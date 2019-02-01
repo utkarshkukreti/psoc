@@ -61,6 +61,8 @@ impl Compiler {
 
         let mut string = String::new();
 
+        string += "(function() {";
+
         for module in modules {
             if !module.foreign.is_empty() {
                 string += &format!(
@@ -80,6 +82,9 @@ impl Compiler {
             done.insert(var);
             string += &format!("var {} = {};\n", var, self.map[var]);
         }
+
+        string += &format!("return {};\n", entry);
+        string += "})()();";
         string
     }
 
