@@ -12,4 +12,4 @@ numbers = { one: 1 }
 
 tuple a b = { a, b }
 
-main = { object, tuple }
+main = tuple object tuple

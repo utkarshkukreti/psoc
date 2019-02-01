@@ -72,6 +72,14 @@ impl Compiler {
                 Some(argument.clone()),
                 vec![g::return_(Some(self.compile_expression(body)))],
             ),
+            App {
+                abstraction,
+                argument,
+                ..
+            } => g::call(
+                self.compile_expression(abstraction),
+                Some(self.compile_expression(argument)),
+            ),
             Accessor {
                 expression, field, ..
             } => g::member(

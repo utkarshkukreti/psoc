@@ -26,10 +26,7 @@ var object = {
     string: string,
     one: numbers.one
 };
-var main = {
-    object: object,
-    tuple: tuple
-};
+var main = tuple(object)(tuple);
 module.exports = {
     array: array,
     "boolean": $$boolean,
