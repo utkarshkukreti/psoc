@@ -116,6 +116,17 @@ var numbers = {
 };
 var number = 1.23;
 var $$int = 42;
+var fourTuple = function (x) {
+    return function (y) {
+        var a = tuple(x)(y);
+        var d = (function () {
+            var b = tuple(a)(a);
+            var c = tuple(b)(b);
+            return tuple(c)(c);
+        })();
+        return tuple(d)(d);
+    };
+};
 var datas = tuple(D1_1.value)(tuple(D2_1.value)(tuple(D2_2.value)(tuple(D3_1.create)(tuple(D4_1.create)(tuple(D5_1.create)(tuple(D5_2.value)(tuple(D6_1.create)(tuple(D6_2.value)(tuple(D6_3.value)(tuple(D7_1.create)(tuple(D7_2.create)(N))))))))))));
 var $$char = "\u03c0";
 var $$boolean = true;
@@ -129,7 +140,7 @@ var object = {
     string: string,
     one: numbers.one
 };
-var main = tuple(object)(tuple(tuple)(datas));
+var main = tuple(object)(tuple(tuple)(tuple(datas)(fourTuple)));
 module.exports = {
     array: array,
     "boolean": $$boolean,
@@ -154,5 +165,6 @@ module.exports = {
     D7_2: D7_2,
     N: N,
     datas: datas,
+    fourTuple: fourTuple,
     main: main
 };

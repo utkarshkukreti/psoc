@@ -69,4 +69,19 @@ var Main_datas = Main_tuple(Main_D1_1)(
     )
   )
 );
-var Main_main = Main_tuple(Main_object)(Main_tuple(Main_tuple)(Main_datas));
+var Main_fourTuple = function(x) {
+  return function(y) {
+    return (function() {
+      var a = Main_tuple(x)(y);
+      var d = (function() {
+        var b = Main_tuple(a)(a);
+        var c = Main_tuple(b)(b);
+        return Main_tuple(c)(c);
+      })();
+      return Main_tuple(d)(d);
+    })();
+  };
+};
+var Main_main = Main_tuple(Main_object)(
+  Main_tuple(Main_tuple)(Main_tuple(Main_datas)(Main_fourTuple))
+);

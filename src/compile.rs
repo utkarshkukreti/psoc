@@ -152,6 +152,21 @@ impl Compiler {
                     }
                 }
             }
+            Let {
+                expression, binds, ..
+            } => {
+                let mut stmts = Vec::new();
+                each_bind(&binds, |bind| {
+                    stmts.push(g::let_(
+                        bind.identifier.clone(),
+                        Some(self.compile_expression(module, &bind.expression)),
+                    ));
+                });
+                stmts.push(g::return_(Some(
+                    self.compile_expression(module, expression),
+                )));
+                g::call(g::function::<_, String>(None, stmts), None)
+            }
             Literal { value, .. } => self.compile_literal(module, value),
             Var { value, .. } => g::var(qid(value)),
             _ => unimplemented!("expression: {:?}", expression),

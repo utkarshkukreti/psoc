@@ -25,4 +25,16 @@ newtype N = N Int
 
 datas = D1_1 /\ D2_1 /\ D2_2 /\ D3_1 /\ D4_1 /\ D5_1 /\ D5_2 /\ D6_1 /\ D6_2 /\ D6_3 /\ D7_1 /\ D7_2 /\ N
 
-main = object /\ tuple /\ datas
+fourTuple x y =
+  let
+    a = x /\ y
+    d =
+      let
+        b = a /\ a
+        c = b /\ b
+      in
+        c /\ c
+  in
+    d /\ d
+
+main = object /\ tuple /\ datas /\ fourTuple
