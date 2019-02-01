@@ -4,7 +4,7 @@ mod compile;
 
 #[derive(StructOpt, Debug)]
 #[structopt(name = "psoc")]
-struct Opt {
+pub struct Opt {
     /// Input Path
     #[structopt(short = "i", long = "input")]
     input: String,
@@ -20,5 +20,5 @@ fn main() {
         .map(|path| std::fs::read_to_string(path.unwrap()).unwrap())
         .map(|string| purescript_corefn::from_str(&string).unwrap())
         .collect::<Vec<_>>();
-    println!("{}", compile::compile(&modules, &opt.entry));
+    println!("{}", compile::compile(&modules, &opt));
 }

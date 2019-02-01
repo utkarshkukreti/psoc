@@ -1,3 +1,4 @@
+use crate::Opt;
 use escodegen as j;
 use escodegen::g;
 use purescript_corefn as p;
@@ -21,7 +22,9 @@ struct Variant {
 }
 
 impl Compiler {
-    fn compile(mut self, modules: &[p::Module], entry: &str) -> String {
+    fn compile(mut self, modules: &[p::Module], opt: &Opt) -> String {
+        let entry = opt.entry.replace(".", "_");
+
         for module in modules {
             each_bind(&module.decls, |bind| {
                 self.collect_constructors(module, bind)
@@ -32,9 +35,9 @@ impl Compiler {
             each_bind(&module.decls, |bind| self.compile_bind(module, bind));
         }
 
-        assert!(self.map.contains_key(entry));
+        assert!(self.map.contains_key(&entry));
         let mut used = Vec::new();
-        let mut stack = vec![entry.to_string()];
+        let mut stack = vec![entry.clone()];
         while let Some(var) = stack.pop() {
             if !self.map.contains_key(&*var) {
                 continue;
@@ -220,6 +223,6 @@ fn id(module: &[String], identifier: &str) -> String {
     }) + &identifier
 }
 
-pub fn compile(modules: &[p::Module], entry: &str) -> String {
-    Compiler::default().compile(modules, &entry.replace(".", "_"))
+pub fn compile(modules: &[p::Module], opt: &Opt) -> String {
+    Compiler::default().compile(modules, opt)
 }
