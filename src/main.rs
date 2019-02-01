@@ -15,7 +15,7 @@ struct Opt {
 
 fn main() {
     let opt = Opt::from_args();
-    let modules = glob::glob(&format!("{}/**/corefn.json", opt.input))
+    let modules = glob::glob(&format!("{}/*/corefn.json", opt.input))
         .unwrap()
         .map(|path| std::fs::read_to_string(path.unwrap()).unwrap())
         .map(|string| purescript_corefn::from_str(&string).unwrap())
