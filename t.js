@@ -95,13 +95,10 @@
           var v1 = b;
           var v2 = Main_f(a);
           return (function() {
-            var m_0 = v2;
-            var m_1 = v1;
-            var m_2 = v;
-            if (m_0 === 0 && m_1 === 0 && m_2 === 0) {
+            if (v2 === 0 && v1 === 0 && v === 0) {
               return "zeros";
             }
-            if (m_0 === 1 && m_1 === 1 && m_2 === 1) {
+            if (v2 === 1 && v1 === 1 && v === 1) {
               return "ones";
             }
             return "others";

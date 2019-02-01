@@ -146,12 +146,14 @@ impl Compiler {
                 let mut stmts = Vec::new();
                 let mut vars = Vec::new();
                 for expression in expressions {
-                    let var = self.gen("m_");
-                    stmts.push(g::let_(
-                        var.clone(),
-                        Some(self.compile_expression(module, expression)),
-                    ));
-                    vars.push(var);
+                    let compiled = self.compile_expression(module, expression);
+                    if let j::Expr::Var(name) = compiled {
+                        vars.push(name.clone());
+                    } else {
+                        let var = self.gen("m_");
+                        stmts.push(g::let_(var.clone(), Some(compiled)));
+                        vars.push(var);
+                    }
                 }
                 for alternative in alternatives {
                     self.compile_alternative(module, alternative, &vars, &mut stmts);
