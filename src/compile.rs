@@ -5,7 +5,7 @@ use purescript_corefn as p;
 use std::collections::{HashMap, HashSet};
 
 #[derive(Default)]
-pub struct Compiler {
+struct Compiler {
     map: HashMap<String, j::Expr>,
     constructors: HashMap<String, Constructor>,
 }
@@ -208,7 +208,7 @@ fn each_bind(decls: &[p::Decl], mut f: impl FnMut(&p::Bind)) {
     }
 }
 
-pub fn qid(qualified: &p::Qualified) -> String {
+fn qid(qualified: &p::Qualified) -> String {
     id(
         qualified.module.as_ref().unwrap_or(&Vec::new()),
         &qualified.identifier,
