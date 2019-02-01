@@ -60,6 +60,18 @@ impl Compiler {
         used.reverse();
 
         let mut string = String::new();
+
+        for module in modules {
+            if !module.foreign.is_empty() {
+                string += &format!(
+                    "var {}_$foreign = require('./{}/{}/foreign.js');\n",
+                    module.name.join("_"),
+                    opt.input,
+                    &module.name.join(".")
+                );
+            }
+        }
+
         let mut done = HashSet::new();
         for var in &used {
             if done.contains(&var) {
@@ -171,7 +183,23 @@ impl Compiler {
                 g::call(g::function::<_, String>(None, stmts), None)
             }
             Literal { value, .. } => self.compile_literal(module, value),
-            Var { value, .. } => g::var(qid(value)),
+            Var { value, annotation } => {
+                let is_foreign = annotation
+                    .meta
+                    .as_ref()
+                    .map_or(false, |m| *m == p::Meta::Foreign);
+
+                if is_foreign {
+                    g::member(
+                        g::var(
+                            value.module.as_ref().unwrap_or(&module.name).join("_") + "_$foreign",
+                        ),
+                        g::string(value.identifier.clone()),
+                    )
+                } else {
+                    g::var(qid(value))
+                }
+            }
             _ => unimplemented!("expression: {:?}", expression),
         }
     }

@@ -37,4 +37,11 @@ fourTuple x y =
   in
     d /\ d
 
-main = object /\ tuple /\ datas /\ fourTuple
+foreign import data Unit :: Type
+
+foreign import data Effect :: Type -> Type
+
+foreign import log :: forall a. a -> Effect Unit
+
+main :: Effect Unit
+main = log (object /\ tuple /\ datas /\ fourTuple)

@@ -1,3 +1,4 @@
+var Main_$foreign = require("./t/output/Main/foreign.js");
 var Main_tuple = function(a) {
   return function(b) {
     return { a: a, b: b };
@@ -82,6 +83,8 @@ var Main_fourTuple = function(x) {
     })();
   };
 };
-var Main_main = Main_tuple(Main_object)(
-  Main_tuple(Main_tuple)(Main_tuple(Main_datas)(Main_fourTuple))
+var Main_main = Main_$foreign.log(
+  Main_tuple(Main_object)(
+    Main_tuple(Main_tuple)(Main_tuple(Main_datas)(Main_fourTuple))
+  )
 );
