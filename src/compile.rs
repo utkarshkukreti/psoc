@@ -68,6 +68,12 @@ impl Compiler {
     fn compile_expression(&mut self, expression: &p::Expression) -> j::Expr {
         use p::Expression::*;
         match expression {
+            Accessor {
+                expression, field, ..
+            } => g::member(
+                self.compile_expression(expression),
+                g::string(field.clone()),
+            ),
             Literal { value, .. } => self.compile_literal(value),
             Var { value, .. } => g::var(qid(value)),
             _ => unimplemented!("expression: {:?}", expression),
