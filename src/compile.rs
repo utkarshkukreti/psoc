@@ -8,6 +8,7 @@ use std::collections::{HashMap, HashSet};
 struct Compiler {
     map: HashMap<String, j::Expr>,
     constructors: HashMap<String, Constructor>,
+    gen: u32,
 }
 
 #[derive(Default, Debug)]
@@ -137,6 +138,27 @@ impl Compiler {
                 self.compile_expression(module, expression),
                 g::string(field.clone()),
             ),
+            Case {
+                alternatives,
+                expressions,
+                ..
+            } => {
+                let mut stmts = Vec::new();
+                let mut vars = Vec::new();
+                for expression in expressions {
+                    let var = self.gen("m_");
+                    stmts.push(g::let_(
+                        var.clone(),
+                        Some(self.compile_expression(module, expression)),
+                    ));
+                    vars.push(var);
+                }
+                for alternative in alternatives {
+                    self.compile_alternative(module, alternative, &vars, &mut stmts);
+                }
+                // TODO: Handle No Match
+                g::call(g::function::<_, String>(None, stmts), None)
+            }
             Constructor {
                 name,
                 type_,
@@ -205,7 +227,64 @@ impl Compiler {
                     g::var(qid(value))
                 }
             }
-            _ => unimplemented!("expression: {:?}", expression),
+        }
+    }
+
+    fn compile_alternative(
+        &mut self,
+        module: &p::Module,
+        alternative: &p::Alternative,
+        vars: &[String],
+        stmts: &mut Vec<j::Stmt>,
+    ) {
+        match alternative {
+            p::Alternative::Guarded { .. } => unimplemented!(),
+            p::Alternative::Unguarded {
+                binders,
+                expression,
+            } => {
+                let mut when = Vec::new();
+                let mut then = Vec::new();
+                for (binder, var) in binders.iter().zip(vars) {
+                    self.compile_binder(binder, g::var(var.clone()), &mut when, &mut then);
+                }
+                then.push(g::return_(Some(
+                    self.compile_expression(module, expression),
+                )));
+                let then = if then.len() == 1 {
+                    then.remove(0)
+                } else {
+                    g::block(then)
+                };
+                if when.is_empty() {
+                    stmts.push(then)
+                } else {
+                    let first = when.remove(0);
+                    let when = when
+                        .into_iter()
+                        .fold(first, |acc, x| g::binary(g::And, acc, x));
+                    stmts.push(g::if_(when, then, None));
+                }
+            }
+        }
+    }
+
+    fn compile_binder(
+        &mut self,
+        binder: &p::Binder,
+        var: j::Expr,
+        when: &mut Vec<j::Expr>,
+        _stmts: &mut Vec<j::Stmt>,
+    ) {
+        match binder {
+            p::Binder::Literal { literal } => match literal {
+                p::LiteralBinder::Int { value } => {
+                    when.push(g::binary(g::Eqq, var, g::number(*value as f64)));
+                }
+                _ => unimplemented!(),
+            },
+            p::Binder::Null {} => {}
+            _ => unimplemented!(),
         }
     }
 
@@ -225,6 +304,11 @@ impl Compiler {
             ),
             String { value } => g::string(value.clone()),
         }
+    }
+
+    fn gen(&mut self, prefix: &str) -> String {
+        self.gen += 1;
+        format!("{}{}", prefix, self.gen - 1)
     }
 }
 

@@ -128,6 +128,24 @@ var fourTuple = function (x) {
         return tuple(d)(d);
     };
 };
+var f = function (x) {
+    return x;
+};
+var m = function (a) {
+    return function (b) {
+        return function (c) {
+            var v = f(c);
+            var v2 = f(a);
+            if (v2 === 0 && (b === 0 && v === 0)) {
+                return "zeros";
+            };
+            if (v2 === 1 && (b === 1 && v === 1)) {
+                return "ones";
+            };
+            return "others";
+        };
+    };
+};
 var datas = tuple(D1_1.value)(tuple(D2_1.value)(tuple(D2_2.value)(tuple(D3_1.create)(tuple(D4_1.create)(tuple(D5_1.create)(tuple(D5_2.value)(tuple(D6_1.create)(tuple(D6_2.value)(tuple(D6_3.value)(tuple(D7_1.create)(tuple(D7_2.create)(N))))))))))));
 var $$char = "\u03c0";
 var $$boolean = true;
@@ -141,7 +159,7 @@ var object = {
     string: string,
     one: numbers.one
 };
-var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(fourTuple))));
+var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(m(3)(3)(3)))))))));
 module.exports = {
     array: array,
     "boolean": $$boolean,
@@ -167,6 +185,8 @@ module.exports = {
     N: N,
     datas: datas,
     fourTuple: fourTuple,
+    f: f,
+    m: m,
     main: main,
     log: $foreign.log
 };

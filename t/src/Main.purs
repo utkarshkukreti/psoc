@@ -37,6 +37,13 @@ fourTuple x y =
   in
     d /\ d
 
+f x = x
+m a b c = case f a, b, f c of
+  0, 0, 0 -> "zeros"
+  1, 1, 1 -> "ones"
+  _, _, _ -> "others"
+
+
 foreign import data Unit :: Type
 
 foreign import data Effect :: Type -> Type
@@ -44,4 +51,4 @@ foreign import data Effect :: Type -> Type
 foreign import log :: forall a. a -> Effect Unit
 
 main :: Effect Unit
-main = log (object /\ tuple /\ datas /\ fourTuple)
+main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3)

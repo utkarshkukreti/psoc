@@ -84,9 +84,45 @@
       })();
     };
   };
+  var Main_f = function(x) {
+    return x;
+  };
+  var Main_m = function(a) {
+    return function(b) {
+      return function(c) {
+        return (function() {
+          var v = Main_f(c);
+          var v1 = b;
+          var v2 = Main_f(a);
+          return (function() {
+            var m_0 = v2;
+            var m_1 = v1;
+            var m_2 = v;
+            if (m_0 === 0 && m_1 === 0 && m_2 === 0) {
+              return "zeros";
+            }
+            if (m_0 === 1 && m_1 === 1 && m_2 === 1) {
+              return "ones";
+            }
+            return "others";
+          })();
+        })();
+      };
+    };
+  };
   var Main_main = Main_$foreign.log(
     Main_tuple(Main_object)(
-      Main_tuple(Main_tuple)(Main_tuple(Main_datas)(Main_fourTuple))
+      Main_tuple(Main_tuple)(
+        Main_tuple(Main_datas)(
+          Main_tuple(Main_fourTuple)(
+            Main_tuple(Main_m(0)(0)(0))(
+              Main_tuple(Main_m(1)(1)(1))(
+                Main_tuple(Main_m(0)(1)(0))(Main_m(3)(3)(3))
+              )
+            )
+          )
+        )
+      )
     )
   );
   return Main_main;
