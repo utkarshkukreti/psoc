@@ -14,4 +14,9 @@ var Main_object = {
   string: Main_string,
   one: Main_numbers.one
 };
-var Main_main = Main_object;
+var Main_tuple = function(a) {
+  return function(b) {
+    return { a: a, b: b };
+  };
+};
+var Main_main = { object: Main_object, tuple: Main_tuple };

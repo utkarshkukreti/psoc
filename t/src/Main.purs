@@ -10,4 +10,6 @@ string = "πr²"
 
 numbers = { one: 1 }
 
-main = object
+tuple a b = { a, b }
+
+main = { object, tuple }

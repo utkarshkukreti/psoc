@@ -68,6 +68,10 @@ impl Compiler {
     fn compile_expression(&mut self, expression: &p::Expression) -> j::Expr {
         use p::Expression::*;
         match expression {
+            Abs { argument, body, .. } => g::function(
+                Some(argument.clone()),
+                vec![g::return_(Some(self.compile_expression(body)))],
+            ),
             Accessor {
                 expression, field, ..
             } => g::member(
