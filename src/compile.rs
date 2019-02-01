@@ -11,16 +11,7 @@ pub struct Compiler {
 impl Compiler {
     fn compile(mut self, modules: &[p::Module], entry: &str) -> String {
         for module in modules {
-            for decl in &module.decls {
-                match decl {
-                    p::Decl::NonRec(bind) => self.compile_bind(module, bind),
-                    p::Decl::Rec { binds } => {
-                        for bind in binds {
-                            self.compile_bind(module, bind)
-                        }
-                    }
-                }
-            }
+            each_bind(&module.decls, |bind| self.compile_bind(module, bind));
         }
 
         assert!(self.map.contains_key(entry));
@@ -107,6 +98,19 @@ impl Compiler {
                     .map(|(k, v)| (k.clone(), self.compile_expression(v))),
             ),
             String { value } => g::string(value.clone()),
+        }
+    }
+}
+
+fn each_bind(decls: &[p::Decl], mut f: impl FnMut(&p::Bind)) {
+    for decl in decls {
+        match decl {
+            p::Decl::NonRec(bind) => f(bind),
+            p::Decl::Rec { binds } => {
+                for bind in binds {
+                    f(bind)
+                }
+            }
         }
     }
 }
