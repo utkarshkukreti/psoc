@@ -6,10 +6,28 @@ use std::collections::{HashMap, HashSet};
 #[derive(Default)]
 pub struct Compiler {
     map: HashMap<String, j::Expr>,
+    constructors: HashMap<String, Constructor>,
+}
+
+#[derive(Default, Debug)]
+struct Constructor {
+    variants: Vec<Variant>,
+}
+
+#[derive(Default, Debug)]
+struct Variant {
+    name: String,
+    fields: Vec<String>,
 }
 
 impl Compiler {
     fn compile(mut self, modules: &[p::Module], entry: &str) -> String {
+        for module in modules {
+            each_bind(&module.decls, |bind| {
+                self.collect_constructors(module, bind)
+            });
+        }
+
         for module in modules {
             each_bind(&module.decls, |bind| self.compile_bind(module, bind));
         }
@@ -50,44 +68,101 @@ impl Compiler {
         string
     }
 
+    fn collect_constructors(&mut self, module: &p::Module, bind: &p::Bind) {
+        match &bind.expression {
+            p::Expression::Constructor {
+                name,
+                type_,
+                fields,
+                ..
+            } => {
+                let type_name = id(&module.name, &type_);
+                self.constructors
+                    .entry(type_name)
+                    .or_default()
+                    .variants
+                    .push(Variant {
+                        name: name.clone(),
+                        fields: fields.clone(),
+                    });
+            }
+            _ => {}
+        }
+    }
+
     fn compile_bind(&mut self, module: &p::Module, bind: &p::Bind) {
         let name = module.name.join("_") + "_" + &bind.identifier;
-        let expr = self.compile_expression(&bind.expression);
+        let expr = self.compile_expression(module, &bind.expression);
         self.map.insert(name, expr);
     }
 
-    fn compile_expression(&mut self, expression: &p::Expression) -> j::Expr {
+    fn compile_expression(&mut self, module: &p::Module, expression: &p::Expression) -> j::Expr {
         use p::Expression::*;
         match expression {
             Abs { argument, body, .. } => g::function(
                 Some(argument.clone()),
-                vec![g::return_(Some(self.compile_expression(body)))],
+                vec![g::return_(Some(self.compile_expression(module, body)))],
             ),
             App {
                 abstraction,
                 argument,
                 ..
             } => g::call(
-                self.compile_expression(abstraction),
-                Some(self.compile_expression(argument)),
+                self.compile_expression(module, abstraction),
+                Some(self.compile_expression(module, argument)),
             ),
             Accessor {
                 expression, field, ..
             } => g::member(
-                self.compile_expression(expression),
+                self.compile_expression(module, expression),
                 g::string(field.clone()),
             ),
-            Literal { value, .. } => self.compile_literal(value),
+            Constructor {
+                name,
+                type_,
+                fields,
+                ..
+            } => {
+                let variants = &self.constructors[&id(&module.name, type_)].variants;
+                let variant_index = variants.iter().position(|v| &v.name == name).unwrap();
+                let tag = g::number(variant_index as f64);
+                if fields.is_empty() {
+                    tag
+                } else {
+                    // No boxing if there's only one variant and only one field.
+                    if variants.len() == 1 && fields.len() == 1 {
+                        g::function(
+                            Some(fields[0].clone()),
+                            vec![g::return_(Some(g::var(fields[0].clone())))],
+                        )
+                    } else {
+                        // No tag if there is only one variant with more than 0 fields.
+                        let tag = if variants.iter().filter(|v| v.fields.len() > 0).count() == 1 {
+                            None
+                        } else {
+                            Some(tag)
+                        };
+                        let expr = g::array(
+                            tag.into_iter()
+                                .chain(fields.iter().map(|field| g::var(field.clone()))),
+                        );
+                        fields.iter().rev().fold(expr, |acc, x| {
+                            g::function(Some(x.clone()), vec![g::return_(Some(acc))])
+                        })
+                    }
+                }
+            }
+            Literal { value, .. } => self.compile_literal(module, value),
             Var { value, .. } => g::var(qid(value)),
             _ => unimplemented!("expression: {:?}", expression),
         }
     }
 
-    fn compile_literal(&mut self, literal: &p::Literal) -> j::Expr {
+    fn compile_literal(&mut self, module: &p::Module, literal: &p::Literal) -> j::Expr {
         use p::Literal::*;
 
         match literal {
-            Array { value } => g::array(value.iter().map(|v| self.compile_expression(v))),
+            Array { value } => g::array(value.iter().map(|v| self.compile_expression(module, v))),
             Boolean { value } => g::bool(*value),
             Char { value } => g::string(Some(*value).into_iter().collect::<std::string::String>()),
             Int { value } => g::number(*value as f64),
@@ -95,7 +170,7 @@ impl Compiler {
             Object { value } => g::object(
                 value
                     .iter()
-                    .map(|(k, v)| (k.clone(), self.compile_expression(v))),
+                    .map(|(k, v)| (k.clone(), self.compile_expression(module, v))),
             ),
             String { value } => g::string(value.clone()),
         }
