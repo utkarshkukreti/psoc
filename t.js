@@ -92,62 +92,42 @@
         var v1 = b;
         var v2 = Main_f(a);
         return (function() {
-          if (v2 === 0 && v1 === 0 && v === 0) {
-            return "zeros";
-          }
-          if (v2 === 1 && v1 === 1 && v === 1) {
-            return "ones";
-          }
+          if (v2 === 0 && v1 === 0 && v === 0) return "zeros";
+          if (v2 === 1 && v1 === 1 && v === 1) return "ones";
           return "others";
         })();
       };
     };
   };
   var Main_caseBoolean = function(v) {
-    if (v === true) {
-      return "true";
-    }
+    if (v === true) return "true";
     return "other";
   };
   var Main_caseChar = function(v) {
-    if (v === "π") {
-      return "pi";
-    }
+    if (v === "π") return "pi";
     return "other";
   };
   var Main_caseInt = function(v) {
-    if (v === 42) {
-      return "42";
-    }
+    if (v === 42) return "42";
     return "other";
   };
   var Main_caseNumber = function(v) {
-    if (v === 1.23) {
-      return "1.23";
-    }
+    if (v === 1.23) return "1.23";
     return "other";
   };
   var Main_caseString = function(v) {
-    if (v === "hi") {
-      return "hi";
-    }
+    if (v === "hi") return "hi";
     return "other";
   };
   var Main_caseArray = function(v) {
-    if (v.length === 0) {
-      return 0;
-    }
+    if (v.length === 0) return 0;
     if (v.length === 3 && v[0] === 0 && v[2] === 2) {
-      {
-        var x = v[1];
-        return x;
-      }
+      var x = v[1];
+      return x;
     }
     if (v.length === 3) {
-      {
-        var z = v[2];
-        return z;
-      }
+      var z = v[2];
+      return z;
     }
     return 9;
   };
