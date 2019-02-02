@@ -22,6 +22,26 @@ struct Variant {
     fields: Vec<String>,
 }
 
+impl Constructor {
+    fn index(&self, name: &str) -> u32 {
+        self.variants.iter().position(|v| v.name == name).unwrap() as u32
+    }
+
+    fn tag(&self, name: &str) -> Option<u32> {
+        // Tag is only necessary when there are more than 1 variants with fields.
+        if self.variants.iter().filter(|v| v.fields.len() > 0).count() == 1 {
+            None
+        } else {
+            Some(self.index(name))
+        }
+    }
+
+    fn unboxed(&self) -> bool {
+        // No boxing if there's only one variant and only one field.
+        self.variants.len() == 1 && self.variants[0].fields.len() == 1
+    }
+}
+
 impl Compiler {
     fn compile(mut self, modules: &[p::Module], opt: &Opt) -> String {
         let entry = opt.entry.replace(".", "_");
@@ -171,27 +191,21 @@ impl Compiler {
                 fields,
                 ..
             } => {
-                let variants = &self.constructors[&id(&module.name, type_)].variants;
-                let variant_index = variants.iter().position(|v| &v.name == name).unwrap();
-                let tag = g::number(variant_index as f64);
+                let constructor = &self.constructors[&id(&module.name, type_)];
                 if fields.is_empty() {
-                    tag
+                    g::number(constructor.index(name) as f64)
                 } else {
-                    // No boxing if there's only one variant and only one field.
-                    if variants.len() == 1 && fields.len() == 1 {
+                    if constructor.unboxed() {
                         g::function(
                             Some(fields[0].clone()),
                             vec![g::return_(Some(g::var(fields[0].clone())))],
                         )
                     } else {
-                        // No tag if there is only one variant with more than 0 fields.
-                        let tag = if variants.iter().filter(|v| v.fields.len() > 0).count() == 1 {
-                            None
-                        } else {
-                            Some(tag)
-                        };
                         let expr = g::array(
-                            tag.into_iter()
+                            constructor
+                                .tag(&name)
+                                .map(|n| g::number(n as f64))
+                                .into_iter()
                                 .chain(fields.iter().map(|field| g::var(field.clone()))),
                         );
                         fields.iter().rev().fold(expr, |acc, x| {
