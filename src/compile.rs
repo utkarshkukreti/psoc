@@ -1,4 +1,4 @@
-use crate::Opt;
+use crate::{optimize, Opt};
 use escodegen as j;
 use escodegen::g;
 use purescript_corefn as p;
@@ -81,7 +81,11 @@ impl Compiler {
                 continue;
             }
             done.insert(var);
-            string += &format!("var {} = {};\n", var, self.map[var]);
+            string += &format!(
+                "var {} = {};\n",
+                var,
+                optimize::optimize(self.map[var].clone())
+            );
         }
 
         string += &format!("return {};\n", entry);

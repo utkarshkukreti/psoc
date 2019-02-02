@@ -73,15 +73,13 @@
   );
   var Main_fourTuple = function(x) {
     return function(y) {
-      return (function() {
-        var a = Main_tuple(x)(y);
-        var d = (function() {
-          var b = Main_tuple(a)(a);
-          var c = Main_tuple(b)(b);
-          return Main_tuple(c)(c);
-        })();
-        return Main_tuple(d)(d);
+      var a = Main_tuple(x)(y);
+      var d = (function() {
+        var b = Main_tuple(a)(a);
+        var c = Main_tuple(b)(b);
+        return Main_tuple(c)(c);
       })();
+      return Main_tuple(d)(d);
     };
   };
   var Main_f = function(x) {
@@ -90,62 +88,50 @@
   var Main_m = function(a) {
     return function(b) {
       return function(c) {
+        var v = Main_f(c);
+        var v1 = b;
+        var v2 = Main_f(a);
         return (function() {
-          var v = Main_f(c);
-          var v1 = b;
-          var v2 = Main_f(a);
-          return (function() {
-            if (v2 === 0 && v1 === 0 && v === 0) {
-              return "zeros";
-            }
-            if (v2 === 1 && v1 === 1 && v === 1) {
-              return "ones";
-            }
-            return "others";
-          })();
+          if (v2 === 0 && v1 === 0 && v === 0) {
+            return "zeros";
+          }
+          if (v2 === 1 && v1 === 1 && v === 1) {
+            return "ones";
+          }
+          return "others";
         })();
       };
     };
   };
   var Main_caseBoolean = function(v) {
-    return (function() {
-      if (v === true) {
-        return "true";
-      }
-      return "other";
-    })();
+    if (v === true) {
+      return "true";
+    }
+    return "other";
   };
   var Main_caseChar = function(v) {
-    return (function() {
-      if (v === "π") {
-        return "pi";
-      }
-      return "other";
-    })();
+    if (v === "π") {
+      return "pi";
+    }
+    return "other";
   };
   var Main_caseInt = function(v) {
-    return (function() {
-      if (v === 42) {
-        return "42";
-      }
-      return "other";
-    })();
+    if (v === 42) {
+      return "42";
+    }
+    return "other";
   };
   var Main_caseNumber = function(v) {
-    return (function() {
-      if (v === 1.23) {
-        return "1.23";
-      }
-      return "other";
-    })();
+    if (v === 1.23) {
+      return "1.23";
+    }
+    return "other";
   };
   var Main_caseString = function(v) {
-    return (function() {
-      if (v === "hi") {
-        return "hi";
-      }
-      return "other";
-    })();
+    if (v === "hi") {
+      return "hi";
+    }
+    return "other";
   };
   var Main_cases = Main_tuple(Main_caseBoolean(true))(
     Main_tuple(Main_caseChar("π"))(

@@ -1,6 +1,7 @@
 use structopt::StructOpt;
 
 mod compile;
+mod optimize;
 
 #[derive(StructOpt, Debug)]
 #[structopt(name = "psoc")]
