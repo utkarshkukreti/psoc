@@ -91,11 +91,9 @@
         var v = Main_f(c);
         var v1 = b;
         var v2 = Main_f(a);
-        return (function() {
-          if (v2 === 0 && v1 === 0 && v === 0) return "zeros";
-          if (v2 === 1 && v1 === 1 && v === 1) return "ones";
-          return "others";
-        })();
+        if (v2 === 0 && v1 === 0 && v === 0) return "zeros";
+        if (v2 === 1 && v1 === 1 && v === 1) return "ones";
+        return "others";
       };
     };
   };
