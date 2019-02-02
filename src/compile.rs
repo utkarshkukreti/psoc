@@ -16,6 +16,13 @@ struct Constructor {
     variants: Vec<Variant>,
 }
 
+enum ConstructorRepr {
+    Unboxed,
+    OnlyTag(u32),
+    WithTag(u32),
+    WithoutTag,
+}
+
 #[derive(Default, Debug)]
 struct Variant {
     name: String,
@@ -23,6 +30,10 @@ struct Variant {
 }
 
 impl Constructor {
+    fn variant(&self, name: &str) -> &Variant {
+        self.variants.iter().find(|v| v.name == name).unwrap()
+    }
+
     fn index(&self, name: &str) -> u32 {
         self.variants.iter().position(|v| v.name == name).unwrap() as u32
     }
@@ -39,6 +50,20 @@ impl Constructor {
     fn unboxed(&self) -> bool {
         // No boxing if there's only one variant and only one field.
         self.variants.len() == 1 && self.variants[0].fields.len() == 1
+    }
+
+    fn repr(&self, name: &str) -> ConstructorRepr {
+        use ConstructorRepr::*;
+        let variant = self.variant(name);
+        if variant.fields.is_empty() {
+            OnlyTag(self.index(name))
+        } else if self.unboxed() {
+            Unboxed
+        } else if let Some(tag) = self.tag(name) {
+            WithTag(tag)
+        } else {
+            WithoutTag
+        }
     }
 }
 
@@ -191,28 +216,27 @@ impl Compiler {
                 fields,
                 ..
             } => {
+                use ConstructorRepr::*;
                 let constructor = &self.constructors[&id(&module.name, type_)];
-                if fields.is_empty() {
-                    g::number(constructor.index(name) as f64)
-                } else {
-                    if constructor.unboxed() {
-                        g::function(
+                let tag = match constructor.repr(&name) {
+                    Unboxed => {
+                        return g::function(
                             Some(fields[0].clone()),
                             vec![g::return_(Some(g::var(fields[0].clone())))],
-                        )
-                    } else {
-                        let expr = g::array(
-                            constructor
-                                .tag(&name)
-                                .map(|n| g::number(n as f64))
-                                .into_iter()
-                                .chain(fields.iter().map(|field| g::var(field.clone()))),
                         );
-                        fields.iter().rev().fold(expr, |acc, x| {
-                            g::function(Some(x.clone()), vec![g::return_(Some(acc))])
-                        })
                     }
-                }
+                    OnlyTag(tag) => return g::number(tag as f64),
+                    WithTag(tag) => Some(tag),
+                    WithoutTag => None,
+                };
+                let expr = g::array(
+                    tag.map(|n| g::number(n as f64))
+                        .into_iter()
+                        .chain(fields.iter().map(|field| g::var(field.clone()))),
+                );
+                fields.iter().rev().fold(expr, |acc, x| {
+                    g::function(Some(x.clone()), vec![g::return_(Some(acc))])
+                })
             }
             Let {
                 expression, binds, ..
