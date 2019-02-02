@@ -189,7 +189,7 @@ impl Compiler {
     }
 
     fn compile_bind(&mut self, module: &p::Module, bind: &p::Bind) {
-        let name = module.name.join("_") + "_" + &bind.identifier;
+        let name = id(&module.name, &bind.identifier);
         let expr = self.compile_expression(module, &bind.expression);
         self.map.insert(name, expr);
     }
