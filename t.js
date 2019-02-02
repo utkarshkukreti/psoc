@@ -5,7 +5,8 @@
       return { a: a, b: b };
     };
   };
-  var Main_array = [1, 2, 3];
+  var A_array = [1, 2, 3];
+  var Main_array = A_array;
   var Main_boolean = true;
   var Main_char = "π";
   var Main_int = 42;

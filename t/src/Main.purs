@@ -1,6 +1,8 @@
 module Main where
 
-array = [1, 2, 3]
+import A as A
+
+array = A.array
 boolean = true
 char = 'π'
 int = 42

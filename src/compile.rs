@@ -8,6 +8,7 @@ use std::collections::{HashMap, HashSet};
 struct Compiler {
     map: HashMap<String, j::Expr>,
     constructors: HashMap<String, Constructor>,
+    foreigns: HashSet<String>,
     gen: u32,
 }
 
@@ -75,6 +76,12 @@ impl Compiler {
             each_bind(&module.decls, |bind| {
                 self.collect_constructors(module, bind)
             });
+        }
+
+        for module in modules {
+            for foreign in &module.foreign {
+                self.foreigns.insert(id(&module.name, &foreign));
+            }
         }
 
         for module in modules {
@@ -273,13 +280,9 @@ impl Compiler {
                 g::call(g::function::<_, String>(None, stmts), None)
             }
             Literal { value, .. } => self.compile_literal(module, value),
-            Var { value, annotation } => {
-                let is_foreign = annotation
-                    .meta
-                    .as_ref()
-                    .map_or(false, |m| *m == p::Meta::Foreign);
-
-                if is_foreign {
+            Var { value, .. } => {
+                let id = qid(value);
+                if self.foreigns.contains(&id) {
                     g::member(
                         g::var(
                             value.module.as_ref().unwrap_or(&module.name).join("_") + "_$foreign",
@@ -287,7 +290,7 @@ impl Compiler {
                         g::string(value.identifier.clone()),
                     )
                 } else {
-                    g::var(qid(value))
+                    g::var(id)
                 }
             }
         }
