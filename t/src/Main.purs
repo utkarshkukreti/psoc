@@ -25,6 +25,34 @@ newtype N = N Int
 
 datas = D1_1 /\ D2_1 /\ D2_2 /\ D3_1 /\ D4_1 /\ D5_1 /\ D5_2 /\ D6_1 /\ D6_2 /\ D6_3 /\ D7_1 /\ D7_2 /\ N
 
+caseData1 = case _ of
+  D1_1 -> 1
+
+caseData2 = case _ of
+  D2_1 -> 1
+  D2_2 -> 2
+
+caseData3 = case _ of
+  D3_1 x -> x
+
+caseData4 = case _ of
+  D4_1 x y -> x /\ y
+
+caseData5 = case _ of
+  D5_1 x -> x
+  D5_2 -> 2
+
+caseData6 = case _ of
+  D6_1 x -> x
+  D6_2 -> 2
+  D6_3 -> 3
+
+caseData7 = case _ of
+  D7_1 x -> x
+  D7_2 x -> x
+
+caseDatas = caseData1 /\ caseData2 /\ caseData3 /\ caseData4 /\ caseData5 /\ caseData6 /\ caseData7
+
 fourTuple x y =
   let
     a = x /\ y
@@ -83,7 +111,7 @@ caseString = case _ of
   "hi" -> "hi"
   _ -> "other"
 
-cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi" /\ caseArrays /\ caseObject /\ caseNamed
+cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi" /\ caseArrays /\ caseObject /\ caseNamed /\ caseDatas
 
 foreign import data Unit :: Type
 

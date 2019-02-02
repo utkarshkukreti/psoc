@@ -190,6 +190,55 @@ var caseInt = function (v) {
     };
     return "other";
 };
+var caseData7 = function (v) {
+    if (v instanceof D7_1) {
+        return v.value0;
+    };
+    if (v instanceof D7_2) {
+        return v.value0;
+    };
+    throw new Error("Failed pattern match at Main line 50, column 13 - line 52, column 14: " + [ v.constructor.name ]);
+};
+var caseData6 = function (v) {
+    if (v instanceof D6_1) {
+        return v.value0;
+    };
+    if (v instanceof D6_2) {
+        return 2;
+    };
+    if (v instanceof D6_3) {
+        return 3;
+    };
+    throw new Error("Failed pattern match at Main line 45, column 13 - line 50, column 1: " + [ v.constructor.name ]);
+};
+var caseData5 = function (v) {
+    if (v instanceof D5_1) {
+        return v.value0;
+    };
+    if (v instanceof D5_2) {
+        return 2;
+    };
+    throw new Error("Failed pattern match at Main line 41, column 13 - line 45, column 1: " + [ v.constructor.name ]);
+};
+var caseData4 = function (v) {
+    return tuple(v.value0)(v.value1);
+};
+var caseData3 = function (v) {
+    return v.value0;
+};
+var caseData2 = function (v) {
+    if (v instanceof D2_1) {
+        return 1;
+    };
+    if (v instanceof D2_2) {
+        return 2;
+    };
+    throw new Error("Failed pattern match at Main line 31, column 13 - line 35, column 1: " + [ v.constructor.name ]);
+};
+var caseData1 = function (v) {
+    return 1;
+};
+var caseDatas = tuple(caseData1)(tuple(caseData2)(tuple(caseData3)(tuple(caseData4)(tuple(caseData5)(tuple(caseData6)(caseData7))))));
 var caseChar = function (v) {
     if (v === "\u03c0") {
         return "pi";
@@ -215,7 +264,7 @@ var caseArray = function (v) {
     return 9;
 };
 var caseArrays = tuple(caseArray([  ]))(tuple(caseArray([ 0, 1, 2 ]))(tuple(caseArray([ 7, 6, 5 ]))(caseArray([ 2 ]))));
-var cases = tuple(caseBoolean(true))(tuple(caseChar("\u03c0"))(tuple(caseInt(43))(tuple(caseNumber(1.234))(tuple(caseString("hi"))(tuple(caseArrays)(tuple(caseObject)(caseNamed)))))));
+var cases = tuple(caseBoolean(true))(tuple(caseChar("\u03c0"))(tuple(caseInt(43))(tuple(caseNumber(1.234))(tuple(caseString("hi"))(tuple(caseArrays)(tuple(caseObject)(tuple(caseNamed)(caseDatas))))))));
 var $$boolean = true;
 var array = [ 1, 2, 3 ];
 var object = {
@@ -252,6 +301,14 @@ module.exports = {
     D7_2: D7_2,
     N: N,
     datas: datas,
+    caseData1: caseData1,
+    caseData2: caseData2,
+    caseData3: caseData3,
+    caseData4: caseData4,
+    caseData5: caseData5,
+    caseData6: caseData6,
+    caseData7: caseData7,
+    caseDatas: caseDatas,
     fourTuple: fourTuple,
     f: f,
     m: m,

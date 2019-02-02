@@ -321,6 +321,56 @@ impl Compiler {
         stmts: &mut Vec<j::Stmt>,
     ) {
         match binder {
+            p::Binder::Constructor {
+                constructor,
+                type_,
+                binders,
+                ..
+            } => {
+                use ConstructorRepr::*;
+                let name = &constructor.identifier;
+                let constructor = &self.constructors[&qid(&type_)];
+                match constructor.repr(name) {
+                    Unboxed => {
+                        assert!(binders.len() == 1);
+                        self.compile_binder(&binders[0], var, when, stmts);
+                    }
+                    OnlyTag(tag) => {
+                        assert!(binders.len() == 0);
+                        when.push(g::binary(g::Eqq, var, g::number(tag as f64)));
+                    }
+                    WithTag(tag) => {
+                        when.push(g::binary(
+                            g::Eqq,
+                            g::member(var.clone(), g::number(0.0)),
+                            g::number(tag as f64),
+                        ));
+                        for (index, binder) in binders.iter().enumerate() {
+                            self.compile_binder(
+                                binder,
+                                g::member(var.clone(), g::number(index as f64 + 1.0)),
+                                when,
+                                stmts,
+                            );
+                        }
+                    }
+                    WithoutTag => {
+                        when.push(g::binary(
+                            g::NotEqq,
+                            g::unary(g::UnaryOperator::Typeof, var.clone()),
+                            g::string("number"),
+                        ));
+                        for (index, binder) in binders.iter().enumerate() {
+                            self.compile_binder(
+                                binder,
+                                g::member(var.clone(), g::number(index as f64)),
+                                when,
+                                stmts,
+                            );
+                        }
+                    }
+                }
+            }
             p::Binder::Literal { literal } => {
                 let mut eq = |expr| when.push(g::binary(g::Eqq, var.clone(), expr));
                 match literal {
@@ -374,7 +424,6 @@ impl Compiler {
             p::Binder::Var { identifier } => {
                 stmts.push(g::let_(identifier.clone(), Some(var)));
             }
-            _ => unimplemented!("binder: {:?}", binder),
         }
     }
 

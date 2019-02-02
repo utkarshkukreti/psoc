@@ -166,13 +166,54 @@
     }
     return [];
   };
+  var Main_caseData1 = function(v) {
+    if (v === 0) return 1;
+  };
+  var Main_caseData2 = function(v) {
+    if (v === 0) return 1;
+    if (v === 1) return 2;
+  };
+  var Main_caseData3 = function(v) {
+    return v;
+  };
+  var Main_caseData4 = function(v) {
+    if (typeof v !== "number") {
+      var x = v[0];
+      var y = v[1];
+      return Main_tuple(x)(y);
+    }
+  };
+  var Main_caseData5 = function(v) {
+    if (typeof v !== "number") return v[0];
+    if (v === 1) return 2;
+  };
+  var Main_caseData6 = function(v) {
+    if (typeof v !== "number") return v[0];
+    if (v === 1) return 2;
+    if (v === 2) return 3;
+  };
+  var Main_caseData7 = function(v) {
+    if (v[0] === 0) return v[1];
+    if (v[0] === 1) return v[1];
+  };
+  var Main_caseDatas = Main_tuple(Main_caseData1)(
+    Main_tuple(Main_caseData2)(
+      Main_tuple(Main_caseData3)(
+        Main_tuple(Main_caseData4)(
+          Main_tuple(Main_caseData5)(Main_tuple(Main_caseData6)(Main_caseData7))
+        )
+      )
+    )
+  );
   var Main_cases = Main_tuple(Main_caseBoolean(true))(
     Main_tuple(Main_caseChar("π"))(
       Main_tuple(Main_caseInt(43))(
         Main_tuple(Main_caseNumber(1.234))(
           Main_tuple(Main_caseString("hi"))(
             Main_tuple(Main_caseArrays)(
-              Main_tuple(Main_caseObject)(Main_caseNamed)
+              Main_tuple(Main_caseObject)(
+                Main_tuple(Main_caseNamed)(Main_caseDatas)
+              )
             )
           )
         )
