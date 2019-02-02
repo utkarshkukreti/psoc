@@ -129,6 +129,17 @@ var fourTuple = function (x) {
         return tuple(d)(d);
     };
 };
+var forever = function ($copy_x) {
+    var $tco_result;
+    function $tco_loop(x) {
+        $copy_x = x;
+        return;
+    };
+    while (!false) {
+        $tco_result = $tco_loop($copy_x);
+    };
+    return $tco_result;
+};
 var f = function (x) {
     return x;
 };
@@ -280,7 +291,7 @@ var object = {
     string: string,
     one: numbers.one
 };
-var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(cases)))))))));
+var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(forever))))))))));
 module.exports = {
     array: array,
     "boolean": $$boolean,
@@ -327,6 +338,7 @@ module.exports = {
     caseNamed: caseNamed,
     caseString: caseString,
     cases: cases,
+    forever: forever,
     main: main,
     log: $foreign.log
 };

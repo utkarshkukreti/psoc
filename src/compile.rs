@@ -96,19 +96,21 @@ impl Compiler {
                 continue;
             }
             let expr = &self.map[&var];
-            used.push(var);
             j::walk::walk_expr(
                 expr,
                 &mut |_| {},
                 &mut |_| {},
                 &mut |expr| match expr {
                     j::Expr::Var(var) => {
-                        stack.push(var.clone());
+                        if !used.contains(var) {
+                            stack.push(var.clone());
+                        }
                     }
                     _ => {}
                 },
                 &mut |_| {},
             );
+            used.push(var);
         }
         used.reverse();
 

@@ -83,9 +83,6 @@
       return Main_tuple(d)(d);
     };
   };
-  var Main_f = function(x) {
-    return x;
-  };
   var Main_m = function(a) {
     return function(b) {
       return function(c) {
@@ -97,6 +94,9 @@
         return "others";
       };
     };
+  };
+  var Main_f = function(x) {
+    return x;
   };
   var Main_caseBoolean = function(v) {
     if (v === true) return "true";
@@ -228,6 +228,9 @@
       )
     )
   );
+  var Main_forever = function(x) {
+    return Main_forever(x);
+  };
   var Main_main = Main_$foreign.log(
     Main_tuple(Main_object)(
       Main_tuple(Main_tuple)(
@@ -236,7 +239,9 @@
             Main_tuple(Main_m(0)(0)(0))(
               Main_tuple(Main_m(1)(1)(1))(
                 Main_tuple(Main_m(0)(1)(0))(
-                  Main_tuple(Main_m(3)(3)(3))(Main_cases)
+                  Main_tuple(Main_m(3)(3)(3))(
+                    Main_tuple(Main_cases)(Main_forever)
+                  )
                 )
               )
             )
