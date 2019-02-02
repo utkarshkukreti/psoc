@@ -280,12 +280,27 @@ impl Compiler {
         binder: &p::Binder,
         var: j::Expr,
         when: &mut Vec<j::Expr>,
-        _stmts: &mut Vec<j::Stmt>,
+        stmts: &mut Vec<j::Stmt>,
     ) {
         match binder {
             p::Binder::Literal { literal } => {
-                let eq = |expr| when.push(g::binary(g::Eqq, var, expr));
+                let mut eq = |expr| when.push(g::binary(g::Eqq, var.clone(), expr));
                 match literal {
+                    p::LiteralBinder::Array { value } => {
+                        when.push(g::binary(
+                            g::Eqq,
+                            g::member(var.clone(), g::string("length")),
+                            g::number(value.len() as f64),
+                        ));
+                        for (index, binder) in value.iter().enumerate() {
+                            self.compile_binder(
+                                binder,
+                                g::member(var.clone(), g::number(index as f64)),
+                                when,
+                                stmts,
+                            );
+                        }
+                    }
                     p::LiteralBinder::Boolean { value } => {
                         eq(g::bool(*value));
                     }
@@ -305,7 +320,10 @@ impl Compiler {
                 }
             }
             p::Binder::Null {} => {}
-            _ => unimplemented!(),
+            p::Binder::Var { identifier } => {
+                stmts.push(g::let_(identifier.clone(), Some(var)));
+            }
+            _ => unimplemented!("binder: {:?}", binder),
         }
     }
 

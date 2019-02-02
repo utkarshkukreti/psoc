@@ -43,6 +43,14 @@ m a b c = case f a, b, f c of
   1, 1, 1 -> "ones"
   _, _, _ -> "others"
 
+caseArray = case _ of
+  [] -> 0
+  [0, x, 2] -> x
+  [_, _, z] -> z
+  _ -> 9
+
+caseArrays = caseArray [] /\ caseArray [0, 1, 2] /\ caseArray [7, 6, 5] /\ caseArray [2]
+
 caseBoolean = case _ of
   true -> "true"
   _ -> "other"
@@ -63,7 +71,7 @@ caseString = case _ of
   "hi" -> "hi"
   _ -> "other"
 
-cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi"
+cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi" /\ caseArrays
 
 foreign import data Unit :: Type
 

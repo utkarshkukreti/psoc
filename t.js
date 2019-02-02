@@ -133,10 +133,35 @@
     }
     return "other";
   };
+  var Main_caseArray = function(v) {
+    if (v.length === 0) {
+      return 0;
+    }
+    if (v.length === 3 && v[0] === 0 && v[2] === 2) {
+      {
+        var x = v[1];
+        return x;
+      }
+    }
+    if (v.length === 3) {
+      {
+        var z = v[2];
+        return z;
+      }
+    }
+    return 9;
+  };
+  var Main_caseArrays = Main_tuple(Main_caseArray([]))(
+    Main_tuple(Main_caseArray([0, 1, 2]))(
+      Main_tuple(Main_caseArray([7, 6, 5]))(Main_caseArray([2]))
+    )
+  );
   var Main_cases = Main_tuple(Main_caseBoolean(true))(
     Main_tuple(Main_caseChar("π"))(
       Main_tuple(Main_caseInt(43))(
-        Main_tuple(Main_caseNumber(1.234))(Main_caseString("hi"))
+        Main_tuple(Main_caseNumber(1.234))(
+          Main_tuple(Main_caseString("hi"))(Main_caseArrays)
+        )
       )
     )
   );

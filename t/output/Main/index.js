@@ -178,7 +178,20 @@ var caseBoolean = function (v) {
     };
     return "other";
 };
-var cases = tuple(caseBoolean(true))(tuple(caseChar("\u03c0"))(tuple(caseInt(43))(tuple(caseNumber(1.234))(caseString("hi")))));
+var caseArray = function (v) {
+    if (v.length === 0) {
+        return 0;
+    };
+    if (v.length === 3 && (v[0] === 0 && v[2] === 2)) {
+        return v[1];
+    };
+    if (v.length === 3) {
+        return v[2];
+    };
+    return 9;
+};
+var caseArrays = tuple(caseArray([  ]))(tuple(caseArray([ 0, 1, 2 ]))(tuple(caseArray([ 7, 6, 5 ]))(caseArray([ 2 ]))));
+var cases = tuple(caseBoolean(true))(tuple(caseChar("\u03c0"))(tuple(caseInt(43))(tuple(caseNumber(1.234))(tuple(caseString("hi"))(caseArrays)))));
 var $$boolean = true;
 var array = [ 1, 2, 3 ];
 var object = {
@@ -218,6 +231,8 @@ module.exports = {
     fourTuple: fourTuple,
     f: f,
     m: m,
+    caseArray: caseArray,
+    caseArrays: caseArrays,
     caseBoolean: caseBoolean,
     caseChar: caseChar,
     caseInt: caseInt,
