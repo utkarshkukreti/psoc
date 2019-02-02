@@ -119,14 +119,8 @@
   };
   var Main_caseArray = function(v) {
     if (v.length === 0) return 0;
-    if (v.length === 3 && v[0] === 0 && v[2] === 2) {
-      var x = v[1];
-      return x;
-    }
-    if (v.length === 3) {
-      var z = v[2];
-      return z;
-    }
+    if (v.length === 3 && v[0] === 0 && v[2] === 2) return v[1];
+    if (v.length === 3) return v[2];
     return 9;
   };
   var Main_caseArrays = Main_tuple(Main_caseArray([]))(
