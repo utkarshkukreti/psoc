@@ -279,28 +279,27 @@ impl Compiler {
         _stmts: &mut Vec<j::Stmt>,
     ) {
         match binder {
-            p::Binder::Literal { literal } => match literal {
-                p::LiteralBinder::Boolean { value } => {
-                    when.push(g::binary(g::Eqq, var, g::bool(*value)));
+            p::Binder::Literal { literal } => {
+                let eq = |expr| when.push(g::binary(g::Eqq, var, expr));
+                match literal {
+                    p::LiteralBinder::Boolean { value } => {
+                        eq(g::bool(*value));
+                    }
+                    p::LiteralBinder::Char { value } => {
+                        eq(g::string(Some(value).into_iter().collect::<String>()));
+                    }
+                    p::LiteralBinder::Int { value } => {
+                        eq(g::number(*value as f64));
+                    }
+                    p::LiteralBinder::Number { value } => {
+                        eq(g::number(*value));
+                    }
+                    p::LiteralBinder::String { value } => {
+                        eq(g::string(value.clone()));
+                    }
+                    _ => unimplemented!(),
                 }
-                p::LiteralBinder::Char { value } => {
-                    when.push(g::binary(
-                        g::Eqq,
-                        var,
-                        g::string(Some(value).into_iter().collect::<String>()),
-                    ));
-                }
-                p::LiteralBinder::Int { value } => {
-                    when.push(g::binary(g::Eqq, var, g::number(*value as f64)));
-                }
-                p::LiteralBinder::Number { value } => {
-                    when.push(g::binary(g::Eqq, var, g::number(*value)));
-                }
-                p::LiteralBinder::String { value } => {
-                    when.push(g::binary(g::Eqq, var, g::string(value.clone())));
-                }
-                _ => unimplemented!(),
-            },
+            }
             p::Binder::Null {} => {}
             _ => unimplemented!(),
         }
