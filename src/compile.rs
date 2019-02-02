@@ -140,6 +140,25 @@ impl Compiler {
 
     fn collect_constructors(&mut self, module: &p::Module, bind: &p::Bind) {
         match &bind.expression {
+            p::Expression::Abs {
+                argument,
+                annotation,
+                ..
+            } if annotation
+                .meta
+                .as_ref()
+                .map_or(false, |m| *m == p::Meta::Newtype) =>
+            {
+                let type_name = id(&module.name, &bind.identifier);
+                self.constructors
+                    .entry(type_name)
+                    .or_default()
+                    .variants
+                    .push(Variant {
+                        name: bind.identifier.clone(),
+                        fields: vec![argument.clone()],
+                    });
+            }
             p::Expression::Constructor {
                 name,
                 type_,

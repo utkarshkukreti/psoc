@@ -172,6 +172,9 @@ var caseNumber = function (v) {
     };
     return "other";
 };
+var caseNewtype = function (v) {
+    return v;
+};
 var caseNamed = function (v) {
     if (v.a.length === 1 && v["a"][0] === 0) {
         return v.a;
@@ -238,7 +241,7 @@ var caseData2 = function (v) {
 var caseData1 = function (v) {
     return 1;
 };
-var caseDatas = tuple(caseData1)(tuple(caseData2)(tuple(caseData3)(tuple(caseData4)(tuple(caseData5)(tuple(caseData6)(caseData7))))));
+var caseDatas = tuple(caseData1)(tuple(caseData2)(tuple(caseData3)(tuple(caseData4)(tuple(caseData5)(tuple(caseData6)(tuple(caseData7)(caseNewtype)))))));
 var caseChar = function (v) {
     if (v === "\u03c0") {
         return "pi";
@@ -308,6 +311,7 @@ module.exports = {
     caseData5: caseData5,
     caseData6: caseData6,
     caseData7: caseData7,
+    caseNewtype: caseNewtype,
     caseDatas: caseDatas,
     fourTuple: fourTuple,
     f: f,

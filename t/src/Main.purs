@@ -51,7 +51,10 @@ caseData7 = case _ of
   D7_1 x -> x
   D7_2 x -> x
 
-caseDatas = caseData1 /\ caseData2 /\ caseData3 /\ caseData4 /\ caseData5 /\ caseData6 /\ caseData7
+caseNewtype = case _ of
+  N x -> x
+
+caseDatas = caseData1 /\ caseData2 /\ caseData3 /\ caseData4 /\ caseData5 /\ caseData6 /\ caseData7 /\ caseNewtype
 
 fourTuple x y =
   let

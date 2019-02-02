@@ -196,11 +196,18 @@
     if (v[0] === 0) return v[1];
     if (v[0] === 1) return v[1];
   };
+  var Main_caseNewtype = function(v) {
+    return v;
+  };
   var Main_caseDatas = Main_tuple(Main_caseData1)(
     Main_tuple(Main_caseData2)(
       Main_tuple(Main_caseData3)(
         Main_tuple(Main_caseData4)(
-          Main_tuple(Main_caseData5)(Main_tuple(Main_caseData6)(Main_caseData7))
+          Main_tuple(Main_caseData5)(
+            Main_tuple(Main_caseData6)(
+              Main_tuple(Main_caseData7)(Main_caseNewtype)
+            )
+          )
         )
       )
     )
