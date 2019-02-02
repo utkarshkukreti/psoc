@@ -73,11 +73,17 @@ caseObject = case _ of
   {c: 'c', d: {e: {f: 4.0}}} -> ".c is c and .d.e.f is 4.0"
   _ -> "other"
 
+caseNamed = case _ of
+  {a: b @ [0]} -> let bb = b in bb
+  {b: {c: {d: b @ [1]}}} -> let bb = b in bb
+  {c: [[[b @ [1, 2, 3]]]]} -> let bb = b in bb
+  _ -> []
+
 caseString = case _ of
   "hi" -> "hi"
   _ -> "other"
 
-cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi" /\ caseArrays /\ caseObject
+cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi" /\ caseArrays /\ caseObject /\ caseNamed
 
 foreign import data Unit :: Type
 

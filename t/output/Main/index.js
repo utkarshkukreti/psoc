@@ -172,6 +172,18 @@ var caseNumber = function (v) {
     };
     return "other";
 };
+var caseNamed = function (v) {
+    if (v.a.length === 1 && v["a"][0] === 0) {
+        return v.a;
+    };
+    if (v.b.c.d.length === 1 && v["b"]["c"]["d"][0] === 1) {
+        return v.b.c.d;
+    };
+    if (v.c.length === 1 && (v["c"][0].length === 1 && (v["c"][0][0].length === 1 && (v["c"][0][0][0].length === 3 && (v["c"][0][0][0][0] === 1 && (v["c"][0][0][0][1] === 2 && v["c"][0][0][0][2] === 3)))))) {
+        return v["c"][0][0][0];
+    };
+    return [  ];
+};
 var caseInt = function (v) {
     if (v === 42) {
         return "42";
@@ -203,7 +215,7 @@ var caseArray = function (v) {
     return 9;
 };
 var caseArrays = tuple(caseArray([  ]))(tuple(caseArray([ 0, 1, 2 ]))(tuple(caseArray([ 7, 6, 5 ]))(caseArray([ 2 ]))));
-var cases = tuple(caseBoolean(true))(tuple(caseChar("\u03c0"))(tuple(caseInt(43))(tuple(caseNumber(1.234))(tuple(caseString("hi"))(tuple(caseArrays)(caseObject))))));
+var cases = tuple(caseBoolean(true))(tuple(caseChar("\u03c0"))(tuple(caseInt(43))(tuple(caseNumber(1.234))(tuple(caseString("hi"))(tuple(caseArrays)(tuple(caseObject)(caseNamed)))))));
 var $$boolean = true;
 var array = [ 1, 2, 3 ];
 var object = {
@@ -250,6 +262,7 @@ module.exports = {
     caseInt: caseInt,
     caseNumber: caseNumber,
     caseObject: caseObject,
+    caseNamed: caseNamed,
     caseString: caseString,
     cases: cases,
     main: main,

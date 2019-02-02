@@ -134,12 +134,46 @@
     if (v.c === "c" && v.d.e.f === 4) return ".c is c and .d.e.f is 4.0";
     return "other";
   };
+  var Main_caseNamed = function(v) {
+    if (v.a.length === 1 && v.a[0] === 0) {
+      var b = v.a;
+      return (function() {
+        var bb = b;
+        return bb;
+      })();
+    }
+    if (v.b.c.d.length === 1 && v.b.c.d[0] === 1) {
+      var b = v.b.c.d;
+      return (function() {
+        var bb = b;
+        return bb;
+      })();
+    }
+    if (
+      v.c.length === 1 &&
+      v.c[0].length === 1 &&
+      v.c[0][0].length === 1 &&
+      v.c[0][0][0].length === 3 &&
+      v.c[0][0][0][0] === 1 &&
+      v.c[0][0][0][1] === 2 &&
+      v.c[0][0][0][2] === 3
+    ) {
+      var b = v.c[0][0][0];
+      return (function() {
+        var bb = b;
+        return bb;
+      })();
+    }
+    return [];
+  };
   var Main_cases = Main_tuple(Main_caseBoolean(true))(
     Main_tuple(Main_caseChar("π"))(
       Main_tuple(Main_caseInt(43))(
         Main_tuple(Main_caseNumber(1.234))(
           Main_tuple(Main_caseString("hi"))(
-            Main_tuple(Main_caseArrays)(Main_caseObject)
+            Main_tuple(Main_caseArrays)(
+              Main_tuple(Main_caseObject)(Main_caseNamed)
+            )
           )
         )
       )

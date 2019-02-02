@@ -328,6 +328,10 @@ impl Compiler {
                     }
                 }
             }
+            p::Binder::Named { identifier, binder } => {
+                self.compile_binder(binder, var.clone(), when, stmts);
+                stmts.push(g::let_(identifier.clone(), Some(var)));
+            }
             p::Binder::Null {} => {}
             p::Binder::Var { identifier } => {
                 stmts.push(g::let_(identifier.clone(), Some(var)));
