@@ -107,6 +107,53 @@
       };
     };
   };
+  var Main_caseBoolean = function(v) {
+    return (function() {
+      if (v === true) {
+        return "true";
+      }
+      return "other";
+    })();
+  };
+  var Main_caseChar = function(v) {
+    return (function() {
+      if (v === "π") {
+        return "pi";
+      }
+      return "other";
+    })();
+  };
+  var Main_caseInt = function(v) {
+    return (function() {
+      if (v === 42) {
+        return "42";
+      }
+      return "other";
+    })();
+  };
+  var Main_caseNumber = function(v) {
+    return (function() {
+      if (v === 1.23) {
+        return "1.23";
+      }
+      return "other";
+    })();
+  };
+  var Main_caseString = function(v) {
+    return (function() {
+      if (v === "hi") {
+        return "hi";
+      }
+      return "other";
+    })();
+  };
+  var Main_cases = Main_tuple(Main_caseBoolean(true))(
+    Main_tuple(Main_caseChar("π"))(
+      Main_tuple(Main_caseInt(43))(
+        Main_tuple(Main_caseNumber(1.234))(Main_caseString("hi"))
+      )
+    )
+  );
   var Main_main = Main_$foreign.log(
     Main_tuple(Main_object)(
       Main_tuple(Main_tuple)(
@@ -114,7 +161,9 @@
           Main_tuple(Main_fourTuple)(
             Main_tuple(Main_m(0)(0)(0))(
               Main_tuple(Main_m(1)(1)(1))(
-                Main_tuple(Main_m(0)(1)(0))(Main_m(3)(3)(3))
+                Main_tuple(Main_m(0)(1)(0))(
+                  Main_tuple(Main_m(3)(3)(3))(Main_cases)
+                )
               )
             )
           )

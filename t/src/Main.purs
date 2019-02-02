@@ -43,6 +43,27 @@ m a b c = case f a, b, f c of
   1, 1, 1 -> "ones"
   _, _, _ -> "others"
 
+caseBoolean = case _ of
+  true -> "true"
+  _ -> "other"
+
+caseChar = case _ of
+  'π' -> "pi"
+  _ -> "other"
+
+caseInt = case _ of
+  42 -> "42"
+  _ -> "other"
+
+caseNumber = case _ of
+  1.23 -> "1.23"
+  _ -> "other"
+
+caseString = case _ of
+  "hi" -> "hi"
+  _ -> "other"
+
+cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi"
 
 foreign import data Unit :: Type
 
@@ -51,4 +72,4 @@ foreign import data Effect :: Type -> Type
 foreign import log :: forall a. a -> Effect Unit
 
 main :: Effect Unit
-main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3)
+main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases)

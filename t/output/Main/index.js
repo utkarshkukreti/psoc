@@ -148,6 +148,37 @@ var m = function (a) {
 };
 var datas = tuple(D1_1.value)(tuple(D2_1.value)(tuple(D2_2.value)(tuple(D3_1.create)(tuple(D4_1.create)(tuple(D5_1.create)(tuple(D5_2.value)(tuple(D6_1.create)(tuple(D6_2.value)(tuple(D6_3.value)(tuple(D7_1.create)(tuple(D7_2.create)(N))))))))))));
 var $$char = "\u03c0";
+var caseString = function (v) {
+    if (v === "hi") {
+        return "hi";
+    };
+    return "other";
+};
+var caseNumber = function (v) {
+    if (v === 1.23) {
+        return "1.23";
+    };
+    return "other";
+};
+var caseInt = function (v) {
+    if (v === 42) {
+        return "42";
+    };
+    return "other";
+};
+var caseChar = function (v) {
+    if (v === "\u03c0") {
+        return "pi";
+    };
+    return "other";
+};
+var caseBoolean = function (v) {
+    if (v) {
+        return "true";
+    };
+    return "other";
+};
+var cases = tuple(caseBoolean(true))(tuple(caseChar("\u03c0"))(tuple(caseInt(43))(tuple(caseNumber(1.234))(caseString("hi")))));
 var $$boolean = true;
 var array = [ 1, 2, 3 ];
 var object = {
@@ -159,7 +190,7 @@ var object = {
     string: string,
     one: numbers.one
 };
-var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(m(3)(3)(3)))))))));
+var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(cases)))))))));
 module.exports = {
     array: array,
     "boolean": $$boolean,
@@ -187,6 +218,12 @@ module.exports = {
     fourTuple: fourTuple,
     f: f,
     m: m,
+    caseBoolean: caseBoolean,
+    caseChar: caseChar,
+    caseInt: caseInt,
+    caseNumber: caseNumber,
+    caseString: caseString,
+    cases: cases,
     main: main,
     log: $foreign.log
 };

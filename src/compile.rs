@@ -280,8 +280,24 @@ impl Compiler {
     ) {
         match binder {
             p::Binder::Literal { literal } => match literal {
+                p::LiteralBinder::Boolean { value } => {
+                    when.push(g::binary(g::Eqq, var, g::bool(*value)));
+                }
+                p::LiteralBinder::Char { value } => {
+                    when.push(g::binary(
+                        g::Eqq,
+                        var,
+                        g::string(Some(value).into_iter().collect::<String>()),
+                    ));
+                }
                 p::LiteralBinder::Int { value } => {
                     when.push(g::binary(g::Eqq, var, g::number(*value as f64)));
+                }
+                p::LiteralBinder::Number { value } => {
+                    when.push(g::binary(g::Eqq, var, g::number(*value)));
+                }
+                p::LiteralBinder::String { value } => {
+                    when.push(g::binary(g::Eqq, var, g::string(value.clone())));
                 }
                 _ => unimplemented!(),
             },
