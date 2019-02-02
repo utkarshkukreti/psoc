@@ -128,11 +128,19 @@
       Main_tuple(Main_caseArray([7, 6, 5]))(Main_caseArray([2]))
     )
   );
+  var Main_caseObject = function(v) {
+    if (v.a === 1) return ".a is 1";
+    if (v.b === "b") return ".b is b";
+    if (v.c === "c" && v.d.e.f === 4) return ".c is c and .d.e.f is 4.0";
+    return "other";
+  };
   var Main_cases = Main_tuple(Main_caseBoolean(true))(
     Main_tuple(Main_caseChar("π"))(
       Main_tuple(Main_caseInt(43))(
         Main_tuple(Main_caseNumber(1.234))(
-          Main_tuple(Main_caseString("hi"))(Main_caseArrays)
+          Main_tuple(Main_caseString("hi"))(
+            Main_tuple(Main_caseArrays)(Main_caseObject)
+          )
         )
       )
     )

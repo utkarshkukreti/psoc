@@ -67,11 +67,17 @@ caseNumber = case _ of
   1.23 -> "1.23"
   _ -> "other"
 
+caseObject = case _ of
+  {a: 1} -> ".a is 1"
+  {b: "b"} -> ".b is b"
+  {c: 'c', d: {e: {f: 4.0}}} -> ".c is c and .d.e.f is 4.0"
+  _ -> "other"
+
 caseString = case _ of
   "hi" -> "hi"
   _ -> "other"
 
-cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi" /\ caseArrays
+cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi" /\ caseArrays /\ caseObject
 
 foreign import data Unit :: Type
 

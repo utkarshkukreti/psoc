@@ -313,10 +313,19 @@ impl Compiler {
                     p::LiteralBinder::Number { value } => {
                         eq(g::number(*value));
                     }
+                    p::LiteralBinder::Object { value } => {
+                        for (field, binder) in value {
+                            self.compile_binder(
+                                binder,
+                                g::member(var.clone(), g::string(field.clone())),
+                                when,
+                                stmts,
+                            );
+                        }
+                    }
                     p::LiteralBinder::String { value } => {
                         eq(g::string(value.clone()));
                     }
-                    _ => unimplemented!(),
                 }
             }
             p::Binder::Null {} => {}
