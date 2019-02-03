@@ -83,6 +83,9 @@
       return Main_tuple(d)(d);
     };
   };
+  var Main_f = function(x) {
+    return x;
+  };
   var Main_m = function(a) {
     return function(b) {
       return function(c) {
@@ -94,9 +97,6 @@
         return "others";
       };
     };
-  };
-  var Main_f = function(x) {
-    return x;
   };
   var Main_caseBoolean = function(v) {
     if (v === true) return "true";

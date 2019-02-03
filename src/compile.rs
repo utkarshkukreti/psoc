@@ -89,6 +89,7 @@ impl Compiler {
 
         assert!(self.map.contains_key(&entry));
         let mut used = Vec::new();
+        let mut processing = HashSet::new();
         let mut stack = vec![entry.clone()];
         while let Some(var) = stack.pop() {
             if !self.map.contains_key(&*var) {
@@ -101,7 +102,8 @@ impl Compiler {
                 &mut |_| {},
                 &mut |expr| match expr {
                     j::Expr::Var(var) => {
-                        if !used.contains(var) {
+                        if !processing.contains(var) {
+                            processing.insert(var.clone());
                             stack.push(var.clone());
                         }
                     }
