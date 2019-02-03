@@ -1,9 +1,16 @@
 use escodegen as j;
 use escodegen::g;
+use std::collections::HashMap;
 
-pub fn optimize(mut expr: j::Expr) -> j::Expr {
+pub fn optimize(map: &mut HashMap<String, j::Expr>) {
+    for (_, expr) in map {
+        *expr = optimize_expr(expr.clone());
+    }
+}
+
+fn optimize_expr(mut expr: j::Expr) -> j::Expr {
     loop {
-        let new_expr = optimize_once(expr.clone());
+        let new_expr = optimize_expr_once(expr.clone());
         if new_expr == expr {
             return new_expr;
         }
@@ -11,7 +18,7 @@ pub fn optimize(mut expr: j::Expr) -> j::Expr {
     }
 }
 
-fn optimize_once(expr: j::Expr) -> j::Expr {
+fn optimize_expr_once(expr: j::Expr) -> j::Expr {
     walk(
         expr,
         |expr| {

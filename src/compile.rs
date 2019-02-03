@@ -130,17 +130,15 @@ impl Compiler {
             }
         }
 
+        optimize::optimize(&mut self.map);
+
         let mut done = HashSet::new();
         for var in &used {
             if done.contains(&var) {
                 continue;
             }
             done.insert(var);
-            string += &format!(
-                "var {} = {};\n",
-                var,
-                optimize::optimize(self.map[var].clone())
-            );
+            string += &format!("var {} = {};\n", var, self.map[var]);
         }
 
         string += &format!("return {};\n", entry);
