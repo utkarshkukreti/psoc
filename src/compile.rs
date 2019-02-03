@@ -1,6 +1,5 @@
 use crate::{optimize, Opt};
 use escodegen as j;
-use escodegen::g;
 use purescript_corefn as p;
 use std::collections::{HashMap, HashSet};
 
@@ -191,7 +190,7 @@ impl Compiler {
     fn compile_bind(&mut self, module: &p::Module, bind: &p::Bind) {
         let name = id(&module.name, &bind.identifier);
         let expr = self.compile_expression(module, &bind.expression);
-        self.map.insert(name, expr);
+        self.map.insert(g::id(name), expr);
     }
 
     fn compile_expression(&mut self, module: &p::Module, expression: &p::Expression) -> j::Expr {
@@ -501,6 +500,29 @@ fn id(module: &[String], identifier: &str) -> String {
     } else {
         module.join("_") + "_"
     }) + &identifier
+}
+
+mod g {
+    pub use escodegen::g::*;
+
+    pub fn let_<S: Into<String>>(name: S, expr: Option<Expr>) -> Stmt {
+        Stmt::Var(id(name.into()), expr)
+    }
+
+    pub fn function<I: IntoIterator<Item = S>, S: Into<String>>(
+        params: I,
+        stmts: Vec<Stmt>,
+    ) -> Expr {
+        Expr::Function(params.into_iter().map(Into::into).map(id).collect(), stmts)
+    }
+
+    pub fn var<S: Into<String>>(name: S) -> Expr {
+        Expr::Var(id(name.into()))
+    }
+
+    pub fn id(string: String) -> String {
+        string.replace("'", "$prime")
+    }
 }
 
 pub fn compile(modules: &[p::Module], opt: &Opt) -> String {

@@ -14,14 +14,14 @@ var D7_1 = (function () {
     };
     return D7_1;
 })();
-var D7_2 = (function () {
-    function D7_2(value0) {
+var D7_2$prime = (function () {
+    function D7_2$prime(value0) {
         this.value0 = value0;
     };
-    D7_2.create = function (value0) {
-        return new D7_2(value0);
+    D7_2$prime.create = function (value0) {
+        return new D7_2$prime(value0);
     };
-    return D7_2;
+    return D7_2$prime;
 })();
 var D6_1 = (function () {
     function D6_1(value0) {
@@ -105,14 +105,14 @@ var D1_1 = (function () {
     return D1_1;
 })();
 var tuple = function (a) {
-    return function (b) {
+    return function (b$prime) {
         return {
             a: a,
-            b: b
+            b: b$prime
         };
     };
 };
-var string = "\u03c0r\xb2";
+var string$prime = "\u03c0r\xb2";
 var numbers = {
     one: 1
 };
@@ -120,9 +120,9 @@ var number = 1.23;
 var $$int = 42;
 var fourTuple = function (x) {
     return function (y) {
-        var a = tuple(x)(y);
+        var a$prime = tuple(x)(y);
         var d = (function () {
-            var b = tuple(a)(a);
+            var b = tuple(a$prime)(a$prime);
             var c = tuple(b)(b);
             return tuple(c)(c);
         })();
@@ -158,7 +158,7 @@ var m = function (a) {
         };
     };
 };
-var datas = tuple(D1_1.value)(tuple(D2_1.value)(tuple(D2_2.value)(tuple(D3_1.create)(tuple(D4_1.create)(tuple(D5_1.create)(tuple(D5_2.value)(tuple(D6_1.create)(tuple(D6_2.value)(tuple(D6_3.value)(tuple(D7_1.create)(tuple(D7_2.create)(N))))))))))));
+var datas = tuple(D1_1.value)(tuple(D2_1.value)(tuple(D2_2.value)(tuple(D3_1.create)(tuple(D4_1.create)(tuple(D5_1.create)(tuple(D5_2.value)(tuple(D6_1.create)(tuple(D6_2.value)(tuple(D6_3.value)(tuple(D7_1.create)(tuple(D7_2$prime.create)(N))))))))))));
 var $$char = "\u03c0";
 var caseString = function (v) {
     if (v === "hi") {
@@ -173,8 +173,8 @@ var caseObject = function (v) {
     if (v.b === "b") {
         return ".b is b";
     };
-    if (v.c === "c" && v.d.e.f === 4.0) {
-        return ".c is c and .d.e.f is 4.0";
+    if (v.c === "c" && v["d'"].e.f === 4.0) {
+        return ".c is c and .d'.e.f is 4.0";
     };
     return "other";
 };
@@ -209,10 +209,10 @@ var caseData7 = function (v) {
     if (v instanceof D7_1) {
         return v.value0;
     };
-    if (v instanceof D7_2) {
+    if (v instanceof D7_2$prime) {
         return v.value0;
     };
-    throw new Error("Failed pattern match at Main line 52, column 13 - line 54, column 14: " + [ v.constructor.name ]);
+    throw new Error("Failed pattern match at Main line 52, column 13 - line 54, column 15: " + [ v.constructor.name ]);
 };
 var caseData6 = function (v) {
     if (v instanceof D6_1) {
@@ -288,7 +288,7 @@ var object = {
     "char": $$char,
     "int": $$int,
     number: number,
-    string: string,
+    "string'": string$prime,
     one: numbers.one
 };
 var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(forever))))))))));
@@ -299,7 +299,7 @@ module.exports = {
     "int": $$int,
     number: number,
     object: object,
-    string: string,
+    "string'": string$prime,
     numbers: numbers,
     tuple: tuple,
     D1_1: D1_1,
@@ -313,7 +313,7 @@ module.exports = {
     D6_2: D6_2,
     D6_3: D6_3,
     D7_1: D7_1,
-    D7_2: D7_2,
+    "D7_2'": D7_2$prime,
     N: N,
     datas: datas,
     caseData1: caseData1,

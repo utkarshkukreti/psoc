@@ -7,12 +7,12 @@ boolean = true
 char = 'π'
 int = 42
 number = 1.23
-object = { array, boolean, char, int, number, string, one: numbers.one }
-string = "πr²"
+object = { array, boolean, char, int, number, string', one: numbers.one }
+string' = "πr²"
 
 numbers = { one: 1 }
 
-tuple a b = { a, b }
+tuple a b' = { a, b: b' }
 infixr 6 tuple as /\
 
 data D0
@@ -22,10 +22,10 @@ data D3 = D3_1 Int
 data D4 = D4_1 Int Int
 data D5 = D5_1 Int | D5_2
 data D6 = D6_1 Int | D6_2 | D6_3
-data D7 = D7_1 Int | D7_2 Int
+data D7 = D7_1 Int | D7_2' Int
 newtype N = N Int
 
-datas = D1_1 /\ D2_1 /\ D2_2 /\ D3_1 /\ D4_1 /\ D5_1 /\ D5_2 /\ D6_1 /\ D6_2 /\ D6_3 /\ D7_1 /\ D7_2 /\ N
+datas = D1_1 /\ D2_1 /\ D2_2 /\ D3_1 /\ D4_1 /\ D5_1 /\ D5_2 /\ D6_1 /\ D6_2 /\ D6_3 /\ D7_1 /\ D7_2' /\ N
 
 caseData1 = case _ of
   D1_1 -> 1
@@ -51,7 +51,7 @@ caseData6 = case _ of
 
 caseData7 = case _ of
   D7_1 x -> x
-  D7_2 x -> x
+  D7_2' x -> x
 
 caseNewtype = case _ of
   N x -> x
@@ -60,10 +60,10 @@ caseDatas = caseData1 /\ caseData2 /\ caseData3 /\ caseData4 /\ caseData5 /\ cas
 
 fourTuple x y =
   let
-    a = x /\ y
+    a' = x /\ y
     d =
       let
-        b = a /\ a
+        b = a' /\ a'
         c = b /\ b
       in
         c /\ c
@@ -78,7 +78,7 @@ m a b c = case f a, b, f c of
 
 caseArray = case _ of
   [] -> 0
-  [0, x, 2] -> x
+  [0, x', 2] -> x'
   [_, _, z] -> z
   _ -> 9
 
@@ -103,12 +103,12 @@ caseNumber = case _ of
 caseObject = case _ of
   {a: 1} -> ".a is 1"
   {b: "b"} -> ".b is b"
-  {c: 'c', d: {e: {f: 4.0}}} -> ".c is c and .d.e.f is 4.0"
+  {c: 'c', d': {e: {f: 4.0}}} -> ".c is c and .d'.e.f is 4.0"
   _ -> "other"
 
 caseNamed = case _ of
   {a: b @ [0]} -> let bb = b in bb
-  {b: {c: {d: b @ [1]}}} -> let bb = b in bb
+  {b: {c: {d: b' @ [1]}}} -> let bb = b' in bb
   {c: [[[b @ [1, 2, 3]]]]} -> let bb = b in bb
   _ -> []
 

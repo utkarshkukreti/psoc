@@ -1,8 +1,8 @@
 (function() {
   var Main_$foreign = require("./t/output/Main/foreign.js");
   var Main_tuple = function(a) {
-    return function(b) {
-      return { a: a, b: b };
+    return function(b$prime) {
+      return { a: a, b: b$prime };
     };
   };
   var A_array = [1, 2, 3];
@@ -11,7 +11,7 @@
   var Main_char = "π";
   var Main_int = 42;
   var Main_number = 1.23;
-  var Main_string = "πr²";
+  var Main_string$prime = "πr²";
   var Main_numbers = { one: 1 };
   var Main_object = {
     array: Main_array,
@@ -19,8 +19,8 @@
     char: Main_char,
     int: Main_int,
     number: Main_number,
-    string: Main_string,
-    one: Main_numbers.one
+    "string'": Main_string$prime,
+    one: Main_numbers["one"]
   };
   var Main_D1_1 = 0;
   var Main_D2_1 = 0;
@@ -45,7 +45,7 @@
   var Main_D7_1 = function(value0) {
     return [0, value0];
   };
-  var Main_D7_2 = function(value0) {
+  var Main_D7_2$prime = function(value0) {
     return [1, value0];
   };
   var Main_N = function(x) {
@@ -61,7 +61,7 @@
                 Main_tuple(Main_D6_1)(
                   Main_tuple(Main_D6_2)(
                     Main_tuple(Main_D6_3)(
-                      Main_tuple(Main_D7_1)(Main_tuple(Main_D7_2)(Main_N))
+                      Main_tuple(Main_D7_1)(Main_tuple(Main_D7_2$prime)(Main_N))
                     )
                   )
                 )
@@ -74,9 +74,9 @@
   );
   var Main_fourTuple = function(x) {
     return function(y) {
-      var a = Main_tuple(x)(y);
+      var a$prime = Main_tuple(x)(y);
       var d = (function() {
-        var b = Main_tuple(a)(a);
+        var b = Main_tuple(a$prime)(a$prime);
         var c = Main_tuple(b)(b);
         return Main_tuple(c)(c);
       })();
@@ -119,9 +119,9 @@
     return "other";
   };
   var Main_caseArray = function(v) {
-    if (v.length === 0) return 0;
-    if (v.length === 3 && v[0] === 0 && v[2] === 2) return v[1];
-    if (v.length === 3) return v[2];
+    if (v["length"] === 0) return 0;
+    if (v["length"] === 3 && v[0] === 0 && v[2] === 2) return v[1];
+    if (v["length"] === 3) return v[2];
     return 9;
   };
   var Main_caseArrays = Main_tuple(Main_caseArray([]))(
@@ -130,36 +130,37 @@
     )
   );
   var Main_caseObject = function(v) {
-    if (v.a === 1) return ".a is 1";
-    if (v.b === "b") return ".b is b";
-    if (v.c === "c" && v.d.e.f === 4) return ".c is c and .d.e.f is 4.0";
+    if (v["a"] === 1) return ".a is 1";
+    if (v["b"] === "b") return ".b is b";
+    if (v["c"] === "c" && v["d'"]["e"]["f"] === 4)
+      return ".c is c and .d'.e.f is 4.0";
     return "other";
   };
   var Main_caseNamed = function(v) {
-    if (v.a.length === 1 && v.a[0] === 0) {
-      var b = v.a;
+    if (v["a"]["length"] === 1 && v["a"][0] === 0) {
+      var b = v["a"];
       return (function() {
         var bb = b;
         return bb;
       })();
     }
-    if (v.b.c.d.length === 1 && v.b.c.d[0] === 1) {
-      var b = v.b.c.d;
+    if (v["b"]["c"]["d"]["length"] === 1 && v["b"]["c"]["d"][0] === 1) {
+      var b$prime = v["b"]["c"]["d"];
       return (function() {
-        var bb = b;
+        var bb = b$prime;
         return bb;
       })();
     }
     if (
-      v.c.length === 1 &&
-      v.c[0].length === 1 &&
-      v.c[0][0].length === 1 &&
-      v.c[0][0][0].length === 3 &&
-      v.c[0][0][0][0] === 1 &&
-      v.c[0][0][0][1] === 2 &&
-      v.c[0][0][0][2] === 3
+      v["c"]["length"] === 1 &&
+      v["c"][0]["length"] === 1 &&
+      v["c"][0][0]["length"] === 1 &&
+      v["c"][0][0][0]["length"] === 3 &&
+      v["c"][0][0][0][0] === 1 &&
+      v["c"][0][0][0][1] === 2 &&
+      v["c"][0][0][0][2] === 3
     ) {
-      var b = v.c[0][0][0];
+      var b = v["c"][0][0][0];
       return (function() {
         var bb = b;
         return bb;
@@ -231,7 +232,7 @@
   var Main_forever = function(x) {
     return Main_forever(x);
   };
-  var Main_main = Main_$foreign.log(
+  var Main_main = Main_$foreign["log"](
     Main_tuple(Main_object)(
       Main_tuple(Main_tuple)(
         Main_tuple(Main_datas)(
