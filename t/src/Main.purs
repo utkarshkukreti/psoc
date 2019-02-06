@@ -118,6 +118,20 @@ caseString = case _ of
 
 cases = caseBoolean true /\ caseChar 'π' /\ caseInt 43 /\ caseNumber 1.234 /\ caseString "hi" /\ caseArrays /\ caseObject /\ caseNamed /\ caseDatas
 
+class Show a where
+  show :: a -> String
+
+instance showInt :: Show Int where
+  show _ = "Int"
+
+instance showNumber :: Show Number where
+  show _ = "Number"
+
+instance showArray :: (Show a) => Show (Array a) where
+  show _ = "Array"
+
+typeclass = show 1 /\ show 1.23 /\ show [1, 2] /\ show [1.2, 3.4]
+
 foreign import data Unit :: Type
 
 foreign import data Effect :: Type -> Type
@@ -127,4 +141,4 @@ foreign import log :: forall a. a -> Effect Unit
 forever x = forever x
 
 main :: Effect Unit
-main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever)
+main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass)

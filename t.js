@@ -232,6 +232,30 @@
   var Main_forever = function(x) {
     return Main_forever(x);
   };
+  var Main_show = function(dict) {
+    return dict["show"];
+  };
+  var Main_Show = function(show) {
+    return { show: show };
+  };
+  var Main_showInt = Main_Show(function(v) {
+    return "Int";
+  });
+  var Main_showNumber = Main_Show(function(v) {
+    return "Number";
+  });
+  var Main_showArray = function(dictShow) {
+    return Main_Show(function(v) {
+      return "Array";
+    });
+  };
+  var Main_typeclass = Main_tuple(Main_show(Main_showInt)(1))(
+    Main_tuple(Main_show(Main_showNumber)(1.23))(
+      Main_tuple(Main_show(Main_showArray(Main_showInt))([1, 2]))(
+        Main_show(Main_showArray(Main_showNumber))([1.2, 3.4])
+      )
+    )
+  );
   var Main_main = Main_$foreign["log"](
     Main_tuple(Main_object)(
       Main_tuple(Main_tuple)(
@@ -241,7 +265,9 @@
               Main_tuple(Main_m(1)(1)(1))(
                 Main_tuple(Main_m(0)(1)(0))(
                   Main_tuple(Main_m(3)(3)(3))(
-                    Main_tuple(Main_cases)(Main_forever)
+                    Main_tuple(Main_cases)(
+                      Main_tuple(Main_forever)(Main_typeclass)
+                    )
                   )
                 )
               )

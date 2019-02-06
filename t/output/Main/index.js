@@ -104,6 +104,9 @@ var D1_1 = (function () {
     D1_1.value = new D1_1();
     return D1_1;
 })();
+var Show = function (show) {
+    this.show = show;
+};
 var tuple = function (a) {
     return function (b$prime) {
         return {
@@ -113,6 +116,21 @@ var tuple = function (a) {
     };
 };
 var string$prime = "\u03c0r\xb2";
+var showNumber = new Show(function (v) {
+    return "Number";
+});
+var showInt = new Show(function (v) {
+    return "Int";
+});
+var showArray = function (dictShow) {
+    return new Show(function (v) {
+        return "Array";
+    });
+};
+var show = function (dict) {
+    return dict.show;
+};
+var typeclass = tuple(show(showInt)(1))(tuple(show(showNumber)(1.23))(tuple(show(showArray(showInt))([ 1, 2 ]))(show(showArray(showNumber))([ 1.2, 3.4 ]))));
 var numbers = {
     one: 1
 };
@@ -291,8 +309,9 @@ var object = {
     "string'": string$prime,
     one: numbers.one
 };
-var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(forever))))))))));
+var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(typeclass)))))))))));
 module.exports = {
+    show: show,
     array: array,
     "boolean": $$boolean,
     "char": $$char,
@@ -338,7 +357,12 @@ module.exports = {
     caseNamed: caseNamed,
     caseString: caseString,
     cases: cases,
+    Show: Show,
+    typeclass: typeclass,
     forever: forever,
     main: main,
+    showInt: showInt,
+    showNumber: showNumber,
+    showArray: showArray,
     log: $foreign.log
 };

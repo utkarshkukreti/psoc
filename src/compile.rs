@@ -90,30 +90,8 @@ impl Compiler {
         assert!(self.map.contains_key(&entry));
         let mut used = Vec::new();
         let mut processing = HashSet::new();
-        let mut stack = vec![entry.clone()];
-        while let Some(var) = stack.pop() {
-            if !self.map.contains_key(&*var) {
-                continue;
-            }
-            let expr = &self.map[&var];
-            j::walk::walk_expr(
-                expr,
-                &mut |_| {},
-                &mut |_| {},
-                &mut |expr| match expr {
-                    j::Expr::Var(var) => {
-                        if !processing.contains(var) {
-                            processing.insert(var.clone());
-                            stack.push(var.clone());
-                        }
-                    }
-                    _ => {}
-                },
-                &mut |_| {},
-            );
-            used.push(var);
-        }
-        used.reverse();
+        collect_used(&self.map, &self.map[&entry], &mut used, &mut processing);
+        used.push(entry.clone());
 
         let mut string = String::new();
 
@@ -523,6 +501,30 @@ mod g {
     pub fn id(string: String) -> String {
         string.replace("'", "$prime")
     }
+}
+
+fn collect_used(
+    map: &HashMap<String, j::Expr>,
+    expr: &j::Expr,
+    used: &mut Vec<String>,
+    processing: &mut HashSet<String>,
+) {
+    j::walk::walk_expr(
+        expr,
+        &mut |_| (),
+        &mut |_| (),
+        &mut |expr| match expr {
+            j::Expr::Var(ref name) => {
+                if map.contains_key(name) && !processing.contains(name) {
+                    processing.insert(name.clone());
+                    collect_used(map, &map[name], used, processing);
+                    used.push(name.clone());
+                }
+            }
+            _ => {}
+        },
+        &mut |_| (),
+    )
 }
 
 pub fn compile(modules: &[p::Module], opt: &Opt) -> String {
