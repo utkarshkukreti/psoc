@@ -142,5 +142,10 @@ forever x = forever x
 
 tuplizeA o = o { a = o.a /\ o.a }
 
+newtype Hello = Hi Int
+
+matchHello = case _ of
+  Hi hi -> hi
+
 main :: Effect Unit
-main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass /\ tuplizeA)
+main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass /\ tuplizeA /\ matchHello)

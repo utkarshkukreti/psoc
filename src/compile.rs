@@ -219,11 +219,14 @@ impl Compiler {
                 name,
                 type_,
                 fields,
-                ..
+                annotation,
             } => {
                 use ConstructorRepr::*;
-                let constructor = &self.constructors[&id(&module.name, type_)];
-                let tag = match constructor.repr(&name) {
+                let repr = match annotation.meta {
+                    Some(p::Meta::Newtype) => Unboxed,
+                    _ => self.constructors[&id(&module.name, type_)].repr(&name),
+                };
+                let tag = match repr {
                     Unboxed => {
                         return g::function(
                             Some(fields[0].clone()),
@@ -341,12 +344,15 @@ impl Compiler {
                 constructor,
                 type_,
                 binders,
-                ..
+                annotation,
             } => {
                 use ConstructorRepr::*;
                 let name = &constructor.identifier;
-                let constructor = &self.constructors[&qid(&type_)];
-                match constructor.repr(name) {
+                let repr = match annotation.meta {
+                    Some(p::Meta::Newtype) => Unboxed,
+                    _ => self.constructors[&qid(&type_)].repr(&name),
+                };
+                match repr {
                     Unboxed => {
                         assert!(binders.len() == 1);
                         self.compile_binder(&binders[0], var, when, stmts);

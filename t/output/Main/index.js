@@ -5,6 +5,9 @@ var A = require("../A/index.js");
 var N = function (x) {
     return x;
 };
+var Hi = function (x) {
+    return x;
+};
 var D7_1 = (function () {
     function D7_1(value0) {
         this.value0 = value0;
@@ -116,14 +119,14 @@ var tuple = function (a) {
     };
 };
 var tuplizeA = function (o) {
-    var $24 = {};
-    for (var $25 in o) {
-        if ({}.hasOwnProperty.call(o, $25)) {
-            $24[$25] = o[$25];
+    var $25 = {};
+    for (var $26 in o) {
+        if ({}.hasOwnProperty.call(o, $26)) {
+            $25[$26] = o[$26];
         };
     };
-    $24.a = tuple(o.a)(o.a);
-    return $24;
+    $25.a = tuple(o.a)(o.a);
+    return $25;
 };
 var string$prime = "\u03c0r\xb2";
 var showNumber = new Show(function (v) {
@@ -145,6 +148,9 @@ var numbers = {
     one: 1
 };
 var number = 1.23;
+var matchHello = function (v) {
+    return v;
+};
 var $$int = 42;
 var fourTuple = function (x) {
     return function (y) {
@@ -319,7 +325,7 @@ var object = {
     "string'": string$prime,
     one: numbers.one
 };
-var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(tuple(typeclass)(tuplizeA))))))))))));
+var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(tuple(typeclass)(tuple(tuplizeA)(matchHello)))))))))))));
 module.exports = {
     show: show,
     array: array,
@@ -371,6 +377,8 @@ module.exports = {
     typeclass: typeclass,
     forever: forever,
     tuplizeA: tuplizeA,
+    Hi: Hi,
+    matchHello: matchHello,
     main: main,
     showInt: showInt,
     showNumber: showNumber,
