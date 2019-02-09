@@ -140,5 +140,7 @@ foreign import log :: forall a. a -> Effect Unit
 
 forever x = forever x
 
+tuplizeA o = o { a = o.a /\ o.a }
+
 main :: Effect Unit
-main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass)
+main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass /\ tuplizeA)

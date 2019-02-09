@@ -259,6 +259,21 @@ impl Compiler {
                 g::call(g::function::<_, String>(None, stmts), None)
             }
             Literal { value, .. } => self.compile_literal(module, value),
+            ObjectUpdate {
+                expression,
+                updates,
+                ..
+            } => {
+                let updates = g::object(updates.iter().map(|(field, expression)| {
+                    (field.clone(), self.compile_expression(module, expression))
+                }));
+                let args = vec![
+                    g::object::<_, String>(None),
+                    self.compile_expression(module, expression),
+                    updates,
+                ];
+                g::call(g::member(g::var("Object"), g::string("assign")), args)
+            }
             Var { value, .. } => {
                 let id = qid(value);
                 if self.foreigns.contains(&id) {

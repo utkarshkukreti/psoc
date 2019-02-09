@@ -115,6 +115,16 @@ var tuple = function (a) {
         };
     };
 };
+var tuplizeA = function (o) {
+    var $24 = {};
+    for (var $25 in o) {
+        if ({}.hasOwnProperty.call(o, $25)) {
+            $24[$25] = o[$25];
+        };
+    };
+    $24.a = tuple(o.a)(o.a);
+    return $24;
+};
 var string$prime = "\u03c0r\xb2";
 var showNumber = new Show(function (v) {
     return "Number";
@@ -309,7 +319,7 @@ var object = {
     "string'": string$prime,
     one: numbers.one
 };
-var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(typeclass)))))))))));
+var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(tuple(typeclass)(tuplizeA))))))))))));
 module.exports = {
     show: show,
     array: array,
@@ -360,6 +370,7 @@ module.exports = {
     Show: Show,
     typeclass: typeclass,
     forever: forever,
+    tuplizeA: tuplizeA,
     main: main,
     showInt: showInt,
     showNumber: showNumber,

@@ -256,6 +256,10 @@
       )
     )
   );
+  var Main_tuplizeA = function(o) {
+    var v = o;
+    return Object["assign"]({}, v, { a: Main_tuple(o["a"])(o["a"]) });
+  };
   var Main_main = Main_$foreign["log"](
     Main_tuple(Main_object)(
       Main_tuple(Main_tuple)(
@@ -266,7 +270,9 @@
                 Main_tuple(Main_m(0)(1)(0))(
                   Main_tuple(Main_m(3)(3)(3))(
                     Main_tuple(Main_cases)(
-                      Main_tuple(Main_forever)(Main_typeclass)
+                      Main_tuple(Main_forever)(
+                        Main_tuple(Main_typeclass)(Main_tuplizeA)
+                      )
                     )
                   )
                 )

@@ -99,12 +99,14 @@
                   },
                   "b": {
                     "b": {
-                      "a": "Int",
-                      "b": {
-                        "a": "Number",
+                      "a": {
+                        "a": "Int",
                         "b": {
-                          "a": "Array",
-                          "b": "Array"
+                          "a": "Number",
+                          "b": {
+                            "a": "Array",
+                            "b": "Array"
+                          }
                         }
                       }
                     }
