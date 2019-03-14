@@ -300,16 +300,19 @@ impl Compiler {
         vars: &[String],
         stmts: &mut Vec<j::Stmt>,
     ) {
+        let binders = match alternative {
+            p::Alternative::Guarded { binders, .. } => binders,
+            p::Alternative::Unguarded { binders, .. } => binders,
+        };
+
+        let mut when = Vec::new();
+        let mut then = Vec::new();
+        for (binder, var) in binders.iter().zip(vars) {
+            self.compile_binder(binder, g::var(var.clone()), &mut when, &mut then);
+        }
+
         match alternative {
-            p::Alternative::Guarded {
-                binders,
-                expressions,
-            } => {
-                let mut when = Vec::new();
-                let mut then = Vec::new();
-                for (binder, var) in binders.iter().zip(vars) {
-                    self.compile_binder(binder, g::var(var.clone()), &mut when, &mut then);
-                }
+            p::Alternative::Guarded { expressions, .. } => {
                 for e in expressions {
                     then.push(g::if_(
                         self.compile_expression(module, &e.guard),
@@ -317,48 +320,28 @@ impl Compiler {
                         None,
                     ));
                 }
-                let then = if then.len() == 1 {
-                    then.remove(0)
-                } else {
-                    g::block(then)
-                };
-                if when.is_empty() {
-                    stmts.push(then)
-                } else {
-                    let first = when.remove(0);
-                    let when = when
-                        .into_iter()
-                        .fold(first, |acc, x| g::binary(g::And, acc, x));
-                    stmts.push(g::if_(when, then, None));
-                }
             }
-            p::Alternative::Unguarded {
-                binders,
-                expression,
-            } => {
-                let mut when = Vec::new();
-                let mut then = Vec::new();
-                for (binder, var) in binders.iter().zip(vars) {
-                    self.compile_binder(binder, g::var(var.clone()), &mut when, &mut then);
-                }
+            p::Alternative::Unguarded { expression, .. } => {
                 then.push(g::return_(Some(
                     self.compile_expression(module, expression),
                 )));
-                let then = if then.len() == 1 {
-                    then.remove(0)
-                } else {
-                    g::block(then)
-                };
-                if when.is_empty() {
-                    stmts.push(then)
-                } else {
-                    let first = when.remove(0);
-                    let when = when
-                        .into_iter()
-                        .fold(first, |acc, x| g::binary(g::And, acc, x));
-                    stmts.push(g::if_(when, then, None));
-                }
             }
+        }
+
+        let then = if then.len() == 1 {
+            then.remove(0)
+        } else {
+            g::block(then)
+        };
+
+        if when.is_empty() {
+            stmts.push(then)
+        } else {
+            let first = when.remove(0);
+            let when = when
+                .into_iter()
+                .fold(first, |acc, x| g::binary(g::And, acc, x));
+            stmts.push(g::if_(when, then, None));
         }
     }
 
