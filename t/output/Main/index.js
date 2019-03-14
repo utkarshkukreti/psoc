@@ -119,14 +119,14 @@ var tuple = function (a) {
     };
 };
 var tuplizeA = function (o) {
-    var $25 = {};
-    for (var $26 in o) {
-        if ({}.hasOwnProperty.call(o, $26)) {
-            $25[$26] = o[$26];
+    var $33 = {};
+    for (var $34 in o) {
+        if ({}.hasOwnProperty.call(o, $34)) {
+            $33[$34] = o[$34];
         };
     };
-    $25.a = tuple(o.a)(o.a);
-    return $25;
+    $33.a = tuple(o.a)(o.a);
+    return $33;
 };
 var string$prime = "\u03c0r\xb2";
 var showNumber = new Show(function (v) {
@@ -151,7 +151,59 @@ var number = 1.23;
 var matchHello = function (v) {
     return v;
 };
+var isOne = function (v) {
+    if (v === 1) {
+        return true;
+    };
+    return false;
+};
 var $$int = 42;
+var guardedMatch = function (v) {
+    var v1 = function (v2) {
+        var v3 = function (v4) {
+            var v5 = function (v6) {
+                return 0;
+            };
+            if (v.length === 3) {
+                var $39 = isOne(v[0]);
+                if ($39) {
+                    var $40 = isOne(v[2]);
+                    if ($40) {
+                        return v[1];
+                    };
+                    return v5(true);
+                };
+                return v5(true);
+            };
+            return v5(true);
+        };
+        if (v.length === 3) {
+            var $45 = isOne(v[1]);
+            if ($45) {
+                var $46 = isOne(v[2]);
+                if ($46) {
+                    return v[0];
+                };
+                return v3(true);
+            };
+            return v3(true);
+        };
+        return v3(true);
+    };
+    if (v.length === 3) {
+        var $51 = isOne(v[0]);
+        if ($51) {
+            var $52 = isOne(v[1]);
+            if ($52) {
+                return v[2];
+            };
+            return v1(true);
+        };
+        return v1(true);
+    };
+    return v1(true);
+};
+var guardedMatches = [ guardedMatch([  ]), guardedMatch([ 1, 1, 1 ]), guardedMatch([ 2, 1, 1 ]), guardedMatch([ 1, 3, 1 ]) ];
 var fourTuple = function (x) {
     return function (y) {
         var a$prime = tuple(x)(y);
@@ -325,7 +377,7 @@ var object = {
     "string'": string$prime,
     one: numbers.one
 };
-var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(tuple(typeclass)(tuple(tuplizeA)(matchHello)))))))))))));
+var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(tuple(typeclass)(tuple(tuplizeA)(tuple(matchHello)(guardedMatches))))))))))))));
 module.exports = {
     show: show,
     array: array,
@@ -379,6 +431,9 @@ module.exports = {
     tuplizeA: tuplizeA,
     Hi: Hi,
     matchHello: matchHello,
+    isOne: isOne,
+    guardedMatch: guardedMatch,
+    guardedMatches: guardedMatches,
     main: main,
     showInt: showInt,
     showNumber: showNumber,

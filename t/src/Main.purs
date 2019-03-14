@@ -147,5 +147,22 @@ newtype Hello = Hi Int
 matchHello = case _ of
   Hi hi -> hi
 
+isOne = case _ of
+  1 -> true
+  _ -> false
+
+guardedMatch = case _ of
+  [x, y, z] | isOne x, isOne y -> z
+  [x, y, z] | isOne y, isOne z -> x
+  [x, y, z] | isOne x, isOne z -> y
+  _ -> 0
+
+guardedMatches = [
+  guardedMatch [],
+  guardedMatch [1, 1, 1],
+  guardedMatch [2, 1, 1],
+  guardedMatch [1, 3, 1]
+]
+
 main :: Effect Unit
-main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass /\ tuplizeA /\ matchHello)
+main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass /\ tuplizeA /\ matchHello /\ guardedMatches)

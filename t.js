@@ -263,6 +263,73 @@
   var Main_matchHello = function(v) {
     return v;
   };
+  var Main_isOne = function(v) {
+    if (v === 1) return true;
+    return false;
+  };
+  var Main_guardedMatch = function(v) {
+    var v1 = function(v2) {
+      var v3 = function(v4) {
+        var v5 = function(v6) {
+          return 0;
+        };
+        if (v["length"] === 3) {
+          var x = v[0];
+          var y = v[1];
+          var z = v[2];
+          return (function() {
+            var m_0 = Main_isOne(x);
+            if (m_0 === true)
+              return (function() {
+                var m_1 = Main_isOne(z);
+                if (m_1 === true) return y;
+                return v5(true);
+              })();
+            return v5(true);
+          })();
+        }
+        return v5(true);
+      };
+      if (v["length"] === 3) {
+        var x = v[0];
+        var y = v[1];
+        var z = v[2];
+        return (function() {
+          var m_2 = Main_isOne(y);
+          if (m_2 === true)
+            return (function() {
+              var m_3 = Main_isOne(z);
+              if (m_3 === true) return x;
+              return v3(true);
+            })();
+          return v3(true);
+        })();
+      }
+      return v3(true);
+    };
+    if (v["length"] === 3) {
+      var x = v[0];
+      var y = v[1];
+      var z = v[2];
+      return (function() {
+        var m_4 = Main_isOne(x);
+        if (m_4 === true)
+          return (function() {
+            var m_5 = Main_isOne(y);
+            if (m_5 === true) return z;
+            return v1(true);
+          })();
+        return v1(true);
+      })();
+    }
+    return v1(true);
+  };
+  var Main_guardedMatches = [
+    Main_guardedMatch([]),
+    Main_guardedMatch([1, 1, 1]),
+    Main_guardedMatch([2, 1, 1]),
+    Main_guardedMatch([1, 3, 1])
+  ];
   var Main_main = Main_$foreign["log"](
     Main_tuple(Main_object)(
       Main_tuple(Main_tuple)(
@@ -275,7 +342,9 @@
                     Main_tuple(Main_cases)(
                       Main_tuple(Main_forever)(
                         Main_tuple(Main_typeclass)(
-                          Main_tuple(Main_tuplizeA)(Main_matchHello)
+                          Main_tuple(Main_tuplizeA)(
+                            Main_tuple(Main_matchHello)(Main_guardedMatches)
+                          )
                         )
                       )
                     )

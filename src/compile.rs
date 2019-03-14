@@ -301,7 +301,37 @@ impl Compiler {
         stmts: &mut Vec<j::Stmt>,
     ) {
         match alternative {
-            p::Alternative::Guarded { .. } => unimplemented!(),
+            p::Alternative::Guarded {
+                binders,
+                expressions,
+            } => {
+                let mut when = Vec::new();
+                let mut then = Vec::new();
+                for (binder, var) in binders.iter().zip(vars) {
+                    self.compile_binder(binder, g::var(var.clone()), &mut when, &mut then);
+                }
+                for e in expressions {
+                    then.push(g::if_(
+                        self.compile_expression(module, &e.guard),
+                        g::return_(Some(self.compile_expression(module, &e.expression))),
+                        None,
+                    ));
+                }
+                let then = if then.len() == 1 {
+                    then.remove(0)
+                } else {
+                    g::block(then)
+                };
+                if when.is_empty() {
+                    stmts.push(then)
+                } else {
+                    let first = when.remove(0);
+                    let when = when
+                        .into_iter()
+                        .fold(first, |acc, x| g::binary(g::And, acc, x));
+                    stmts.push(g::if_(when, then, None));
+                }
+            }
             p::Alternative::Unguarded {
                 binders,
                 expression,
