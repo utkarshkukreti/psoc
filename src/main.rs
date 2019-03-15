@@ -13,6 +13,8 @@ pub struct Opt {
     /// Entry Point, e.g. "Main.main"
     #[structopt(short = "e", long = "entry")]
     entry: String,
+    #[structopt(long = "es6")]
+    es6: bool,
 }
 
 fn main() {

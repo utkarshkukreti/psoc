@@ -97,13 +97,23 @@ impl Compiler {
 
         for module in modules {
             if !module.foreign.is_empty() {
-                string += &format!(
-                    "var {}_$foreign = require('{}{}/{}/foreign.js');\n",
+                let (a, b, c, d) = (
                     module.name.join("_"),
                     if opt.input.starts_with("/") { "" } else { "./" },
-                    opt.input,
-                    &module.name.join(".")
+                    &opt.input,
+                    &module.name.join("."),
                 );
+                if opt.es6 {
+                    string += &format!(
+                        "import * as {}_$foreign from '{}{}/{}/foreign.js';\n",
+                        a, b, c, d
+                    );
+                } else {
+                    string += &format!(
+                        "var {}_$foreign = require('{}{}/{}/foreign.js');\n",
+                        a, b, c, d
+                    );
+                }
             }
         }
 
