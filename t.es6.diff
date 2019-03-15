@@ -1,4 +1,6 @@
-1c1
+1,2c1,2
+< import * as B_$foreign from "./t/output/B/foreign.js";
 < import * as Main_$foreign from "./t/output/Main/foreign.js";
 ---
+> var B_$foreign = require("./t/output/B/foreign.js");
 > var Main_$foreign = require("./t/output/Main/foreign.js");

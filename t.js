@@ -1,3 +1,4 @@
+var B_$foreign = require("./t/output/B/foreign.js");
 var Main_$foreign = require("./t/output/Main/foreign.js");
 var Main_tuple = function(a) {
   return function(b$prime) {

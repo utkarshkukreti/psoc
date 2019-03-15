@@ -1,0 +1,1 @@
+{"moduleName":["B"],"imports":[{"annotation":{"meta":null,"sourceSpan":{"start":[1,1],"end":[3,27]}},"moduleName":["Prim"]}],"builtWith":"0.12.3","modulePath":"src/B.purs","exports":["b"],"decls":[],"comments":[],"foreign":["b"],"sourceSpan":{"start":[1,1],"end":[3,27]}}
