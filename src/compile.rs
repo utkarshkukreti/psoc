@@ -89,31 +89,36 @@ impl Compiler {
 
         assert!(self.map.contains_key(&entry));
         let mut used = Vec::new();
+        let mut used_foreigns = HashSet::new();
         let mut processing = HashSet::new();
-        collect_used(&self.map, &self.map[&entry], &mut used, &mut processing);
+        collect_used(
+            &self.map,
+            &self.map[&entry],
+            &mut used,
+            &mut used_foreigns,
+            &mut processing,
+        );
         used.push(entry.clone());
 
         let mut string = String::new();
 
-        for module in modules {
-            if !module.foreign.is_empty() {
-                let (a, b, c, d) = (
-                    module.name.join("_"),
-                    if opt.input.starts_with("/") { "" } else { "./" },
-                    &opt.input,
-                    &module.name.join("."),
+        for module_name in used_foreigns {
+            let (a, b, c, d) = (
+                module_name.join("_"),
+                if opt.input.starts_with("/") { "" } else { "./" },
+                &opt.input,
+                &module_name.join("."),
+            );
+            if opt.es6 {
+                string += &format!(
+                    "import * as {}_$foreign from '{}{}/{}/foreign.js';\n",
+                    a, b, c, d
                 );
-                if opt.es6 {
-                    string += &format!(
-                        "import * as {}_$foreign from '{}{}/{}/foreign.js';\n",
-                        a, b, c, d
-                    );
-                } else {
-                    string += &format!(
-                        "var {}_$foreign = require('{}{}/{}/foreign.js');\n",
-                        a, b, c, d
-                    );
-                }
+            } else {
+                string += &format!(
+                    "var {}_$foreign = require('{}{}/{}/foreign.js');\n",
+                    a, b, c, d
+                );
             }
         }
 
@@ -554,6 +559,7 @@ fn collect_used(
     map: &HashMap<String, j::Expr>,
     expr: &j::Expr,
     used: &mut Vec<String>,
+    used_foreigns: &mut HashSet<Vec<String>>,
     processing: &mut HashSet<String>,
 ) {
     j::walk::walk_expr(
@@ -564,8 +570,12 @@ fn collect_used(
             j::Expr::Var(ref name) => {
                 if map.contains_key(name) && !processing.contains(name) {
                     processing.insert(name.clone());
-                    collect_used(map, &map[name], used, processing);
+                    collect_used(map, &map[name], used, used_foreigns, processing);
                     used.push(name.clone());
+                } else if name.ends_with("_$foreign") {
+                    let mut module_name = name.split("_").map(Into::into).collect::<Vec<String>>();
+                    module_name.pop();
+                    used_foreigns.insert(module_name);
                 }
             }
             _ => {}
