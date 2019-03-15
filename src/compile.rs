@@ -282,7 +282,9 @@ impl Compiler {
             }
             Var { value, .. } => {
                 let id = qid(value);
-                if self.foreigns.contains(&id) {
+                if id == "Prim_undefined" {
+                    g::undefined()
+                } else if self.foreigns.contains(&id) {
                     g::member(
                         escodegen::g::var(
                             value.module.as_ref().unwrap_or(&module.name).join("_") + "_$foreign",
