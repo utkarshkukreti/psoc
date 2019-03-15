@@ -330,6 +330,10 @@
     Main_guardedMatch([2, 1, 1]),
     Main_guardedMatch([1, 3, 1])
   ];
+  var Main_void$prime = (function() {
+    var $$void = "void";
+    return $$void;
+  })();
   var Main_main = Main_$foreign["log"](
     Main_tuple(Main_object)(
       Main_tuple(Main_tuple)(
@@ -343,7 +347,9 @@
                       Main_tuple(Main_forever)(
                         Main_tuple(Main_typeclass)(
                           Main_tuple(Main_tuplizeA)(
-                            Main_tuple(Main_matchHello)(Main_guardedMatches)
+                            Main_tuple(Main_matchHello)(
+                              Main_tuple(Main_guardedMatches)(Main_void$prime)
+                            )
                           )
                         )
                       )

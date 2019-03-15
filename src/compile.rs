@@ -275,13 +275,16 @@ impl Compiler {
                     self.compile_expression(module, expression),
                     updates,
                 ];
-                g::call(g::member(g::var("Object"), g::string("assign")), args)
+                g::call(
+                    g::member(escodegen::g::var("Object"), g::string("assign")),
+                    args,
+                )
             }
             Var { value, .. } => {
                 let id = qid(value);
                 if self.foreigns.contains(&id) {
                     g::member(
-                        g::var(
+                        escodegen::g::var(
                             value.module.as_ref().unwrap_or(&module.name).join("_") + "_$foreign",
                         ),
                         g::string(value.identifier.clone()),
@@ -533,7 +536,7 @@ mod g {
     }
 
     pub fn id(string: String) -> String {
-        string.replace("'", "$prime")
+        crate::id::id(&string)
     }
 }
 

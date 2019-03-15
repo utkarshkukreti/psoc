@@ -110,6 +110,7 @@ var D1_1 = (function () {
 var Show = function (show) {
     this.show = show;
 };
+var void$prime = "void";
 var tuple = function (a) {
     return function (b$prime) {
         return {
@@ -377,7 +378,7 @@ var object = {
     "string'": string$prime,
     one: numbers.one
 };
-var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(tuple(typeclass)(tuple(tuplizeA)(tuple(matchHello)(guardedMatches))))))))))))));
+var main = $foreign.log(tuple(object)(tuple(tuple)(tuple(datas)(tuple(fourTuple)(tuple(m(0)(0)(0))(tuple(m(1)(1)(1))(tuple(m(0)(1)(0))(tuple(m(3)(3)(3))(tuple(cases)(tuple(forever)(tuple(typeclass)(tuple(tuplizeA)(tuple(matchHello)(tuple(guardedMatches)(void$prime)))))))))))))));
 module.exports = {
     show: show,
     array: array,
@@ -434,6 +435,7 @@ module.exports = {
     isOne: isOne,
     guardedMatch: guardedMatch,
     guardedMatches: guardedMatches,
+    "void'": void$prime,
     main: main,
     showInt: showInt,
     showNumber: showNumber,

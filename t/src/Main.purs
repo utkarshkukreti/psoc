@@ -164,5 +164,7 @@ guardedMatches = [
   guardedMatch [1, 3, 1]
 ]
 
+void' = let void = "void" in void
+
 main :: Effect Unit
-main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass /\ tuplizeA /\ matchHello /\ guardedMatches)
+main = log (object /\ tuple /\ datas /\ fourTuple /\ m 0 0 0 /\ m 1 1 1 /\ m 0 1 0 /\ m 3 3 3 /\ cases /\ forever /\ typeclass /\ tuplizeA /\ matchHello /\ guardedMatches /\ void')

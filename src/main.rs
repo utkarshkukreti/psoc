@@ -1,6 +1,7 @@
 use structopt::StructOpt;
 
 mod compile;
+mod id;
 mod optimize;
 
 #[derive(StructOpt, Debug)]
