@@ -446,11 +446,14 @@ impl Compiler {
                         }
                     }
                     WithoutTag => {
-                        when.push(g::binary(
-                            g::NotEqq,
-                            g::unary(g::UnaryOperator::Typeof, var.clone()),
-                            g::string("number"),
-                        ));
+                        let needs_typeof_check = self.constructors[&qid(&type_)].variants.len() > 1;
+                        if needs_typeof_check {
+                            when.push(g::binary(
+                                g::NotEqq,
+                                g::unary(g::UnaryOperator::Typeof, var.clone()),
+                                g::string("number"),
+                            ));
+                        }
                         for (index, binder) in binders.iter().enumerate() {
                             self.compile_binder(
                                 binder,

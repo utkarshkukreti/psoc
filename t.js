@@ -259,7 +259,7 @@ var Main$caseData5 = function(v) {
   if (v === 1) return 2;
 };
 var Main$caseData4 = function(v) {
-  if (typeof v !== "number") {
+  {
     var x = v[0];
     var y = v[1];
     return Main$tuple(x)(y);
