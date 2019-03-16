@@ -100,6 +100,44 @@ impl Compiler {
         );
         used.push(entry.clone());
 
+        {
+            fn recur(modules: &[p::Module], module_name: String, modules_order: &mut Vec<String>) {
+                if !modules_order.contains(&module_name) {
+                    if let Some(module) = modules.iter().find(|m| m.name.join("$") == module_name) {
+                        for import in &module.imports {
+                            let import_module_name = import.module.join("$");
+                            if import_module_name != module_name {
+                                recur(modules, import_module_name, modules_order);
+                            }
+                        }
+                        modules_order.push(module_name);
+                    }
+                }
+            }
+            let mut modules_order = vec![];
+            let entry_module_name = entry.rsplitn(2, "$").skip(1).next().unwrap().to_string();
+            recur(&modules, entry_module_name, &mut modules_order);
+
+            let mut order = HashMap::new();
+            for module in modules {
+                if let Some(module_index) = modules_order
+                    .iter()
+                    .position(|m| m == &module.name.join("$"))
+                {
+                    let mut i = 0;
+                    each_bind(&module.decls, |bind| {
+                        order.insert(
+                            crate::id::id(&(module.name.join("$") + "$" + &bind.identifier)),
+                            (module_index, i),
+                        );
+                        i += 1;
+                    });
+                }
+            }
+
+            used.sort_by_key(|a| order[a]);
+        }
+
         let mut string = String::new();
 
         for module_name in used_foreigns {

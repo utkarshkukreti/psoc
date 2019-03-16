@@ -1,252 +1,64 @@
 var Main$foreign = require("./t/output/Main/foreign.js");
-var Main$tuple = function(a) {
-  return function(b$prime) {
-    return { a: a, b: b$prime };
-  };
-};
 var A$array = [1, 2, 3];
-var Main$array = A$array;
-var Main$boolean = true;
-var Main$char = "π";
-var Main$int = 42;
-var Main$number = 1.23;
-var Main$string$prime = "πr²";
-var Main$numbers = { one: 1 };
-var Main$object = {
-  array: Main$array,
-  boolean: Main$boolean,
-  char: Main$char,
-  int: Main$int,
-  number: Main$number,
-  "string'": Main$string$prime,
-  one: Main$numbers["one"]
+var Main$N = function(x) {
+  return x;
 };
-var Main$D1_1 = 0;
-var Main$D2_1 = 0;
-var Main$D2_2 = 1;
-var Main$D3_1 = function(value0) {
-  return value0;
-};
-var Main$D4_1 = function(value0) {
-  return function(value1) {
-    return [value0, value1];
-  };
-};
-var Main$D5_1 = function(value0) {
-  return [value0];
-};
-var Main$D5_2 = 1;
-var Main$D6_1 = function(value0) {
-  return [value0];
-};
-var Main$D6_2 = 1;
-var Main$D6_3 = 2;
 var Main$D7_1 = function(value0) {
   return [0, value0];
 };
 var Main$D7_2$prime = function(value0) {
   return [1, value0];
 };
-var Main$N = function(x) {
-  return x;
+var Main$D6_1 = function(value0) {
+  return [value0];
 };
-var Main$datas = Main$tuple(Main$D1_1)(
-  Main$tuple(Main$D2_1)(
-    Main$tuple(Main$D2_2)(
-      Main$tuple(Main$D3_1)(
-        Main$tuple(Main$D4_1)(
-          Main$tuple(Main$D5_1)(
-            Main$tuple(Main$D5_2)(
-              Main$tuple(Main$D6_1)(
-                Main$tuple(Main$D6_2)(
-                  Main$tuple(Main$D6_3)(
-                    Main$tuple(Main$D7_1)(Main$tuple(Main$D7_2$prime)(Main$N))
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-  )
-);
-var Main$fourTuple = function(x) {
-  return function(y) {
-    var a$prime = Main$tuple(x)(y);
-    var d = (function() {
-      var b = Main$tuple(a$prime)(a$prime);
-      var c = Main$tuple(b)(b);
-      return Main$tuple(c)(c);
-    })();
-    return Main$tuple(d)(d);
+var Main$D6_2 = 1;
+var Main$D6_3 = 2;
+var Main$D5_1 = function(value0) {
+  return [value0];
+};
+var Main$D5_2 = 1;
+var Main$D4_1 = function(value0) {
+  return function(value1) {
+    return [value0, value1];
   };
 };
-var Main$f = function(x) {
-  return x;
+var Main$D3_1 = function(value0) {
+  return value0;
 };
-var Main$m = function(a) {
-  return function(b) {
-    return function(c) {
-      var v = Main$f(c);
-      var v1 = b;
-      var v2 = Main$f(a);
-      if (v2 === 0 && v1 === 0 && v === 0) return "zeros";
-      if (v2 === 1 && v1 === 1 && v === 1) return "ones";
-      return "others";
-    };
-  };
-};
-var Main$caseBoolean = function(v) {
-  if (v === true) return "true";
-  return "other";
-};
-var Main$caseChar = function(v) {
-  if (v === "π") return "pi";
-  return "other";
-};
-var Main$caseInt = function(v) {
-  if (v === 42) return "42";
-  return "other";
-};
-var Main$caseNumber = function(v) {
-  if (v === 1.23) return "1.23";
-  return "other";
-};
-var Main$caseString = function(v) {
-  if (v === "hi") return "hi";
-  return "other";
-};
-var Main$caseArray = function(v) {
-  if (v["length"] === 0) return 0;
-  if (v["length"] === 3 && v[0] === 0 && v[2] === 2) return v[1];
-  if (v["length"] === 3) return v[2];
-  return 9;
-};
-var Main$caseArrays = Main$tuple(Main$caseArray([]))(
-  Main$tuple(Main$caseArray([0, 1, 2]))(
-    Main$tuple(Main$caseArray([7, 6, 5]))(Main$caseArray([2]))
-  )
-);
-var Main$caseObject = function(v) {
-  if (v["a"] === 1) return ".a is 1";
-  if (v["b"] === "b") return ".b is b";
-  if (v["c"] === "c" && v["d'"]["e"]["f"] === 4)
-    return ".c is c and .d'.e.f is 4.0";
-  return "other";
-};
-var Main$caseNamed = function(v) {
-  if (v["a"]["length"] === 1 && v["a"][0] === 0) {
-    var b = v["a"];
-    return (function() {
-      var bb = b;
-      return bb;
-    })();
-  }
-  if (v["b"]["c"]["d"]["length"] === 1 && v["b"]["c"]["d"][0] === 1) {
-    var b$prime = v["b"]["c"]["d"];
-    return (function() {
-      var bb = b$prime;
-      return bb;
-    })();
-  }
-  if (
-    v["c"]["length"] === 1 &&
-    v["c"][0]["length"] === 1 &&
-    v["c"][0][0]["length"] === 1 &&
-    v["c"][0][0][0]["length"] === 3 &&
-    v["c"][0][0][0][0] === 1 &&
-    v["c"][0][0][0][1] === 2 &&
-    v["c"][0][0][0][2] === 3
-  ) {
-    var b = v["c"][0][0][0];
-    return (function() {
-      var bb = b;
-      return bb;
-    })();
-  }
-  return [];
-};
-var Main$caseData1 = function(v) {
-  if (v === 0) return 1;
-};
-var Main$caseData2 = function(v) {
-  if (v === 0) return 1;
-  if (v === 1) return 2;
-};
-var Main$caseData3 = function(v) {
-  return v;
-};
-var Main$caseData4 = function(v) {
-  if (typeof v !== "number") {
-    var x = v[0];
-    var y = v[1];
-    return Main$tuple(x)(y);
-  }
-};
-var Main$caseData5 = function(v) {
-  if (typeof v !== "number") return v[0];
-  if (v === 1) return 2;
-};
-var Main$caseData6 = function(v) {
-  if (typeof v !== "number") return v[0];
-  if (v === 1) return 2;
-  if (v === 2) return 3;
-};
-var Main$caseData7 = function(v) {
-  if (v[0] === 0) return v[1];
-  if (v[0] === 1) return v[1];
-};
-var Main$caseNewtype = function(v) {
-  return v;
-};
-var Main$caseDatas = Main$tuple(Main$caseData1)(
-  Main$tuple(Main$caseData2)(
-    Main$tuple(Main$caseData3)(
-      Main$tuple(Main$caseData4)(
-        Main$tuple(Main$caseData5)(
-          Main$tuple(Main$caseData6)(
-            Main$tuple(Main$caseData7)(Main$caseNewtype)
-          )
-        )
-      )
-    )
-  )
-);
-var Main$cases = Main$tuple(Main$caseBoolean(true))(
-  Main$tuple(Main$caseChar("π"))(
-    Main$tuple(Main$caseInt(43))(
-      Main$tuple(Main$caseNumber(1.234))(
-        Main$tuple(Main$caseString("hi"))(
-          Main$tuple(Main$caseArrays)(
-            Main$tuple(Main$caseObject)(
-              Main$tuple(Main$caseNamed)(Main$caseDatas)
-            )
-          )
-        )
-      )
-    )
-  )
-);
-var Main$forever = function(x) {
-  return Main$forever(x);
-};
-var Main$show = function(dict) {
-  return dict["show"];
-};
+var Main$D2_1 = 0;
+var Main$D2_2 = 1;
+var Main$D1_1 = 0;
 var Main$Show = function(show) {
   return { show: show };
 };
-var Main$showInt = Main$Show(function(v) {
-  return "Int";
-});
+var Main$void$prime = (function() {
+  var $$void = "void";
+  return $$void;
+})();
+var Main$tuple = function(a) {
+  return function(b$prime) {
+    return { a: a, b: b$prime };
+  };
+};
+var Main$tuplizeA = function(o) {
+  var v = o;
+  return Object["assign"]({}, v, { a: Main$tuple(o["a"])(o["a"]) });
+};
+var Main$string$prime = "πr²";
 var Main$showNumber = Main$Show(function(v) {
   return "Number";
+});
+var Main$showInt = Main$Show(function(v) {
+  return "Int";
 });
 var Main$showArray = function(dictShow) {
   return Main$Show(function(v) {
     return "Array";
   });
+};
+var Main$show = function(dict) {
+  return dict["show"];
 };
 var Main$typeclass = Main$tuple(Main$show(Main$showInt)(1))(
   Main$tuple(Main$show(Main$showNumber)(1.23))(
@@ -255,10 +67,8 @@ var Main$typeclass = Main$tuple(Main$show(Main$showInt)(1))(
     )
   )
 );
-var Main$tuplizeA = function(o) {
-  var v = o;
-  return Object["assign"]({}, v, { a: Main$tuple(o["a"])(o["a"]) });
-};
+var Main$numbers = { one: 1 };
+var Main$number = 1.23;
 var Main$matchHello = function(v) {
   return v;
 };
@@ -266,6 +76,7 @@ var Main$isOne = function(v) {
   if (v === 1) return true;
   return false;
 };
+var Main$int = 42;
 var Main$guardedMatch = function(v) {
   var v1 = function(v2) {
     var v3 = function(v4) {
@@ -329,10 +140,199 @@ var Main$guardedMatches = [
   Main$guardedMatch([2, 1, 1]),
   Main$guardedMatch([1, 3, 1])
 ];
-var Main$void$prime = (function() {
-  var $$void = "void";
-  return $$void;
-})();
+var Main$fourTuple = function(x) {
+  return function(y) {
+    var a$prime = Main$tuple(x)(y);
+    var d = (function() {
+      var b = Main$tuple(a$prime)(a$prime);
+      var c = Main$tuple(b)(b);
+      return Main$tuple(c)(c);
+    })();
+    return Main$tuple(d)(d);
+  };
+};
+var Main$forever = function(x) {
+  return Main$forever(x);
+};
+var Main$f = function(x) {
+  return x;
+};
+var Main$m = function(a) {
+  return function(b) {
+    return function(c) {
+      var v = Main$f(c);
+      var v1 = b;
+      var v2 = Main$f(a);
+      if (v2 === 0 && v1 === 0 && v === 0) return "zeros";
+      if (v2 === 1 && v1 === 1 && v === 1) return "ones";
+      return "others";
+    };
+  };
+};
+var Main$datas = Main$tuple(Main$D1_1)(
+  Main$tuple(Main$D2_1)(
+    Main$tuple(Main$D2_2)(
+      Main$tuple(Main$D3_1)(
+        Main$tuple(Main$D4_1)(
+          Main$tuple(Main$D5_1)(
+            Main$tuple(Main$D5_2)(
+              Main$tuple(Main$D6_1)(
+                Main$tuple(Main$D6_2)(
+                  Main$tuple(Main$D6_3)(
+                    Main$tuple(Main$D7_1)(Main$tuple(Main$D7_2$prime)(Main$N))
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+);
+var Main$char = "π";
+var Main$caseString = function(v) {
+  if (v === "hi") return "hi";
+  return "other";
+};
+var Main$caseObject = function(v) {
+  if (v["a"] === 1) return ".a is 1";
+  if (v["b"] === "b") return ".b is b";
+  if (v["c"] === "c" && v["d'"]["e"]["f"] === 4)
+    return ".c is c and .d'.e.f is 4.0";
+  return "other";
+};
+var Main$caseNumber = function(v) {
+  if (v === 1.23) return "1.23";
+  return "other";
+};
+var Main$caseNewtype = function(v) {
+  return v;
+};
+var Main$caseNamed = function(v) {
+  if (v["a"]["length"] === 1 && v["a"][0] === 0) {
+    var b = v["a"];
+    return (function() {
+      var bb = b;
+      return bb;
+    })();
+  }
+  if (v["b"]["c"]["d"]["length"] === 1 && v["b"]["c"]["d"][0] === 1) {
+    var b$prime = v["b"]["c"]["d"];
+    return (function() {
+      var bb = b$prime;
+      return bb;
+    })();
+  }
+  if (
+    v["c"]["length"] === 1 &&
+    v["c"][0]["length"] === 1 &&
+    v["c"][0][0]["length"] === 1 &&
+    v["c"][0][0][0]["length"] === 3 &&
+    v["c"][0][0][0][0] === 1 &&
+    v["c"][0][0][0][1] === 2 &&
+    v["c"][0][0][0][2] === 3
+  ) {
+    var b = v["c"][0][0][0];
+    return (function() {
+      var bb = b;
+      return bb;
+    })();
+  }
+  return [];
+};
+var Main$caseInt = function(v) {
+  if (v === 42) return "42";
+  return "other";
+};
+var Main$caseData7 = function(v) {
+  if (v[0] === 0) return v[1];
+  if (v[0] === 1) return v[1];
+};
+var Main$caseData6 = function(v) {
+  if (typeof v !== "number") return v[0];
+  if (v === 1) return 2;
+  if (v === 2) return 3;
+};
+var Main$caseData5 = function(v) {
+  if (typeof v !== "number") return v[0];
+  if (v === 1) return 2;
+};
+var Main$caseData4 = function(v) {
+  if (typeof v !== "number") {
+    var x = v[0];
+    var y = v[1];
+    return Main$tuple(x)(y);
+  }
+};
+var Main$caseData3 = function(v) {
+  return v;
+};
+var Main$caseData2 = function(v) {
+  if (v === 0) return 1;
+  if (v === 1) return 2;
+};
+var Main$caseData1 = function(v) {
+  if (v === 0) return 1;
+};
+var Main$caseDatas = Main$tuple(Main$caseData1)(
+  Main$tuple(Main$caseData2)(
+    Main$tuple(Main$caseData3)(
+      Main$tuple(Main$caseData4)(
+        Main$tuple(Main$caseData5)(
+          Main$tuple(Main$caseData6)(
+            Main$tuple(Main$caseData7)(Main$caseNewtype)
+          )
+        )
+      )
+    )
+  )
+);
+var Main$caseChar = function(v) {
+  if (v === "π") return "pi";
+  return "other";
+};
+var Main$caseBoolean = function(v) {
+  if (v === true) return "true";
+  return "other";
+};
+var Main$caseArray = function(v) {
+  if (v["length"] === 0) return 0;
+  if (v["length"] === 3 && v[0] === 0 && v[2] === 2) return v[1];
+  if (v["length"] === 3) return v[2];
+  return 9;
+};
+var Main$caseArrays = Main$tuple(Main$caseArray([]))(
+  Main$tuple(Main$caseArray([0, 1, 2]))(
+    Main$tuple(Main$caseArray([7, 6, 5]))(Main$caseArray([2]))
+  )
+);
+var Main$cases = Main$tuple(Main$caseBoolean(true))(
+  Main$tuple(Main$caseChar("π"))(
+    Main$tuple(Main$caseInt(43))(
+      Main$tuple(Main$caseNumber(1.234))(
+        Main$tuple(Main$caseString("hi"))(
+          Main$tuple(Main$caseArrays)(
+            Main$tuple(Main$caseObject)(
+              Main$tuple(Main$caseNamed)(Main$caseDatas)
+            )
+          )
+        )
+      )
+    )
+  )
+);
+var Main$boolean = true;
+var Main$array = A$array;
+var Main$object = {
+  array: Main$array,
+  boolean: Main$boolean,
+  char: Main$char,
+  int: Main$int,
+  number: Main$number,
+  "string'": Main$string$prime,
+  one: Main$numbers["one"]
+};
 var Main$main = Main$foreign["log"](
   Main$tuple(Main$object)(
     Main$tuple(Main$tuple)(
