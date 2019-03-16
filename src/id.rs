@@ -2,44 +2,7 @@ pub fn id(str: &str) -> String {
     if BUILTINS.iter().any(|s| s == &str) || RESERVED.iter().any(|s| s == &str) {
         String::from("$$") + str
     } else {
-        let mut string = String::new();
-        for ch in str.chars() {
-            let str = match ch {
-                '0'...'9' | 'a'...'z' | 'A'...'Z' => {
-                    string.push(ch);
-                    continue;
-                }
-                '_' => "_",
-                '.' => "$dot",
-                '$' => "$dollar",
-                '~' => "$tilde",
-                '=' => "$eq",
-                '<' => "$less",
-                '>' => "$greater",
-                '!' => "$bang",
-                '#' => "$hash",
-                '%' => "$percent",
-                '^' => "$up",
-                '&' => "$amp",
-                '|' => "$bar",
-                '*' => "$times",
-                '/' => "$div",
-                '+' => "$plus",
-                '-' => "$minus",
-                ':' => "$colon",
-                '\\' => "$bslash",
-                '?' => "$qmark",
-                '@' => "$at",
-                '\'' => "$prime",
-                _ => {
-                    string.push('$');
-                    string.push_str(&(ch as u32).to_string());
-                    continue;
-                }
-            };
-            string.push_str(str);
-        }
-        string
+        str.to_string().replace("'", "$prime")
     }
 }
 
