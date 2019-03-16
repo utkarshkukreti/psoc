@@ -69,7 +69,7 @@ impl Constructor {
 
 impl Compiler {
     fn compile(mut self, modules: &[p::Module], opt: &Opt) -> String {
-        let entry = opt.entry.replace(".", "_");
+        let entry = opt.entry.replace(".", "$");
 
         for module in modules {
             each_bind(&module.decls, |bind| {
@@ -104,19 +104,19 @@ impl Compiler {
 
         for module_name in used_foreigns {
             let (a, b, c, d) = (
-                module_name.join("_"),
+                module_name.join("$"),
                 if opt.input.starts_with("/") { "" } else { "./" },
                 &opt.input,
                 &module_name.join("."),
             );
             if opt.es6 {
                 string += &format!(
-                    "import * as {}_$foreign from '{}{}/{}/foreign.js';\n",
+                    "import * as {}$foreign from '{}{}/{}/foreign.js';\n",
                     a, b, c, d
                 );
             } else {
                 string += &format!(
-                    "var {}_$foreign = require('{}{}/{}/foreign.js');\n",
+                    "var {}$foreign = require('{}{}/{}/foreign.js');\n",
                     a, b, c, d
                 );
             }
@@ -295,12 +295,12 @@ impl Compiler {
             }
             Var { value, .. } => {
                 let id = qid(value);
-                if id == "Prim_undefined" {
+                if id == "Prim$undefined" {
                     g::undefined()
                 } else if self.foreigns.contains(&id) {
                     g::member(
                         escodegen::g::var(
-                            value.module.as_ref().unwrap_or(&module.name).join("_") + "_$foreign",
+                            value.module.as_ref().unwrap_or(&module.name).join("$") + "$foreign",
                         ),
                         g::string(value.identifier.clone()),
                     )
@@ -528,7 +528,7 @@ fn id(module: &[String], identifier: &str) -> String {
     (if module.is_empty() {
         String::new()
     } else {
-        module.join("_") + "_"
+        module.join("$") + "$"
     }) + &identifier
 }
 
@@ -572,8 +572,8 @@ fn collect_used(
                     processing.insert(name.clone());
                     collect_used(map, &map[name], used, used_foreigns, processing);
                     used.push(name.clone());
-                } else if name.ends_with("_$foreign") {
-                    let mut module_name = name.split("_").map(Into::into).collect::<Vec<String>>();
+                } else if name.ends_with("$foreign") {
+                    let mut module_name = name.split("$").map(Into::into).collect::<Vec<String>>();
                     module_name.pop();
                     used_foreigns.insert(module_name);
                 }

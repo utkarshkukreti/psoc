@@ -1,66 +1,66 @@
-var Main_$foreign = require("./t/output/Main/foreign.js");
-var Main_tuple = function(a) {
+var Main$foreign = require("./t/output/Main/foreign.js");
+var Main$tuple = function(a) {
   return function(b$prime) {
     return { a: a, b: b$prime };
   };
 };
-var A_array = [1, 2, 3];
-var Main_array = A_array;
-var Main_boolean = true;
-var Main_char = "π";
-var Main_int = 42;
-var Main_number = 1.23;
-var Main_string$prime = "πr²";
-var Main_numbers = { one: 1 };
-var Main_object = {
-  array: Main_array,
-  boolean: Main_boolean,
-  char: Main_char,
-  int: Main_int,
-  number: Main_number,
-  "string'": Main_string$prime,
-  one: Main_numbers["one"]
+var A$array = [1, 2, 3];
+var Main$array = A$array;
+var Main$boolean = true;
+var Main$char = "π";
+var Main$int = 42;
+var Main$number = 1.23;
+var Main$string$prime = "πr²";
+var Main$numbers = { one: 1 };
+var Main$object = {
+  array: Main$array,
+  boolean: Main$boolean,
+  char: Main$char,
+  int: Main$int,
+  number: Main$number,
+  "string'": Main$string$prime,
+  one: Main$numbers["one"]
 };
-var Main_D1_1 = 0;
-var Main_D2_1 = 0;
-var Main_D2_2 = 1;
-var Main_D3_1 = function(value0) {
+var Main$D1_1 = 0;
+var Main$D2_1 = 0;
+var Main$D2_2 = 1;
+var Main$D3_1 = function(value0) {
   return value0;
 };
-var Main_D4_1 = function(value0) {
+var Main$D4_1 = function(value0) {
   return function(value1) {
     return [value0, value1];
   };
 };
-var Main_D5_1 = function(value0) {
+var Main$D5_1 = function(value0) {
   return [value0];
 };
-var Main_D5_2 = 1;
-var Main_D6_1 = function(value0) {
+var Main$D5_2 = 1;
+var Main$D6_1 = function(value0) {
   return [value0];
 };
-var Main_D6_2 = 1;
-var Main_D6_3 = 2;
-var Main_D7_1 = function(value0) {
+var Main$D6_2 = 1;
+var Main$D6_3 = 2;
+var Main$D7_1 = function(value0) {
   return [0, value0];
 };
-var Main_D7_2$prime = function(value0) {
+var Main$D7_2$prime = function(value0) {
   return [1, value0];
 };
-var Main_N = function(x) {
+var Main$N = function(x) {
   return x;
 };
-var Main_datas = Main_tuple(Main_D1_1)(
-  Main_tuple(Main_D2_1)(
-    Main_tuple(Main_D2_2)(
-      Main_tuple(Main_D3_1)(
-        Main_tuple(Main_D4_1)(
-          Main_tuple(Main_D5_1)(
-            Main_tuple(Main_D5_2)(
-              Main_tuple(Main_D6_1)(
-                Main_tuple(Main_D6_2)(
-                  Main_tuple(Main_D6_3)(
-                    Main_tuple(Main_D7_1)(Main_tuple(Main_D7_2$prime)(Main_N))
+var Main$datas = Main$tuple(Main$D1_1)(
+  Main$tuple(Main$D2_1)(
+    Main$tuple(Main$D2_2)(
+      Main$tuple(Main$D3_1)(
+        Main$tuple(Main$D4_1)(
+          Main$tuple(Main$D5_1)(
+            Main$tuple(Main$D5_2)(
+              Main$tuple(Main$D6_1)(
+                Main$tuple(Main$D6_2)(
+                  Main$tuple(Main$D6_3)(
+                    Main$tuple(Main$D7_1)(Main$tuple(Main$D7_2$prime)(Main$N))
                   )
                 )
               )
@@ -71,71 +71,71 @@ var Main_datas = Main_tuple(Main_D1_1)(
     )
   )
 );
-var Main_fourTuple = function(x) {
+var Main$fourTuple = function(x) {
   return function(y) {
-    var a$prime = Main_tuple(x)(y);
+    var a$prime = Main$tuple(x)(y);
     var d = (function() {
-      var b = Main_tuple(a$prime)(a$prime);
-      var c = Main_tuple(b)(b);
-      return Main_tuple(c)(c);
+      var b = Main$tuple(a$prime)(a$prime);
+      var c = Main$tuple(b)(b);
+      return Main$tuple(c)(c);
     })();
-    return Main_tuple(d)(d);
+    return Main$tuple(d)(d);
   };
 };
-var Main_f = function(x) {
+var Main$f = function(x) {
   return x;
 };
-var Main_m = function(a) {
+var Main$m = function(a) {
   return function(b) {
     return function(c) {
-      var v = Main_f(c);
+      var v = Main$f(c);
       var v1 = b;
-      var v2 = Main_f(a);
+      var v2 = Main$f(a);
       if (v2 === 0 && v1 === 0 && v === 0) return "zeros";
       if (v2 === 1 && v1 === 1 && v === 1) return "ones";
       return "others";
     };
   };
 };
-var Main_caseBoolean = function(v) {
+var Main$caseBoolean = function(v) {
   if (v === true) return "true";
   return "other";
 };
-var Main_caseChar = function(v) {
+var Main$caseChar = function(v) {
   if (v === "π") return "pi";
   return "other";
 };
-var Main_caseInt = function(v) {
+var Main$caseInt = function(v) {
   if (v === 42) return "42";
   return "other";
 };
-var Main_caseNumber = function(v) {
+var Main$caseNumber = function(v) {
   if (v === 1.23) return "1.23";
   return "other";
 };
-var Main_caseString = function(v) {
+var Main$caseString = function(v) {
   if (v === "hi") return "hi";
   return "other";
 };
-var Main_caseArray = function(v) {
+var Main$caseArray = function(v) {
   if (v["length"] === 0) return 0;
   if (v["length"] === 3 && v[0] === 0 && v[2] === 2) return v[1];
   if (v["length"] === 3) return v[2];
   return 9;
 };
-var Main_caseArrays = Main_tuple(Main_caseArray([]))(
-  Main_tuple(Main_caseArray([0, 1, 2]))(
-    Main_tuple(Main_caseArray([7, 6, 5]))(Main_caseArray([2]))
+var Main$caseArrays = Main$tuple(Main$caseArray([]))(
+  Main$tuple(Main$caseArray([0, 1, 2]))(
+    Main$tuple(Main$caseArray([7, 6, 5]))(Main$caseArray([2]))
   )
 );
-var Main_caseObject = function(v) {
+var Main$caseObject = function(v) {
   if (v["a"] === 1) return ".a is 1";
   if (v["b"] === "b") return ".b is b";
   if (v["c"] === "c" && v["d'"]["e"]["f"] === 4)
     return ".c is c and .d'.e.f is 4.0";
   return "other";
 };
-var Main_caseNamed = function(v) {
+var Main$caseNamed = function(v) {
   if (v["a"]["length"] === 1 && v["a"][0] === 0) {
     var b = v["a"];
     return (function() {
@@ -167,60 +167,60 @@ var Main_caseNamed = function(v) {
   }
   return [];
 };
-var Main_caseData1 = function(v) {
+var Main$caseData1 = function(v) {
   if (v === 0) return 1;
 };
-var Main_caseData2 = function(v) {
+var Main$caseData2 = function(v) {
   if (v === 0) return 1;
   if (v === 1) return 2;
 };
-var Main_caseData3 = function(v) {
+var Main$caseData3 = function(v) {
   return v;
 };
-var Main_caseData4 = function(v) {
+var Main$caseData4 = function(v) {
   if (typeof v !== "number") {
     var x = v[0];
     var y = v[1];
-    return Main_tuple(x)(y);
+    return Main$tuple(x)(y);
   }
 };
-var Main_caseData5 = function(v) {
+var Main$caseData5 = function(v) {
   if (typeof v !== "number") return v[0];
   if (v === 1) return 2;
 };
-var Main_caseData6 = function(v) {
+var Main$caseData6 = function(v) {
   if (typeof v !== "number") return v[0];
   if (v === 1) return 2;
   if (v === 2) return 3;
 };
-var Main_caseData7 = function(v) {
+var Main$caseData7 = function(v) {
   if (v[0] === 0) return v[1];
   if (v[0] === 1) return v[1];
 };
-var Main_caseNewtype = function(v) {
+var Main$caseNewtype = function(v) {
   return v;
 };
-var Main_caseDatas = Main_tuple(Main_caseData1)(
-  Main_tuple(Main_caseData2)(
-    Main_tuple(Main_caseData3)(
-      Main_tuple(Main_caseData4)(
-        Main_tuple(Main_caseData5)(
-          Main_tuple(Main_caseData6)(
-            Main_tuple(Main_caseData7)(Main_caseNewtype)
+var Main$caseDatas = Main$tuple(Main$caseData1)(
+  Main$tuple(Main$caseData2)(
+    Main$tuple(Main$caseData3)(
+      Main$tuple(Main$caseData4)(
+        Main$tuple(Main$caseData5)(
+          Main$tuple(Main$caseData6)(
+            Main$tuple(Main$caseData7)(Main$caseNewtype)
           )
         )
       )
     )
   )
 );
-var Main_cases = Main_tuple(Main_caseBoolean(true))(
-  Main_tuple(Main_caseChar("π"))(
-    Main_tuple(Main_caseInt(43))(
-      Main_tuple(Main_caseNumber(1.234))(
-        Main_tuple(Main_caseString("hi"))(
-          Main_tuple(Main_caseArrays)(
-            Main_tuple(Main_caseObject)(
-              Main_tuple(Main_caseNamed)(Main_caseDatas)
+var Main$cases = Main$tuple(Main$caseBoolean(true))(
+  Main$tuple(Main$caseChar("π"))(
+    Main$tuple(Main$caseInt(43))(
+      Main$tuple(Main$caseNumber(1.234))(
+        Main$tuple(Main$caseString("hi"))(
+          Main$tuple(Main$caseArrays)(
+            Main$tuple(Main$caseObject)(
+              Main$tuple(Main$caseNamed)(Main$caseDatas)
             )
           )
         )
@@ -228,45 +228,45 @@ var Main_cases = Main_tuple(Main_caseBoolean(true))(
     )
   )
 );
-var Main_forever = function(x) {
-  return Main_forever(x);
+var Main$forever = function(x) {
+  return Main$forever(x);
 };
-var Main_show = function(dict) {
+var Main$show = function(dict) {
   return dict["show"];
 };
-var Main_Show = function(show) {
+var Main$Show = function(show) {
   return { show: show };
 };
-var Main_showInt = Main_Show(function(v) {
+var Main$showInt = Main$Show(function(v) {
   return "Int";
 });
-var Main_showNumber = Main_Show(function(v) {
+var Main$showNumber = Main$Show(function(v) {
   return "Number";
 });
-var Main_showArray = function(dictShow) {
-  return Main_Show(function(v) {
+var Main$showArray = function(dictShow) {
+  return Main$Show(function(v) {
     return "Array";
   });
 };
-var Main_typeclass = Main_tuple(Main_show(Main_showInt)(1))(
-  Main_tuple(Main_show(Main_showNumber)(1.23))(
-    Main_tuple(Main_show(Main_showArray(Main_showInt))([1, 2]))(
-      Main_show(Main_showArray(Main_showNumber))([1.2, 3.4])
+var Main$typeclass = Main$tuple(Main$show(Main$showInt)(1))(
+  Main$tuple(Main$show(Main$showNumber)(1.23))(
+    Main$tuple(Main$show(Main$showArray(Main$showInt))([1, 2]))(
+      Main$show(Main$showArray(Main$showNumber))([1.2, 3.4])
     )
   )
 );
-var Main_tuplizeA = function(o) {
+var Main$tuplizeA = function(o) {
   var v = o;
-  return Object["assign"]({}, v, { a: Main_tuple(o["a"])(o["a"]) });
+  return Object["assign"]({}, v, { a: Main$tuple(o["a"])(o["a"]) });
 };
-var Main_matchHello = function(v) {
+var Main$matchHello = function(v) {
   return v;
 };
-var Main_isOne = function(v) {
+var Main$isOne = function(v) {
   if (v === 1) return true;
   return false;
 };
-var Main_guardedMatch = function(v) {
+var Main$guardedMatch = function(v) {
   var v1 = function(v2) {
     var v3 = function(v4) {
       var v5 = function(v6) {
@@ -277,10 +277,10 @@ var Main_guardedMatch = function(v) {
         var y = v[1];
         var z = v[2];
         return (function() {
-          var m_0 = Main_isOne(x);
+          var m_0 = Main$isOne(x);
           if (m_0 === true)
             return (function() {
-              var m_1 = Main_isOne(z);
+              var m_1 = Main$isOne(z);
               if (m_1 === true) return y;
               return v5(true);
             })();
@@ -294,10 +294,10 @@ var Main_guardedMatch = function(v) {
       var y = v[1];
       var z = v[2];
       return (function() {
-        var m_2 = Main_isOne(y);
+        var m_2 = Main$isOne(y);
         if (m_2 === true)
           return (function() {
-            var m_3 = Main_isOne(z);
+            var m_3 = Main$isOne(z);
             if (m_3 === true) return x;
             return v3(true);
           })();
@@ -311,10 +311,10 @@ var Main_guardedMatch = function(v) {
     var y = v[1];
     var z = v[2];
     return (function() {
-      var m_4 = Main_isOne(x);
+      var m_4 = Main$isOne(x);
       if (m_4 === true)
         return (function() {
-          var m_5 = Main_isOne(y);
+          var m_5 = Main$isOne(y);
           if (m_5 === true) return z;
           return v1(true);
         })();
@@ -323,31 +323,31 @@ var Main_guardedMatch = function(v) {
   }
   return v1(true);
 };
-var Main_guardedMatches = [
-  Main_guardedMatch([]),
-  Main_guardedMatch([1, 1, 1]),
-  Main_guardedMatch([2, 1, 1]),
-  Main_guardedMatch([1, 3, 1])
+var Main$guardedMatches = [
+  Main$guardedMatch([]),
+  Main$guardedMatch([1, 1, 1]),
+  Main$guardedMatch([2, 1, 1]),
+  Main$guardedMatch([1, 3, 1])
 ];
-var Main_void$prime = (function() {
+var Main$void$prime = (function() {
   var $$void = "void";
   return $$void;
 })();
-var Main_main = Main_$foreign["log"](
-  Main_tuple(Main_object)(
-    Main_tuple(Main_tuple)(
-      Main_tuple(Main_datas)(
-        Main_tuple(Main_fourTuple)(
-          Main_tuple(Main_m(0)(0)(0))(
-            Main_tuple(Main_m(1)(1)(1))(
-              Main_tuple(Main_m(0)(1)(0))(
-                Main_tuple(Main_m(3)(3)(3))(
-                  Main_tuple(Main_cases)(
-                    Main_tuple(Main_forever)(
-                      Main_tuple(Main_typeclass)(
-                        Main_tuple(Main_tuplizeA)(
-                          Main_tuple(Main_matchHello)(
-                            Main_tuple(Main_guardedMatches)(Main_void$prime)
+var Main$main = Main$foreign["log"](
+  Main$tuple(Main$object)(
+    Main$tuple(Main$tuple)(
+      Main$tuple(Main$datas)(
+        Main$tuple(Main$fourTuple)(
+          Main$tuple(Main$m(0)(0)(0))(
+            Main$tuple(Main$m(1)(1)(1))(
+              Main$tuple(Main$m(0)(1)(0))(
+                Main$tuple(Main$m(3)(3)(3))(
+                  Main$tuple(Main$cases)(
+                    Main$tuple(Main$forever)(
+                      Main$tuple(Main$typeclass)(
+                        Main$tuple(Main$tuplizeA)(
+                          Main$tuple(Main$matchHello)(
+                            Main$tuple(Main$guardedMatches)(Main$void$prime)
                           )
                         )
                       )
@@ -362,4 +362,4 @@ var Main_main = Main_$foreign["log"](
     )
   )
 );
-Main_main();
+Main$main();
