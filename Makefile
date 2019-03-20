@@ -6,3 +6,6 @@ default:
 
 rwh:
 	cd test/real-world-halogen && make
+
+map-benchmark:
+	cd test/map-benchmark && make
