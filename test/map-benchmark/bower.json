@@ -9,7 +9,8 @@
   "dependencies": {
     "purescript-prelude": "^4.1.0",
     "purescript-console": "^4.2.0",
-    "purescript-effect": "^2.0.1"
+    "purescript-effect": "^2.0.1",
+    "purescript-ordered-collections": "^1.6.1"
   },
   "devDependencies": {
     "purescript-psci-support": "^4.0.0"
