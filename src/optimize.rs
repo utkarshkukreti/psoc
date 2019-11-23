@@ -21,43 +21,64 @@ fn optimize_expr(mut expr: j::Expr) -> j::Expr {
 fn optimize_expr_once(expr: j::Expr) -> j::Expr {
     walk(
         expr,
-        |_expr| None,
-        |stmt| {
-            // REWRITE:
-            // { var x = y; return x; }
-            // TO:
-            // return y;
-            if let j::Stmt::Block(stmts) = stmt {
-                if let [let_, return_] = stmts.as_slice() {
-                    if let j::Stmt::Var(name, Some(expr)) = let_ {
-                        if let j::Stmt::Return(Some(j::Expr::Var(name_))) = return_ {
-                            if name == name_ {
-                                return Some(g::return_(Some(expr.clone())));
-                            }
-                        }
-                    }
-                }
-            }
-            // REWRITE:
-            // return (function() {
-            //   ...stmts
-            // })();
-            // TO:
-            // ...stmts
-            // }
-            if let j::Stmt::Return(Some(ref expr)) = stmt {
-                if let j::Expr::Call(ref expr, ref args_) = expr {
-                    if args_.len() == 0 {
-                        if let j::Expr::Function(ref args__, ref stmts) = **expr {
-                            assert!(args__.len() == 0);
-                            return Some(g::block(stmts.clone()));
-                        }
-                    }
+        |expr| {
+            if let j::Expr::Function(args, stmts) = expr {
+                let stmt = g::block(stmts.clone());
+                let new_stmt = optimize_stmt(stmt.clone());
+                if stmt != new_stmt {
+                    return Some(j::Expr::Function(args.clone(), vec![new_stmt]));
                 }
             }
             None
         },
+        |stmt| Some(optimize_stmt(stmt.clone())),
     )
+}
+
+fn optimize_stmt(mut stmt: j::Stmt) -> j::Stmt {
+    loop {
+        let new_stmt = optimize_stmt_once(stmt.clone());
+        if new_stmt == stmt {
+            return new_stmt;
+        }
+        stmt = new_stmt;
+    }
+}
+
+fn optimize_stmt_once(stmt: j::Stmt) -> j::Stmt {
+    // REWRITE:
+    // { var x = y; return x; }
+    // TO:
+    // return y;
+    if let j::Stmt::Block(ref stmts) = stmt {
+        if let [let_, return_] = stmts.as_slice() {
+            if let j::Stmt::Var(name, Some(expr)) = let_ {
+                if let j::Stmt::Return(Some(j::Expr::Var(name_))) = return_ {
+                    if name == name_ {
+                        return g::return_(Some(expr.clone()));
+                    }
+                }
+            }
+        }
+    }
+    // REWRITE:
+    // return (function() {
+    //   ...stmts
+    // })();
+    // TO:
+    // ...stmts
+    // }
+    if let j::Stmt::Return(Some(ref expr)) = stmt {
+        if let j::Expr::Call(ref expr, ref args_) = expr {
+            if args_.len() == 0 {
+                if let j::Expr::Function(ref args__, ref stmts) = **expr {
+                    assert!(args__.len() == 0);
+                    return g::block(stmts.clone());
+                }
+            }
+        }
+    }
+    stmt
 }
 
 fn walk(

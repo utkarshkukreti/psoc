@@ -33,8 +33,7 @@ var Main$Show = function(show) {
   return { show: show };
 };
 var Main$void$prime = (function() {
-  var $$void = "void";
-  return $$void;
+  return "void";
 })();
 var Main$tuple = function(a) {
   return function(b$prime) {
