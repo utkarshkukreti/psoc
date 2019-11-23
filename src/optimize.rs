@@ -21,36 +21,7 @@ fn optimize_expr(mut expr: j::Expr) -> j::Expr {
 fn optimize_expr_once(expr: j::Expr) -> j::Expr {
     walk(
         expr,
-        |expr| {
-            // REWRITE:
-            // function(...args) {
-            //   ...stmts1
-            //   return (function() {
-            //     ...stmts2
-            //   })();
-            // }
-            // TO:
-            // function(...args) {
-            //   ...stmts1
-            //   ...stmts2
-            // }
-            if let j::Expr::Function(ref args, ref stmts) = expr {
-                if let Some(j::Stmt::Return(Some(ref expr))) = stmts.last() {
-                    if let j::Expr::Call(ref expr, ref args_) = expr {
-                        if args_.len() == 0 {
-                            if let j::Expr::Function(ref args__, ref stmts_) = **expr {
-                                assert!(args__.len() == 0);
-                                let mut new_stmts = stmts.clone();
-                                new_stmts.pop();
-                                new_stmts.extend(stmts_.clone());
-                                return Some(g::function(args.clone(), new_stmts));
-                            }
-                        }
-                    }
-                }
-            }
-            None
-        },
+        |_expr| None,
         |stmt| {
             // REWRITE:
             // { var x = y; return x; }
