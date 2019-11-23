@@ -2,7 +2,8 @@ DIR = purescript-halogen-realworld
 
 default: $(DIR)
 	cd $(DIR) && spago build -u "--codegen corefn,js"
-	cargo run --release -- --input $(DIR)/output --entry Main.main > main.js
+	cargo build --release
+	time cargo run --release -- --input $(DIR)/output --entry Main.main > main.js
 	rollup -c --output.format iife --output.name RWH main.js > main.min.js
 	@echo "Minified size: $$(cat main.min.js | wc -c) bytes"
 	@echo " Gzipped size: $$(cat main.min.js | gzip | wc -c) bytes"
