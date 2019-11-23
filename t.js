@@ -69,9 +69,7 @@ var Main$typeclass = Main$tuple(Main$show(Main$showInt)(1))(
 var Main$numbers = { one: 1 };
 var Main$number = 1.23;
 var Main$matchHello = function(v) {
-  {
-    return v;
-  }
+  return v;
 };
 var Main$isOne = function(v) {
   {
@@ -231,9 +229,7 @@ var Main$caseNumber = function(v) {
   }
 };
 var Main$caseNewtype = function(v) {
-  {
-    return v;
-  }
+  return v;
 };
 var Main$caseNamed = function(v) {
   {
@@ -280,17 +276,13 @@ var Main$caseData5 = function(v) {
 };
 var Main$caseData4 = function(v) {
   {
-    {
-      var x = v[0];
-      var y = v[1];
-      return Main$tuple(x)(y);
-    }
+    var x = v[0];
+    var y = v[1];
+    return Main$tuple(x)(y);
   }
 };
 var Main$caseData3 = function(v) {
-  {
-    return v;
-  }
+  return v;
 };
 var Main$caseData2 = function(v) {
   {
@@ -299,9 +291,7 @@ var Main$caseData2 = function(v) {
   }
 };
 var Main$caseData1 = function(v) {
-  {
-    if (v === 0) return 1;
-  }
+  if (v === 0) return 1;
 };
 var Main$caseDatas = Main$tuple(Main$caseData1)(
   Main$tuple(Main$caseData2)(

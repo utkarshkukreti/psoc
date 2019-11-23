@@ -23,6 +23,14 @@ fn optimize_expr_once(expr: j::Expr) -> j::Expr {
         expr,
         |expr| {
             if let j::Expr::Function(args, stmts) = expr {
+                if let [j::Stmt::Block(ref stmts)] = stmts.as_slice() {
+                    if let [stmt] = stmts.as_slice() {
+                        return Some(j::Expr::Function(args.clone(), vec![stmt.clone()]));
+                    }
+                }
+            }
+
+            if let j::Expr::Function(args, stmts) = expr {
                 let stmt = g::block(stmts.clone());
                 let new_stmt = optimize_stmt(stmt.clone());
                 if stmt != new_stmt {
