@@ -12,12 +12,9 @@ var Main$D7_2$prime = function(value0) {
 var Main$D6_1 = function(value0) {
   return [value0];
 };
-var Main$D6_2 = 1;
-var Main$D6_3 = 2;
 var Main$D5_1 = function(value0) {
   return [value0];
 };
-var Main$D5_2 = 1;
 var Main$D4_1 = function(value0) {
   return function(value1) {
     return [value0, value1];
@@ -26,13 +23,9 @@ var Main$D4_1 = function(value0) {
 var Main$D3_1 = function(value0) {
   return value0;
 };
-var Main$D2_1 = 0;
-var Main$D2_2 = 1;
-var Main$D1_1 = 0;
 var Main$Show = function(show) {
   return { show: show };
 };
-var Main$void$prime = "void";
 var Main$tuple = function(a) {
   return function(b$prime) {
     return { a: a, b: b$prime };
@@ -42,7 +35,6 @@ var Main$tuplizeA = function(o) {
   var v = o;
   return Object["assign"]({}, v, { a: Main$tuple(o["a"])(o["a"]) });
 };
-var Main$string$prime = "πr²";
 var Main$showNumber = Main$Show(function(v) {
   return "Number";
 });
@@ -65,7 +57,6 @@ var Main$typeclass = Main$tuple(Main$show(Main$showInt)(1))(
   )
 );
 var Main$numbers = { one: 1 };
-var Main$number = 1.23;
 var Main$matchHello = function(v) {
   return v;
 };
@@ -73,7 +64,6 @@ var Main$isOne = function(v) {
   if (v === 1) return true;
   return false;
 };
-var Main$int = 42;
 var Main$guardedMatch = function(v) {
   var v1 = function(v2) {
     var v3 = function(v4) {
@@ -192,7 +182,6 @@ var Main$datas = Main$tuple(0)(
     )
   )
 );
-var Main$char = "π";
 var Main$caseString = function(v) {
   if (v === "hi") return "hi";
   return "other";
@@ -306,8 +295,6 @@ var Main$cases = Main$tuple(Main$caseBoolean(true))(
     )
   )
 );
-var Main$boolean = true;
-var Main$array = A$array;
 var Main$object = {
   array: A$array,
   boolean: true,

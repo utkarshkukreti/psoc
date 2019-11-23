@@ -87,6 +87,8 @@ impl Compiler {
             each_bind(&module.decls, |bind| self.compile_bind(module, bind));
         }
 
+        optimize::optimize(&mut self.map);
+
         assert!(self.map.contains_key(&entry));
         let mut used = Vec::new();
         let mut used_foreigns = HashSet::new();
@@ -159,8 +161,6 @@ impl Compiler {
                 );
             }
         }
-
-        optimize::optimize(&mut self.map);
 
         let mut done = HashSet::new();
         for var in &used {
