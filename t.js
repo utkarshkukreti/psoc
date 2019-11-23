@@ -171,16 +171,16 @@ var Main$m = function(a) {
     };
   };
 };
-var Main$datas = Main$tuple(Main$D1_1)(
-  Main$tuple(Main$D2_1)(
-    Main$tuple(Main$D2_2)(
+var Main$datas = Main$tuple(0)(
+  Main$tuple(0)(
+    Main$tuple(1)(
       Main$tuple(Main$D3_1)(
         Main$tuple(Main$D4_1)(
           Main$tuple(Main$D5_1)(
-            Main$tuple(Main$D5_2)(
+            Main$tuple(1)(
               Main$tuple(Main$D6_1)(
-                Main$tuple(Main$D6_2)(
-                  Main$tuple(Main$D6_3)(
+                Main$tuple(1)(
+                  Main$tuple(2)(
                     Main$tuple(Main$D7_1)(Main$tuple(Main$D7_2$prime)(Main$N))
                   )
                 )
@@ -309,12 +309,12 @@ var Main$cases = Main$tuple(Main$caseBoolean(true))(
 var Main$boolean = true;
 var Main$array = A$array;
 var Main$object = {
-  array: Main$array,
-  boolean: Main$boolean,
-  char: Main$char,
-  int: Main$int,
-  number: Main$number,
-  "string'": Main$string$prime,
+  array: A$array,
+  boolean: true,
+  char: "π",
+  int: 42,
+  number: 1.23,
+  "string'": "πr²",
   one: Main$numbers["one"]
 };
 var Main$main = Main$foreign["log"](
@@ -331,7 +331,7 @@ var Main$main = Main$foreign["log"](
                       Main$tuple(Main$typeclass)(
                         Main$tuple(Main$tuplizeA)(
                           Main$tuple(Main$matchHello)(
-                            Main$tuple(Main$guardedMatches)(Main$void$prime)
+                            Main$tuple(Main$guardedMatches)("void")
                           )
                         )
                       )

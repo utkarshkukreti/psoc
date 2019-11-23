@@ -3,14 +3,17 @@ use escodegen::g;
 use std::collections::HashMap;
 
 pub fn optimize(map: &mut HashMap<String, j::Expr>) {
-    for (_, expr) in map {
-        *expr = optimize_expr(expr.clone());
+    let keys = map.keys().cloned().collect::<Vec<_>>();
+    for key in keys {
+        let value = map[&key].clone();
+        let new_expr = optimize_expr(value, map);
+        map.insert(key, new_expr);
     }
 }
 
-fn optimize_expr(mut expr: j::Expr) -> j::Expr {
+fn optimize_expr(mut expr: j::Expr, map: &mut HashMap<String, j::Expr>) -> j::Expr {
     loop {
-        let new_expr = optimize_expr_once(expr.clone());
+        let new_expr = optimize_expr_once(expr.clone(), map);
         if new_expr == expr {
             return new_expr;
         }
@@ -18,10 +21,17 @@ fn optimize_expr(mut expr: j::Expr) -> j::Expr {
     }
 }
 
-fn optimize_expr_once(expr: j::Expr) -> j::Expr {
+fn optimize_expr_once(expr: j::Expr, map: &mut HashMap<String, j::Expr>) -> j::Expr {
     walk(
         expr,
         |expr| {
+            if let j::Expr::Var(name) = expr {
+                if let Some(expr) = map.get(name) {
+                    if is_simple(expr) {
+                        return Some(expr.clone());
+                    }
+                }
+            }
             if let j::Expr::Function(args, stmts) = expr {
                 if let [j::Stmt::Block(ref stmts)] = stmts.as_slice() {
                     return Some(j::Expr::Function(args.clone(), stmts.clone()));
@@ -124,4 +134,15 @@ fn walk(
         &mut |_| (),
     );
     expr
+}
+
+fn is_simple(expr: &j::Expr) -> bool {
+    match expr {
+        j::Expr::Bool(_)
+        | j::Expr::Number(_)
+        | j::Expr::String(_)
+        | j::Expr::Undefined
+        | j::Expr::Var(_) => true,
+        _ => false,
+    }
 }
