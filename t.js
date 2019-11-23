@@ -83,56 +83,59 @@ var Main$guardedMatch = function(v) {
       var v5 = function(v6) {
         return 0;
       };
+      {
+        if (v["length"] === 3) {
+          var x = v[0];
+          var y = v[1];
+          var z = v[2];
+          {
+            var m_0 = Main$isOne(x);
+            if (m_0 === true) {
+              var m_1 = Main$isOne(z);
+              if (m_1 === true) return y;
+              return v5(true);
+            }
+            return v5(true);
+          }
+        }
+        return v5(true);
+      }
+    };
+    {
       if (v["length"] === 3) {
         var x = v[0];
         var y = v[1];
         var z = v[2];
-        return (function() {
-          var m_0 = Main$isOne(x);
-          if (m_0 === true)
-            return (function() {
-              var m_1 = Main$isOne(z);
-              if (m_1 === true) return y;
-              return v5(true);
-            })();
-          return v5(true);
-        })();
+        {
+          var m_2 = Main$isOne(y);
+          if (m_2 === true) {
+            var m_3 = Main$isOne(z);
+            if (m_3 === true) return x;
+            return v3(true);
+          }
+          return v3(true);
+        }
       }
-      return v5(true);
-    };
+      return v3(true);
+    }
+  };
+  {
     if (v["length"] === 3) {
       var x = v[0];
       var y = v[1];
       var z = v[2];
-      return (function() {
-        var m_2 = Main$isOne(y);
-        if (m_2 === true)
-          return (function() {
-            var m_3 = Main$isOne(z);
-            if (m_3 === true) return x;
-            return v3(true);
-          })();
-        return v3(true);
-      })();
-    }
-    return v3(true);
-  };
-  if (v["length"] === 3) {
-    var x = v[0];
-    var y = v[1];
-    var z = v[2];
-    return (function() {
-      var m_4 = Main$isOne(x);
-      if (m_4 === true)
-        return (function() {
+      {
+        var m_4 = Main$isOne(x);
+        if (m_4 === true) {
           var m_5 = Main$isOne(y);
           if (m_5 === true) return z;
           return v1(true);
-        })();
-      return v1(true);
-    })();
+        }
+        return v1(true);
+      }
+    }
+    return v1(true);
   }
-  return v1(true);
 };
 var Main$guardedMatches = [
   Main$guardedMatch([]),
@@ -163,9 +166,11 @@ var Main$m = function(a) {
       var v = Main$f(c);
       var v1 = b;
       var v2 = Main$f(a);
-      if (v2 === 0 && v1 === 0 && v === 0) return "zeros";
-      if (v2 === 1 && v1 === 1 && v === 1) return "ones";
-      return "others";
+      {
+        if (v2 === 0 && v1 === 0 && v === 0) return "zeros";
+        if (v2 === 1 && v1 === 1 && v === 1) return "ones";
+        return "others";
+      }
     };
   };
 };
@@ -210,20 +215,9 @@ var Main$caseNewtype = function(v) {
   return v;
 };
 var Main$caseNamed = function(v) {
-  if (v["a"]["length"] === 1 && v["a"][0] === 0) {
-    var b = v["a"];
-    return (function() {
-      var bb = b;
-      return bb;
-    })();
-  }
-  if (v["b"]["c"]["d"]["length"] === 1 && v["b"]["c"]["d"][0] === 1) {
-    var b$prime = v["b"]["c"]["d"];
-    return (function() {
-      var bb = b$prime;
-      return bb;
-    })();
-  }
+  if (v["a"]["length"] === 1 && v["a"][0] === 0) return v["a"];
+  if (v["b"]["c"]["d"]["length"] === 1 && v["b"]["c"]["d"][0] === 1)
+    return v["b"]["c"]["d"];
   if (
     v["c"]["length"] === 1 &&
     v["c"][0]["length"] === 1 &&
@@ -232,13 +226,8 @@ var Main$caseNamed = function(v) {
     v["c"][0][0][0][0] === 1 &&
     v["c"][0][0][0][1] === 2 &&
     v["c"][0][0][0][2] === 3
-  ) {
-    var b = v["c"][0][0][0];
-    return (function() {
-      var bb = b;
-      return bb;
-    })();
-  }
+  )
+    return v["c"][0][0][0];
   return [];
 };
 var Main$caseInt = function(v) {

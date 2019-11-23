@@ -67,6 +67,23 @@ fn optimize_expr_once(expr: j::Expr) -> j::Expr {
                     }
                 }
             }
+            // REWRITE:
+            // return (function() {
+            //   ...stmts
+            // })();
+            // TO:
+            // ...stmts
+            // }
+            if let j::Stmt::Return(Some(ref expr)) = stmt {
+                if let j::Expr::Call(ref expr, ref args_) = expr {
+                    if args_.len() == 0 {
+                        if let j::Expr::Function(ref args__, ref stmts) = **expr {
+                            assert!(args__.len() == 0);
+                            return Some(g::block(stmts.clone()));
+                        }
+                    }
+                }
+            }
             None
         },
     )
