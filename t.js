@@ -32,9 +32,7 @@ var Main$D1_1 = 0;
 var Main$Show = function(show) {
   return { show: show };
 };
-var Main$void$prime = (function() {
-  return "void";
-})();
+var Main$void$prime = "void";
 var Main$tuple = function(a) {
   return function(b$prime) {
     return { a: a, b: b$prime };

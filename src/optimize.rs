@@ -29,6 +29,22 @@ fn optimize_expr_once(expr: j::Expr) -> j::Expr {
                     return Some(j::Expr::Function(args.clone(), vec![new_stmt]));
                 }
             }
+            // REWRITE:
+            // (function() { return $expr; })()
+            // TO:
+            // $expr
+            if let j::Expr::Call(ref expr, ref args) = expr {
+                if args.len() == 0 {
+                    if let j::Expr::Function(ref args__, ref stmts) = **expr {
+                        assert!(args__.len() == 0);
+                        if let [return_] = stmts.as_slice() {
+                            if let j::Stmt::Return(Some(expr)) = return_ {
+                                return Some(expr.clone());
+                            }
+                        }
+                    }
+                }
+            }
             None
         },
         |stmt| Some(optimize_stmt(stmt.clone())),
