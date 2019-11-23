@@ -78,21 +78,26 @@ fn optimize_stmt(mut stmt: j::Stmt) -> j::Stmt {
 }
 
 fn optimize_stmt_once(stmt: j::Stmt) -> j::Stmt {
-    // REWRITE:
-    // { var x = y; return x; }
-    // TO:
-    // return y;
-    if let j::Stmt::Block(ref stmts) = stmt {
-        if let [let_, return_] = stmts.as_slice() {
-            if let j::Stmt::Var(name, Some(expr)) = let_ {
-                if let j::Stmt::Return(Some(j::Expr::Var(name_))) = return_ {
-                    if name == name_ {
-                        return g::return_(Some(expr.clone()));
-                    }
-                }
-            }
-        }
-    }
+    // REMOVED FOR NOW: This optimization is incorrect if `y` refers to the variable `x` anywhere.
+    // E.g. `var x = function() { return x; };`
+    // We need to check for that before doing this transformation.
+    //
+    // // REWRITE:
+    // // { var x = y; return x; }
+    // // TO:
+    // // return y;
+    // if let j::Stmt::Block(ref stmts) = stmt {
+    //     if let [let_, return_] = stmts.as_slice() {
+    //         if let j::Stmt::Var(name, Some(expr)) = let_ {
+    //             if let j::Stmt::Return(Some(j::Expr::Var(name_))) = return_ {
+    //                 if name == name_ {
+    //                     return g::return_(Some(expr.clone()));
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
     // REWRITE:
     // return (function() {
     //   ...stmts
