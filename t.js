@@ -98,10 +98,10 @@ var Main$guardedMatch = function(v) {
                 var y = v[1];
                 var z = v[2];
                 {
-                  var m_0 = Main$isOne(x);
-                  if (m_0 === true) {
-                    var m_1 = Main$isOne(z);
-                    if (m_1 === true) return y;
+                  var $match_0 = Main$isOne(x);
+                  if ($match_0 === true) {
+                    var $match_1 = Main$isOne(z);
+                    if ($match_1 === true) return y;
                     return v5(true);
                   }
                   return v5(true);
@@ -117,10 +117,10 @@ var Main$guardedMatch = function(v) {
             var y = v[1];
             var z = v[2];
             {
-              var m_2 = Main$isOne(y);
-              if (m_2 === true) {
-                var m_3 = Main$isOne(z);
-                if (m_3 === true) return x;
+              var $match_2 = Main$isOne(y);
+              if ($match_2 === true) {
+                var $match_3 = Main$isOne(z);
+                if ($match_3 === true) return x;
                 return v3(true);
               }
               return v3(true);
@@ -136,10 +136,10 @@ var Main$guardedMatch = function(v) {
         var y = v[1];
         var z = v[2];
         {
-          var m_4 = Main$isOne(x);
-          if (m_4 === true) {
-            var m_5 = Main$isOne(y);
-            if (m_5 === true) return z;
+          var $match_4 = Main$isOne(x);
+          if ($match_4 === true) {
+            var $match_5 = Main$isOne(y);
+            if ($match_5 === true) return z;
             return v1(true);
           }
           return v1(true);

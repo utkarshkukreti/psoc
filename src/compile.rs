@@ -255,7 +255,7 @@ impl Compiler {
                     if let j::Expr::Var(name) = compiled {
                         vars.push(name.clone());
                     } else {
-                        let var = self.gen("m_");
+                        let var = self.gen("match");
                         stmts.push(g::let_(var.clone(), Some(compiled)));
                         vars.push(var);
                     }
@@ -541,7 +541,7 @@ impl Compiler {
 
     fn gen(&mut self, prefix: &str) -> String {
         self.gen += 1;
-        format!("{}{}", prefix, self.gen - 1)
+        format!("${}_{}", prefix, self.gen - 1)
     }
 }
 
