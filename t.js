@@ -26,6 +26,10 @@ var Main$D3_1 = function(value0) {
 var Main$Show = function(show) {
   return { show: show };
 };
+var Main$void$prime = (function() {
+  var $$void = "void";
+  return $$void;
+})();
 var Main$tuple = function(a) {
   return function(b$prime) {
     return { a: a, b: b$prime };
@@ -58,7 +62,8 @@ var Main$typeclass = Main$tuple(Main$show(Main$showInt)(1))(
 );
 var Main$numbers = { one: 1 };
 var Main$matchHello = function(v) {
-  return v;
+  var hi = v;
+  return hi;
 };
 var Main$isOne = function(v) {
   if (v === 1) return true;
@@ -198,12 +203,24 @@ var Main$caseNumber = function(v) {
   return "other";
 };
 var Main$caseNewtype = function(v) {
-  return v;
+  var x = v;
+  return x;
 };
 var Main$caseNamed = function(v) {
-  if (v["a"]["length"] === 1 && v["a"][0] === 0) return v["a"];
-  if (v["b"]["c"]["d"]["length"] === 1 && v["b"]["c"]["d"][0] === 1)
-    return v["b"]["c"]["d"];
+  if (v["a"]["length"] === 1 && v["a"][0] === 0) {
+    var b = v["a"];
+    {
+      var bb = b;
+      return bb;
+    }
+  }
+  if (v["b"]["c"]["d"]["length"] === 1 && v["b"]["c"]["d"][0] === 1) {
+    var b$prime = v["b"]["c"]["d"];
+    {
+      var bb = b$prime;
+      return bb;
+    }
+  }
   if (
     v["c"]["length"] === 1 &&
     v["c"][0]["length"] === 1 &&
@@ -212,8 +229,13 @@ var Main$caseNamed = function(v) {
     v["c"][0][0][0][0] === 1 &&
     v["c"][0][0][0][1] === 2 &&
     v["c"][0][0][0][2] === 3
-  )
-    return v["c"][0][0][0];
+  ) {
+    var b = v["c"][0][0][0];
+    {
+      var bb = b;
+      return bb;
+    }
+  }
   return [];
 };
 var Main$caseInt = function(v) {
@@ -221,16 +243,28 @@ var Main$caseInt = function(v) {
   return "other";
 };
 var Main$caseData7 = function(v) {
-  if (v[0] === 0) return v[1];
-  if (v[0] === 1) return v[1];
+  if (v[0] === 0) {
+    var x = v[1];
+    return x;
+  }
+  if (v[0] === 1) {
+    var x = v[1];
+    return x;
+  }
 };
 var Main$caseData6 = function(v) {
-  if (typeof v !== "number") return v[0];
+  if (typeof v !== "number") {
+    var x = v[0];
+    return x;
+  }
   if (v === 1) return 2;
   if (v === 2) return 3;
 };
 var Main$caseData5 = function(v) {
-  if (typeof v !== "number") return v[0];
+  if (typeof v !== "number") {
+    var x = v[0];
+    return x;
+  }
   if (v === 1) return 2;
 };
 var Main$caseData4 = function(v) {
@@ -239,7 +273,8 @@ var Main$caseData4 = function(v) {
   return Main$tuple(x)(y);
 };
 var Main$caseData3 = function(v) {
-  return v;
+  var x = v;
+  return x;
 };
 var Main$caseData2 = function(v) {
   if (v === 0) return 1;
@@ -271,8 +306,14 @@ var Main$caseBoolean = function(v) {
 };
 var Main$caseArray = function(v) {
   if (v["length"] === 0) return 0;
-  if (v["length"] === 3 && v[0] === 0 && v[2] === 2) return v[1];
-  if (v["length"] === 3) return v[2];
+  if (v["length"] === 3 && v[0] === 0 && v[2] === 2) {
+    var x$prime = v[1];
+    return x$prime;
+  }
+  if (v["length"] === 3) {
+    var z = v[2];
+    return z;
+  }
   return 9;
 };
 var Main$caseArrays = Main$tuple(Main$caseArray([]))(
@@ -318,7 +359,7 @@ var Main$main = Main$foreign["log"](
                       Main$tuple(Main$typeclass)(
                         Main$tuple(Main$tuplizeA)(
                           Main$tuple(Main$matchHello)(
-                            Main$tuple(Main$guardedMatches)("void")
+                            Main$tuple(Main$guardedMatches)(Main$void$prime)
                           )
                         )
                       )
