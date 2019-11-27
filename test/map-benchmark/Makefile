@@ -1,7 +1,7 @@
 default: run
 
 compile:
-	pulp build -- --codegen corefn,js
+	spago build -u "--codegen corefn,js"
 	cargo run --release -- --input output --entry Main.main | prettier --parser babel > main.js
 
 run: compile
