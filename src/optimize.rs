@@ -32,6 +32,7 @@ fn optimize_expr_once(expr: j::Expr, map: &mut HashMap<String, j::Expr>) -> j::E
                     }
                 }
             }
+
             if let j::Expr::Function(args, stmts) = expr {
                 if let [j::Stmt::Block(ref stmts)] = stmts.as_slice() {
                     return Some(j::Expr::Function(args.clone(), stmts.clone()));
@@ -45,6 +46,17 @@ fn optimize_expr_once(expr: j::Expr, map: &mut HashMap<String, j::Expr>) -> j::E
                     return Some(j::Expr::Function(args.clone(), vec![new_stmt]));
                 }
             }
+
+            // REWRITE:
+            // $expr === true
+            // TO:
+            // $expr
+            if let j::Expr::Binary(j::BinaryOperator::Eqq, left, true_) = expr {
+                if let j::Expr::Bool(true) = **true_ {
+                    return Some(*left.clone());
+                }
+            }
+
             // REWRITE:
             // (function() { return $expr; })()
             // TO:

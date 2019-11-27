@@ -82,9 +82,9 @@ var Main$guardedMatch = function(v) {
           var z = v[2];
           {
             var $match_0 = Main$isOne(x);
-            if ($match_0 === true) {
+            if ($match_0) {
               var $match_1 = Main$isOne(z);
-              if ($match_1 === true) return y;
+              if ($match_1) return y;
               return v5(true);
             }
             return v5(true);
@@ -100,9 +100,9 @@ var Main$guardedMatch = function(v) {
         var z = v[2];
         {
           var $match_2 = Main$isOne(y);
-          if ($match_2 === true) {
+          if ($match_2) {
             var $match_3 = Main$isOne(z);
-            if ($match_3 === true) return x;
+            if ($match_3) return x;
             return v3(true);
           }
           return v3(true);
@@ -118,9 +118,9 @@ var Main$guardedMatch = function(v) {
       var z = v[2];
       {
         var $match_4 = Main$isOne(x);
-        if ($match_4 === true) {
+        if ($match_4) {
           var $match_5 = Main$isOne(y);
-          if ($match_5 === true) return z;
+          if ($match_5) return z;
           return v1(true);
         }
         return v1(true);
@@ -300,7 +300,7 @@ var Main$caseChar = function(v) {
   return "other";
 };
 var Main$caseBoolean = function(v) {
-  if (v === true) return "true";
+  if (v) return "true";
   return "other";
 };
 var Main$caseArray = function(v) {
