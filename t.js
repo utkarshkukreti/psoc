@@ -200,14 +200,8 @@ var Main$caseNewtype = function(v) {
   return v;
 };
 var Main$caseNamed = function(v) {
-  if (v.a.length === 1 && v.a[0] === 0) {
-    var b = v.a;
-    return b;
-  }
-  if (v.b.c.d.length === 1 && v.b.c.d[0] === 1) {
-    var b$prime = v.b.c.d;
-    return b$prime;
-  }
+  if (v.a.length === 1 && v.a[0] === 0) return v.a;
+  if (v.b.c.d.length === 1 && v.b.c.d[0] === 1) return v.b.c.d;
   if (
     v.c.length === 1 &&
     v.c[0].length === 1 &&
@@ -216,10 +210,8 @@ var Main$caseNamed = function(v) {
     v.c[0][0][0][0] === 1 &&
     v.c[0][0][0][1] === 2 &&
     v.c[0][0][0][2] === 3
-  ) {
-    var b = v.c[0][0][0];
-    return b;
-  }
+  )
+    return v.c[0][0][0];
   return [];
 };
 var Main$caseInt = function(v) {
@@ -227,28 +219,16 @@ var Main$caseInt = function(v) {
   return "other";
 };
 var Main$caseData7 = function(v) {
-  if (v[0] === 0) {
-    var x = v[1];
-    return x;
-  }
-  if (v[0] === 1) {
-    var x = v[1];
-    return x;
-  }
+  if (v[0] === 0) return v[1];
+  if (v[0] === 1) return v[1];
 };
 var Main$caseData6 = function(v) {
-  if (typeof v !== "number") {
-    var x = v[0];
-    return x;
-  }
+  if (typeof v !== "number") return v[0];
   if (v === 1) return 2;
   if (v === 2) return 3;
 };
 var Main$caseData5 = function(v) {
-  if (typeof v !== "number") {
-    var x = v[0];
-    return x;
-  }
+  if (typeof v !== "number") return v[0];
   if (v === 1) return 2;
 };
 var Main$caseData4 = function(v) {
@@ -289,14 +269,8 @@ var Main$caseBoolean = function(v) {
 };
 var Main$caseArray = function(v) {
   if (v.length === 0) return 0;
-  if (v.length === 3 && v[0] === 0 && v[2] === 2) {
-    var x$prime = v[1];
-    return x$prime;
-  }
-  if (v.length === 3) {
-    var z = v[2];
-    return z;
-  }
+  if (v.length === 3 && v[0] === 0 && v[2] === 2) return v[1];
+  if (v.length === 3) return v[2];
   return 9;
 };
 var Main$caseArrays = Main$tuple(Main$caseArray([]))(

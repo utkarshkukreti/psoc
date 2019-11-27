@@ -157,6 +157,7 @@ fn walk(
 fn is_simple(expr: &j::Expr) -> bool {
     match expr {
         j::Expr::Bool(_)
+        | j::Expr::Member(_, _)
         | j::Expr::Number(_)
         | j::Expr::String(_)
         | j::Expr::Undefined
