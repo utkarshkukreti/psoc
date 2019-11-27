@@ -6,6 +6,6 @@ edition = "2018"
 
 [dependencies]
 purescript-corefn = "0.3.0"
-escodegen = "0.4.3"
+escodegen = "0.4.4"
 glob = "0.2.11"
 structopt = "0.2.14"

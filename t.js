@@ -37,7 +37,7 @@ var Main$tuple = function(a) {
 };
 var Main$tuplizeA = function(o) {
   var v = o;
-  return Object["assign"]({}, v, { a: Main$tuple(o["a"])(o["a"]) });
+  return Object.assign({}, v, { a: Main$tuple(o.a)(o.a) });
 };
 var Main$showNumber = Main$Show(function(v) {
   return "Number";
@@ -51,7 +51,7 @@ var Main$showArray = function(dictShow) {
   });
 };
 var Main$show = function(dict) {
-  return dict["show"];
+  return dict.show;
 };
 var Main$typeclass = Main$tuple(Main$show(Main$showInt)(1))(
   Main$tuple(Main$show(Main$showNumber)(1.23))(
@@ -76,7 +76,7 @@ var Main$guardedMatch = function(v) {
         return 0;
       };
       {
-        if (v["length"] === 3) {
+        if (v.length === 3) {
           var x = v[0];
           var y = v[1];
           var z = v[2];
@@ -94,7 +94,7 @@ var Main$guardedMatch = function(v) {
       }
     };
     {
-      if (v["length"] === 3) {
+      if (v.length === 3) {
         var x = v[0];
         var y = v[1];
         var z = v[2];
@@ -112,7 +112,7 @@ var Main$guardedMatch = function(v) {
     }
   };
   {
-    if (v["length"] === 3) {
+    if (v.length === 3) {
       var x = v[0];
       var y = v[1];
       var z = v[2];
@@ -192,10 +192,9 @@ var Main$caseString = function(v) {
   return "other";
 };
 var Main$caseObject = function(v) {
-  if (v["a"] === 1) return ".a is 1";
-  if (v["b"] === "b") return ".b is b";
-  if (v["c"] === "c" && v["d'"]["e"]["f"] === 4)
-    return ".c is c and .d'.e.f is 4.0";
+  if (v.a === 1) return ".a is 1";
+  if (v.b === "b") return ".b is b";
+  if (v.c === "c" && v["d'"].e.f === 4) return ".c is c and .d'.e.f is 4.0";
   return "other";
 };
 var Main$caseNumber = function(v) {
@@ -207,30 +206,30 @@ var Main$caseNewtype = function(v) {
   return x;
 };
 var Main$caseNamed = function(v) {
-  if (v["a"]["length"] === 1 && v["a"][0] === 0) {
-    var b = v["a"];
+  if (v.a.length === 1 && v.a[0] === 0) {
+    var b = v.a;
     {
       var bb = b;
       return bb;
     }
   }
-  if (v["b"]["c"]["d"]["length"] === 1 && v["b"]["c"]["d"][0] === 1) {
-    var b$prime = v["b"]["c"]["d"];
+  if (v.b.c.d.length === 1 && v.b.c.d[0] === 1) {
+    var b$prime = v.b.c.d;
     {
       var bb = b$prime;
       return bb;
     }
   }
   if (
-    v["c"]["length"] === 1 &&
-    v["c"][0]["length"] === 1 &&
-    v["c"][0][0]["length"] === 1 &&
-    v["c"][0][0][0]["length"] === 3 &&
-    v["c"][0][0][0][0] === 1 &&
-    v["c"][0][0][0][1] === 2 &&
-    v["c"][0][0][0][2] === 3
+    v.c.length === 1 &&
+    v.c[0].length === 1 &&
+    v.c[0][0].length === 1 &&
+    v.c[0][0][0].length === 3 &&
+    v.c[0][0][0][0] === 1 &&
+    v.c[0][0][0][1] === 2 &&
+    v.c[0][0][0][2] === 3
   ) {
-    var b = v["c"][0][0][0];
+    var b = v.c[0][0][0];
     {
       var bb = b;
       return bb;
@@ -305,12 +304,12 @@ var Main$caseBoolean = function(v) {
   return "other";
 };
 var Main$caseArray = function(v) {
-  if (v["length"] === 0) return 0;
-  if (v["length"] === 3 && v[0] === 0 && v[2] === 2) {
+  if (v.length === 0) return 0;
+  if (v.length === 3 && v[0] === 0 && v[2] === 2) {
     var x$prime = v[1];
     return x$prime;
   }
-  if (v["length"] === 3) {
+  if (v.length === 3) {
     var z = v[2];
     return z;
   }
@@ -343,9 +342,9 @@ var Main$object = {
   int: 42,
   number: 1.23,
   "string'": "πr²",
-  one: Main$numbers["one"]
+  one: Main$numbers.one
 };
-var Main$main = Main$foreign["log"](
+var Main$main = Main$foreign.log(
   Main$tuple(Main$object)(
     Main$tuple(Main$tuple)(
       Main$tuple(Main$datas)(
