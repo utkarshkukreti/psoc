@@ -1,11 +1,11 @@
-var Effect$Console$foreign = require('./output/Effect.Console/foreign.js');
 var Data$Array$foreign = require('./output/Data.Array/foreign.js');
-var Data$Ord$foreign = require('./output/Data.Ord/foreign.js');
-var Data$Ring$foreign = require('./output/Data.Ring/foreign.js');
-var Data$Show$foreign = require('./output/Data.Show/foreign.js');
-var Data$Semiring$foreign = require('./output/Data.Semiring/foreign.js');
 var Data$Eq$foreign = require('./output/Data.Eq/foreign.js');
 var Data$Foldable$foreign = require('./output/Data.Foldable/foreign.js');
+var Data$Ord$foreign = require('./output/Data.Ord/foreign.js');
+var Data$Ring$foreign = require('./output/Data.Ring/foreign.js');
+var Data$Semiring$foreign = require('./output/Data.Semiring/foreign.js');
+var Data$Show$foreign = require('./output/Data.Show/foreign.js');
+var Effect$Console$foreign = require('./output/Effect.Console/foreign.js');
 var Data$Show$Show = function(show) {
   return { show: show };
 };

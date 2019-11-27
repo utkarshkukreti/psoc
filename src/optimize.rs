@@ -1,8 +1,8 @@
 use escodegen as j;
 use escodegen::g;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
-pub fn optimize(map: &mut HashMap<String, j::Expr>) {
+pub fn optimize(map: &mut BTreeMap<String, j::Expr>) {
     let keys = map.keys().cloned().collect::<Vec<_>>();
     for key in keys {
         let value = map[&key].clone();
@@ -11,7 +11,7 @@ pub fn optimize(map: &mut HashMap<String, j::Expr>) {
     }
 }
 
-fn optimize_expr(mut expr: j::Expr, map: &mut HashMap<String, j::Expr>) -> j::Expr {
+fn optimize_expr(mut expr: j::Expr, map: &mut BTreeMap<String, j::Expr>) -> j::Expr {
     loop {
         let new_expr = optimize_expr_once(expr.clone(), map);
         if new_expr == expr {
@@ -21,7 +21,7 @@ fn optimize_expr(mut expr: j::Expr, map: &mut HashMap<String, j::Expr>) -> j::Ex
     }
 }
 
-fn optimize_expr_once(expr: j::Expr, map: &mut HashMap<String, j::Expr>) -> j::Expr {
+fn optimize_expr_once(expr: j::Expr, map: &mut BTreeMap<String, j::Expr>) -> j::Expr {
     walk(
         expr,
         |expr| {

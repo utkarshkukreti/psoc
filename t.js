@@ -26,6 +26,7 @@ var Main$D3_1 = function(value0) {
 var Main$Show = function(show) {
   return { show: show };
 };
+var Main$void$prime = "void";
 var Main$tuple = function(a) {
   return function(b$prime) {
     return { a: a, b: b$prime };
@@ -316,7 +317,7 @@ var Main$main = Main$foreign.log(
                       Main$tuple(Main$typeclass)(
                         Main$tuple(Main$tuplizeA)(
                           Main$tuple(Main$matchHello)(
-                            Main$tuple(Main$guardedMatches)("void")
+                            Main$tuple(Main$guardedMatches)(Main$void$prime)
                           )
                         )
                       )

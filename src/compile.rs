@@ -1,13 +1,13 @@
 use crate::{optimize, Opt};
 use escodegen as j;
 use purescript_corefn as p;
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, BTreeSet};
 
 #[derive(Default)]
 struct Compiler {
-    map: HashMap<String, j::Expr>,
-    constructors: HashMap<String, Constructor>,
-    foreigns: HashSet<String>,
+    map: BTreeMap<String, j::Expr>,
+    constructors: BTreeMap<String, Constructor>,
+    foreigns: BTreeSet<String>,
     gen: u32,
 }
 
@@ -91,8 +91,8 @@ impl Compiler {
 
         assert!(self.map.contains_key(&entry));
         let mut used = Vec::new();
-        let mut used_foreigns = HashSet::new();
-        let mut processing = HashSet::new();
+        let mut used_foreigns = BTreeSet::new();
+        let mut processing = BTreeSet::new();
         collect_used(
             &self.map,
             &self.map[&entry],
@@ -120,7 +120,7 @@ impl Compiler {
             let entry_module_name = entry.rsplitn(2, "$").skip(1).next().unwrap().to_string();
             recur(&modules, entry_module_name, &mut modules_order);
 
-            let mut order = HashMap::new();
+            let mut order = BTreeMap::new();
             for module in modules {
                 if let Some(module_index) = modules_order
                     .iter()
@@ -162,7 +162,7 @@ impl Compiler {
             }
         }
 
-        let mut done = HashSet::new();
+        let mut done = BTreeSet::new();
         for var in &used {
             if done.contains(&var) {
                 continue;
@@ -597,11 +597,11 @@ mod g {
 }
 
 fn collect_used(
-    map: &HashMap<String, j::Expr>,
+    map: &BTreeMap<String, j::Expr>,
     expr: &j::Expr,
     used: &mut Vec<String>,
-    used_foreigns: &mut HashSet<Vec<String>>,
-    processing: &mut HashSet<String>,
+    used_foreigns: &mut BTreeSet<Vec<String>>,
+    processing: &mut BTreeSet<String>,
 ) {
     j::walk::walk_expr(
         expr,
