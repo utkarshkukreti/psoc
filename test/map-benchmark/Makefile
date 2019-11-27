@@ -1,6 +1,6 @@
 default:
 	pulp build -- --codegen corefn,js
-	cargo run --release -- --input output --entry Main.main > main.js
+	cargo run --release -- --input output --entry Main.main | prettier --parser babel > main.js
 	@echo ------------------------------ PURS ------------------------------
 	@/bin/bash -c "time node -e 'require(\"./output/Main/index.js\").main()'"
 	@echo ------------------------------ PSOC ------------------------------
