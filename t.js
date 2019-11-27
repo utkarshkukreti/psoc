@@ -26,10 +26,6 @@ var Main$D3_1 = function(value0) {
 var Main$Show = function(show) {
   return { show: show };
 };
-var Main$void$prime = (function() {
-  var $$void = "void";
-  return $$void;
-})();
 var Main$tuple = function(a) {
   return function(b$prime) {
     return { a: a, b: b$prime };
@@ -62,8 +58,7 @@ var Main$typeclass = Main$tuple(Main$show(Main$showInt)(1))(
 );
 var Main$numbers = { one: 1 };
 var Main$matchHello = function(v) {
-  var hi = v;
-  return hi;
+  return v;
 };
 var Main$isOne = function(v) {
   if (v === 1) return true;
@@ -202,23 +197,16 @@ var Main$caseNumber = function(v) {
   return "other";
 };
 var Main$caseNewtype = function(v) {
-  var x = v;
-  return x;
+  return v;
 };
 var Main$caseNamed = function(v) {
   if (v.a.length === 1 && v.a[0] === 0) {
     var b = v.a;
-    {
-      var bb = b;
-      return bb;
-    }
+    return b;
   }
   if (v.b.c.d.length === 1 && v.b.c.d[0] === 1) {
     var b$prime = v.b.c.d;
-    {
-      var bb = b$prime;
-      return bb;
-    }
+    return b$prime;
   }
   if (
     v.c.length === 1 &&
@@ -230,10 +218,7 @@ var Main$caseNamed = function(v) {
     v.c[0][0][0][2] === 3
   ) {
     var b = v.c[0][0][0];
-    {
-      var bb = b;
-      return bb;
-    }
+    return b;
   }
   return [];
 };
@@ -272,8 +257,7 @@ var Main$caseData4 = function(v) {
   return Main$tuple(x)(y);
 };
 var Main$caseData3 = function(v) {
-  var x = v;
-  return x;
+  return v;
 };
 var Main$caseData2 = function(v) {
   if (v === 0) return 1;
@@ -358,7 +342,7 @@ var Main$main = Main$foreign.log(
                       Main$tuple(Main$typeclass)(
                         Main$tuple(Main$tuplizeA)(
                           Main$tuple(Main$matchHello)(
-                            Main$tuple(Main$guardedMatches)(Main$void$prime)
+                            Main$tuple(Main$guardedMatches)("void")
                           )
                         )
                       )
